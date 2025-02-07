@@ -1,0 +1,12 @@
+{
+  "id": "SystemClock",
+  "name": "SystemClock",
+  "prefix": "sysclock",
+  "author": ["Breezebuilder"],
+  "description": "Shows the local time in-game. Don't fall into the Black Hole of time.",
+  "priority": 100000,
+  "main_file": "SystemClock.lua",
+  "badge_colour": "638fe1",
+  "version": "1.0.0",
+  "dependencies": ["Steamodded (>=1.0.0~ALPHA-1220a)", "Lovely (>=0.6)"]
+}
