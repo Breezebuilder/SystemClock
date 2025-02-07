@@ -1,5 +1,7 @@
 # SystemClock - See the local time in-game
-SystemClock is a mod for [Balatro](https://store.steampowered.com/app/2379780/Balatro/) which adds a draggable, customizable clock to the game screen.
+SystemClock is a mod for [Balatro](https://store.steampowered.com/app/2379780/Balatro/) which adds a draggable, resizable and needlessly customizable clock to the game screen.
+
+![SystemClockDemo](https://github.com/user-attachments/assets/8646827d-88a8-431b-ae43-0040dbd5f73d)
 
 ## Installation
 1. Install [lovely and SMODS](https://github.com/Steamodded/smods/wiki) by following all installation instructions step-by-step.
@@ -12,8 +14,8 @@ SystemClock is a mod for [Balatro](https://store.steampowered.com/app/2379780/Ba
 4. Start Balatro. If installed correctly, you will have a new `MODS` button on the main menu.
    
 5. SystemClock's settings can be found by first clicking the `MODS` menu, selecting `SystemClock`, then selecting the `Config` tab at the top.
-   
-6. The clock will appear in-game and can be dragged wherever you like.
+
+7. The clock will appear in-game and can be dragged wherever you like.
 
 
 ## Contribute
