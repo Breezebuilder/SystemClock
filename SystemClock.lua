@@ -40,7 +40,7 @@ SystemClock.FONT_SIZES = {
 SystemClock.EXAMPLE_FORMATS = {}
 
 SystemClock.time = ''
-SystemClock.position_initialised = false
+SystemClock.drawOverAll = false
 
 SMODS.load_file('config_tab.lua')()
 SMODS.load_file('MoveableContainer.lua')()
@@ -63,16 +63,35 @@ end
 
 SystemClock.generate_example_time_formats()
 
-SystemClock.Game_update_ref = Game.update
+SystemClock.game_update_ref = Game.update
 function Game:update(dt)
-	SystemClock.Game_update_ref(self, dt)
+	SystemClock.game_update_ref(self, dt)
 	SystemClock.update(dt)
 end
 
-SystemClock.Game_start_run_ref = Game.start_run
+SystemClock.game_start_run_ref = Game.start_run
 function Game:start_run(args)
-	SystemClock.Game_start_run_ref(self, args)
+	SystemClock.game_start_run_ref(self, args)
 	SystemClock.reset_clock_ui()
+end
+
+function SystemClock.set_draw_over_all(state)
+	if SystemClock.drawOverAll ~= state then
+		SystemClock.drawOverAll = state
+		SystemClock.reset_clock_ui()
+	end
+end
+
+SystemClock.g_funcs_exit_mods_ref = G.FUNCS.exit_mods
+function G.FUNCS:exit_mods(e)
+	SystemClock.set_draw_over_all(false)
+	SystemClock.g_funcs_exit_mods_ref(self, e)
+end
+
+SystemClock.g_funcs_mods_button_ref = G.FUNCS.mods_button
+function G.FUNCS:mods_button(e)
+	SystemClock.set_draw_over_all(false)
+	SystemClock.g_funcs_mods_button_ref(self, e)
 end
 
 function SystemClock.update(dt)
@@ -104,14 +123,13 @@ function SystemClock.create_UIBox_clock()
 					align = 'cm',
 					colour = SystemClock.config.clockStyleIndex > 3 and G.C.DYN_UI.BOSS_DARK or G.C.CLEAR,
 					r = 0.1,
-					minw = 1,
+					minw = 0.5,
 					padding = 0.03
 				},
 				nodes = {{
 					n = G.UIT.R,
 					config = {
 						align = 'cm',
-						minh = 0.0
 					},
 					nodes = {}
 				}, {
@@ -125,33 +143,23 @@ function SystemClock.create_UIBox_clock()
 						r = 0.1
 					},
 					nodes = {{
-						n = G.UIT.R,
+						n = G.UIT.O,
 						config = {
-							align = 'cm'
+							align = 'cm',
+							object = DynaText({
+								string = {{
+									ref_table = SystemClock,
+									ref_value = 'time'
+								}},
+								colours = SystemClock.config.clockColour,
+								scale = SystemClock.config.clockTextSize,
+								shadow = (SystemClock.config.clockStyleIndex == 2),
+								pop_in = 0,
+								pop_in_rate = 10,
+								silent = true
+							}),
+							id = 'clock'
 						}
-					}, {
-						n = G.UIT.R,
-						config = {
-							align = 'cm'
-						},
-						nodes = {{
-							n = G.UIT.O,
-							config = {
-								object = DynaText({
-									string = {{
-										ref_table = SystemClock,
-										ref_value = 'time'
-									}},
-									colours = SystemClock.config.clockColour,
-									scale = SystemClock.config.clockTextSize,
-									shadow = (SystemClock.config.clockStyleIndex == 2),
-									pop_in = 0,
-									pop_in_rate = 10,
-									silent = true
-								}),
-								id = 'clock'
-							}
-						}}
 					}}
 				}}
 			}}
@@ -166,12 +174,13 @@ function SystemClock.reset_clock_ui()
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
 		G.HUD_clock = MoveableContainer {
 			config = {
-				align = 'cmi',
+				align = 'cr',
 				offset = {
 					x = 0,
 					y = 0
 				},
-				major = G
+				major = G,
+				instance_type = SystemClock.drawOverAll and 'POPUP'
 			},
 			nodes = {SystemClock.create_UIBox_clock()}
 		}
@@ -221,10 +230,6 @@ G.FUNCS.sysclock_change_clock_size = function(e)
 end
 
 G.FUNCS.sysclock_set_position_x = function(e)
-	if not SystemClock.position_initialised then
-		SystemClock.reset_clock_ui()
-		SystemClock.position_initialised = true
-	end
 	local x = e.ref_table[e.ref_value]
 	if G.HUD_clock then
 		G.HUD_clock.T.x = x
@@ -232,10 +237,6 @@ G.FUNCS.sysclock_set_position_x = function(e)
 end
 
 G.FUNCS.sysclock_set_position_y = function(e)
-	if not SystemClock.position_initialised then
-		SystemClock.reset_clock_ui()
-		SystemClock.position_initialised = true
-	end
 	local y = e.ref_table[e.ref_value]
 	if G.HUD_clock then
 		G.HUD_clock.T.y = y

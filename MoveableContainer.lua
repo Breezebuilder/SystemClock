@@ -18,6 +18,7 @@ function MoveableContainer:init(args)
 
 	UIBox.init(self, args)
 
+	self.layered_parallax = self.role.major and self.role.major.layered_parallax or self.layered_parallax
 	self.states.drag.can = true
 	self.states.hover.can = true
 	self.ambient_tilt = 0.5

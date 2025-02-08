@@ -1,4 +1,6 @@
 SMODS.current_mod.config_tab = function()
+	SystemClock.drawOverAll = true
+	SystemClock.reset_clock_ui()
 	return {
 		n = G.UIT.ROOT,
 		config = {
