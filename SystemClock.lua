@@ -195,7 +195,7 @@ end
 function SystemClock.save_mod_config()
 	local status, err = pcall(SMODS.save_mod_config(mod_instance))
 	if status == false then
-		sendErrorMessage("Failed to perform a manual mod config save.", 'SystemClock')
+		sendErrorMessage("Failed to perform a manual mod config save: "..err, 'SystemClock')
 	end
 end
 
