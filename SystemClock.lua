@@ -96,11 +96,10 @@ end
 
 local g_funcs_change_tab_ref = G.FUNCS.change_tab
 function G.FUNCS.change_tab(e)
-	--print(e)
-    if e and e.id == 'tab_but_SystemClock' then
+    if e and e.config and e.config.id == 'tab_but_'..mod_instance.id then
         SystemClock.set_draw_over_all(false)
     end
-    SystemClock.g_funcs_change_tab_ref(e)
+    g_funcs_change_tab_ref(e)
 end
 
 function SystemClock.update(dt)
