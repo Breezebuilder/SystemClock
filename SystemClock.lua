@@ -65,6 +65,22 @@ end
 
 SystemClock.generate_example_time_formats()
 
+function SystemClock.calculate_max_text_width()
+	local width = 20
+	local format = SystemClock.CLOCK_FORMATS[SystemClock.config.clockTimeFormatIndex][1]
+	for char in format:gmatch(".") do
+		if char == ":" then
+			width = width + 65
+		elseif char == "p" then
+			width = width + 170
+		else
+			width = width + 150
+		end
+	end
+	width = width * SystemClock.config.clockTextSize * 0.003125
+	return width
+end
+
 local game_update_ref = Game.update
 function Game:update(dt)
 	game_update_ref(self, dt)
@@ -148,7 +164,7 @@ function SystemClock.create_UIBox_clock()
 						id = 'clock_right',
 						align = 'cm',
 						padding = 0.03,
-						minw = 1,
+						minw = SystemClock.calculate_max_text_width(),
 						emboss = 0.05,
 						r = 0.1
 					},
