@@ -17,6 +17,9 @@ SMODS.current_mod.description_loc_vars = function(self)
 	}
 end
 
+SMODS.load_file('config_tab.lua')()
+SMODS.load_file('MoveableContainer.lua')()
+
 SystemClock.CLOCK_FORMATS = {
 	{'%I:%M %p', 	true},
 	{'%I:%M', 	 	true},
@@ -41,9 +44,6 @@ SystemClock.EXAMPLE_FORMATS = {}
 
 SystemClock.time = ''
 SystemClock.drawOverAll = false
-
-SMODS.load_file('config_tab.lua')()
-SMODS.load_file('MoveableContainer.lua')()
 
 function SystemClock.format_time(formatIndex, time)
 	local format_string = SystemClock.CLOCK_FORMATS[formatIndex][1] or '%H:%M'
@@ -92,6 +92,15 @@ local g_funcs_mods_button_ref = G.FUNCS.mods_button
 function G.FUNCS.mods_button(e)
 	SystemClock.set_draw_over_all(false)
 	g_funcs_mods_button_ref(e)
+end
+
+local g_funcs_change_tab_ref = G.FUNCS.change_tab
+function G.FUNCS.change_tab(e)
+	--print(e)
+    if e and e.id == 'tab_but_SystemClock' then
+        SystemClock.set_draw_over_all(false)
+    end
+    SystemClock.g_funcs_change_tab_ref(e)
 end
 
 function SystemClock.update(dt)
@@ -202,8 +211,8 @@ function SystemClock.reset_clock_ui()
 end
 
 function SystemClock.save_mod_config()
-	local status, err = pcall(SMODS.save_mod_config, mod_instance)
-	if status == false then
+	local okay, err = pcall(SMODS.save_mod_config, mod_instance)
+	if not okay then
 		sendErrorMessage("Failed to perform a manual mod config save: "..err, 'SystemClock')
 	end
 end
