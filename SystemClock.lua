@@ -17,19 +17,27 @@ SMODS.current_mod.description_loc_vars = function(self)
 	}
 end
 
-SystemClock.CLOCK_FORMATS = {'%I:%M %p', '%I:%M', '%H:%M', '%I:%M:%S %p', '%I:%M:%S', '%H:%M:%S'}
-SystemClock.COLOURS = {G.C.WHITE, G.C.JOKER_GREY, G.C.GREY, G.C.L_BLACK, G.C.BLACK,
-					   G.C.RED, G.C.SECONDARY_SET.Voucher, G.C.ORANGE, G.C.GOLD,
-					   G.C.GREEN, G.C.SECONDARY_SET.Planet, G.C.BLUE, G.C.PERISHABLE, G.C.BOOSTER,
-                       G.C.PURPLE, G.C.SECONDARY_SET.Tarot, G.C.ETERNAL, G.C.EDITION}
-SystemClock.FONT_SIZES = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
-						  1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0}
-SystemClock.EXAMPLE_FORMATS = {}
+SystemClock.CLOCK_FORMATS = {
+	{'%I:%M %p', 	true},
+	{'%I:%M', 	 	true},
+	{'%H:%M', 		false},
+	{'%I:%M:%S %p', true},
+	{'%I:%M:%S', 	true},
+	{'%H:%M:%S', 	false}
+}
 
-local example_time = os.time({year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33})
-for i, format in ipairs(SystemClock.CLOCK_FORMATS) do
-	SystemClock.EXAMPLE_FORMATS[i] = os.date(format, example_time)
-end
+SystemClock.COLOURS = {
+	G.C.WHITE, G.C.JOKER_GREY, G.C.GREY, G.C.L_BLACK, G.C.BLACK,
+	G.C.RED, G.C.SECONDARY_SET.Voucher, G.C.ORANGE, G.C.GOLD,
+	G.C.GREEN, G.C.SECONDARY_SET.Planet, G.C.BLUE, G.C.PERISHABLE, G.C.BOOSTER,
+    G.C.PURPLE, G.C.SECONDARY_SET.Tarot, G.C.ETERNAL, G.C.EDITION
+}
+
+SystemClock.FONT_SIZES = {
+	0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
+	1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0
+}
+SystemClock.EXAMPLE_FORMATS = {}
 
 SystemClock.time = ''
 SystemClock.position_initialised = false
@@ -37,11 +45,23 @@ SystemClock.position_initialised = false
 SMODS.load_file('config_tab.lua')()
 SMODS.load_file('MoveableContainer.lua')()
 
-function SystemClock.format_time(format)
-	local format_string = SystemClock.CLOCK_FORMATS[format] or '%H:%M'
-	local current_time = os.date(format_string)
-	return current_time
+function SystemClock.format_time(formatIndex, time)
+	local format_string = SystemClock.CLOCK_FORMATS[formatIndex][1] or '%H:%M'
+	local formatted_time = os.date(format_string, time)
+	if SystemClock.CLOCK_FORMATS[formatIndex][2] then
+		formatted_time = formatted_time:gsub("^0", "")
+	end
+	return formatted_time
 end
+
+function SystemClock.generate_example_time_formats()
+	local example_time = os.time({year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33})
+	for i, format in ipairs(SystemClock.CLOCK_FORMATS) do
+		SystemClock.EXAMPLE_FORMATS[i] = SystemClock.format_time(i, example_time)
+	end
+end
+
+SystemClock.generate_example_time_formats()
 
 SystemClock.Game_update_ref = Game.update
 function Game:update(dt)
@@ -206,7 +226,6 @@ G.FUNCS.sysclock_set_position_x = function(e)
 		SystemClock.position_initialised = true
 	end
 	local x = e.ref_table[e.ref_value]
-	--SystemClock.config.clockX = x
 	if G.HUD_clock then
 		G.HUD_clock.T.x = x
 	end
@@ -218,7 +237,6 @@ G.FUNCS.sysclock_set_position_y = function(e)
 		SystemClock.position_initialised = true
 	end
 	local y = e.ref_table[e.ref_value]
-	--SystemClock.config.clockY = y
 	if G.HUD_clock then
 		G.HUD_clock.T.y = y
 	end
