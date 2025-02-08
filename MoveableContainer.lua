@@ -7,7 +7,7 @@ function MoveableContainer:init(args)
 	args.definition = {
 		n = G.UIT.ROOT,
 		config = {
-			align = 'tr',
+			align = 'tm',
 			colour = G.C.CLEAR
 		},
 		nodes = {{

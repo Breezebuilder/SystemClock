@@ -40,15 +40,17 @@ SystemClock.FONT_SIZES = {
 	0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
 	1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0
 }
-SystemClock.EXAMPLE_FORMATS = {}
+SystemClock.FORMAT_EXAMPLES = {}
 
 SystemClock.time = ''
-SystemClock.drawOverAll = false
+SystemClock.drawAsPopup = false
 
-function SystemClock.format_time(formatIndex, time)
-	local format_string = SystemClock.CLOCK_FORMATS[formatIndex][1] or '%H:%M'
-	local formatted_time = os.date(format_string, time)
-	if SystemClock.CLOCK_FORMATS[formatIndex][2] then
+function SystemClock.get_formatted_time(format, time)
+	if not format then
+		format = SystemClock.CLOCK_FORMATS[SystemClock.config.clockTimeFormatIndex]
+	end
+	local formatted_time = os.date(format[1], time)
+	if format[2] then
 		formatted_time = formatted_time:gsub("^0", "")
 	end
 	return formatted_time
@@ -57,7 +59,7 @@ end
 function SystemClock.generate_example_time_formats()
 	local example_time = os.time({year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33})
 	for i, format in ipairs(SystemClock.CLOCK_FORMATS) do
-		SystemClock.EXAMPLE_FORMATS[i] = SystemClock.format_time(i, example_time)
+		SystemClock.FORMAT_EXAMPLES[i] = SystemClock.get_formatted_time(format, example_time)
 	end
 end
 
@@ -75,36 +77,36 @@ function Game:start_run(args)
 	SystemClock.reset_clock_ui()
 end
 
-function SystemClock.set_draw_over_all(state)
-	if SystemClock.drawOverAll ~= state then
-		SystemClock.drawOverAll = state
-		SystemClock.reset_clock_ui()
-	end
-end
-
 local g_funcs_exit_mods_ref = G.FUNCS.exit_mods
 function G.FUNCS.exit_mods(e)
-	SystemClock.set_draw_over_all(false)
+	SystemClock.set_draw_as_popup(false)
 	g_funcs_exit_mods_ref(e)
 end
 
 local g_funcs_mods_button_ref = G.FUNCS.mods_button
 function G.FUNCS.mods_button(e)
-	SystemClock.set_draw_over_all(false)
+	SystemClock.set_draw_as_popup(false)
 	g_funcs_mods_button_ref(e)
 end
 
 local g_funcs_change_tab_ref = G.FUNCS.change_tab
 function G.FUNCS.change_tab(e)
     if e and e.config and e.config.id == 'tab_but_'..mod_instance.id then
-        SystemClock.set_draw_over_all(false)
+        SystemClock.set_draw_as_popup(false)
     end
     g_funcs_change_tab_ref(e)
 end
 
 function SystemClock.update(dt)
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
-		SystemClock.time = SystemClock.format_time(SystemClock.config.clockTimeFormatIndex)
+		SystemClock.time = SystemClock.get_formatted_time()
+	end
+end
+
+function SystemClock.set_draw_as_popup(state)
+	if SystemClock.drawAsPopup ~= state then
+		SystemClock.drawAsPopup = state
+		SystemClock.reset_clock_ui()
 	end
 end
 
@@ -182,13 +184,13 @@ function SystemClock.reset_clock_ui()
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
 		G.HUD_clock = MoveableContainer {
 			config = {
-				align = 'cr',
+				align = 'cm',
 				offset = {
 					x = 0,
 					y = 0
 				},
 				major = G,
-				instance_type = SystemClock.drawOverAll and 'POPUP'
+				instance_type = SystemClock.drawAsPopup and 'POPUP'
 			},
 			nodes = {SystemClock.create_UIBox_clock()}
 		}
@@ -218,6 +220,7 @@ end
 
 G.FUNCS.sysclock_change_clock_time_format = function(e)
 	SystemClock.config.clockTimeFormatIndex = e.to_key
+	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_style = function(e)

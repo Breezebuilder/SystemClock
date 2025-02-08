@@ -1,5 +1,5 @@
 SMODS.current_mod.config_tab = function()
-	SystemClock.drawOverAll = true
+	SystemClock.drawAsPopup = true
 	SystemClock.reset_clock_ui()
 	return {
 		n = G.UIT.ROOT,
@@ -37,7 +37,7 @@ SMODS.current_mod.config_tab = function()
 					label = localize('sysclock_time_format_setting'),
 					scale = 0.8,
 					w = 4.5,
-					options = SystemClock.EXAMPLE_FORMATS,
+					options = SystemClock.FORMAT_EXAMPLES,
 					current_option = SystemClock.config.clockTimeFormatIndex,
 					opt_callback = 'sysclock_change_clock_time_format'
 				}), create_option_cycle({
@@ -68,8 +68,8 @@ SMODS.current_mod.config_tab = function()
 					ref_table = SystemClock.config,
 					ref_value = 'clockX',
 					w = 4.5,
-					min = -3,
-					max = 21,
+					min = -4,
+					max = 22,
 					step = 0.01,
 					decimal_places = 2,
 					callback = 'sysclock_set_position_x'
@@ -80,8 +80,8 @@ SMODS.current_mod.config_tab = function()
 					ref_table = SystemClock.config,
 					ref_value = 'clockY',
 					w = 4.5,
-					min = -2,
-					max = 12,
+					min = -3,
+					max = 13,
 					step = 0.01,
 					decimal_places = 2,
 					callback = 'sysclock_set_position_y'
