@@ -95,20 +95,20 @@ end
 
 local g_funcs_exit_mods_ref = G.FUNCS.exit_mods
 function G.FUNCS.exit_mods(e)
-	SystemClock.set_draw_as_popup(false)
+	SystemClock.set_popup(false)
 	g_funcs_exit_mods_ref(e)
 end
 
 local g_funcs_mods_button_ref = G.FUNCS.mods_button
 function G.FUNCS.mods_button(e)
-	SystemClock.set_draw_as_popup(false)
+	SystemClock.set_popup(false)
 	g_funcs_mods_button_ref(e)
 end
 
 local g_funcs_change_tab_ref = G.FUNCS.change_tab
 function G.FUNCS.change_tab(e)
     if e and e.config and e.config.id == 'tab_but_'..mod_instance.id then
-        SystemClock.set_draw_as_popup(false)
+        SystemClock.set_popup(false)
     end
     g_funcs_change_tab_ref(e)
 end
@@ -119,7 +119,7 @@ function SystemClock.update(dt)
 	end
 end
 
-function SystemClock.set_draw_as_popup(state)
+function SystemClock.set_popup(state)
 	if SystemClock.drawAsPopup ~= state then
 		SystemClock.drawAsPopup = state
 		SystemClock.reset_clock_ui()
