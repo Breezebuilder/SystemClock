@@ -63,15 +63,15 @@ end
 
 SystemClock.generate_example_time_formats()
 
-SystemClock.game_update_ref = Game.update
+local game_update_ref = Game.update
 function Game:update(dt)
-	SystemClock.game_update_ref(self, dt)
+	game_update_ref(self, dt)
 	SystemClock.update(dt)
 end
 
-SystemClock.game_start_run_ref = Game.start_run
+local game_start_run_ref = Game.start_run
 function Game:start_run(args)
-	SystemClock.game_start_run_ref(self, args)
+	game_start_run_ref(self, args)
 	SystemClock.reset_clock_ui()
 end
 
@@ -82,16 +82,16 @@ function SystemClock.set_draw_over_all(state)
 	end
 end
 
-SystemClock.g_funcs_exit_mods_ref = G.FUNCS.exit_mods
-function G.FUNCS:exit_mods(e)
+local g_funcs_exit_mods_ref = G.FUNCS.exit_mods
+function G.FUNCS.exit_mods(e)
 	SystemClock.set_draw_over_all(false)
-	SystemClock.g_funcs_exit_mods_ref(self, e)
+	g_funcs_exit_mods_ref(e)
 end
 
-SystemClock.g_funcs_mods_button_ref = G.FUNCS.mods_button
-function G.FUNCS:mods_button(e)
+local g_funcs_mods_button_ref = G.FUNCS.mods_button
+function G.FUNCS.mods_button(e)
 	SystemClock.set_draw_over_all(false)
-	SystemClock.g_funcs_mods_button_ref(self, e)
+	g_funcs_mods_button_ref(e)
 end
 
 function SystemClock.update(dt)
@@ -202,7 +202,7 @@ function SystemClock.reset_clock_ui()
 end
 
 function SystemClock.save_mod_config()
-	local status, err = pcall(SMODS.save_mod_config(mod_instance))
+	local status, err = pcall(SMODS.save_mod_config, mod_instance)
 	if status == false then
 		sendErrorMessage("Failed to perform a manual mod config save: "..err, 'SystemClock')
 	end
