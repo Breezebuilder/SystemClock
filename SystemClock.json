@@ -3,7 +3,7 @@
   "name": "SystemClock",
   "prefix": "sysclock",
   "author": ["Breezebuilder"],
-  "description": "Shows the local time in-game. Don't fall into the Black Hole of time.",
+  "description": "Shows the local time in-game. Don't fall into the Black Hole.",
   "priority": 100000,
   "main_file": "SystemClock.lua",
   "badge_colour": "638fe1",
