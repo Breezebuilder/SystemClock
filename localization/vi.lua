@@ -2,8 +2,10 @@ return {
 	['descriptions'] = {
 		['Mod'] = {
 			['SystemClock'] = {
-				name = 'Đồng Hồ Hệ Thống',
+				name = 'SystemClock',
 				text = {
+					"{C:red}Đồng{C:gold}Hồ{C:red}Hệ{C:gold}Thống{}",
+					" ",
 					"{C:white}Xem giờ hiện tại trực tiếp trong game.{}",
 					" ",
 					" ",
@@ -12,9 +14,7 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
-					" ",
-					" ",
+					"{C:green}Bản dịch của {C:gold}HuayTheLocFixer{}",
 					" ",
             		"Đừng để rơi vào {C:purple,E:1}Hố Đen{} nhé."
 				}
@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_name'] = "Đồng Hồ Hệ Thống",
 			['sysclock_visibility_setting'] = "Hiện đồng hồ",
 			['sysclock_draggable_setting'] = "Cho phép kéo thả",
 			['sysclock_time_format_setting'] = "Định dạng thời gian",
@@ -51,10 +52,10 @@ return {
 				"Vàng",
 				"Vàng óng",
 				"Lục",
-				"Lục Lam",
+				"Lục lam",
 				"Lam",
-				"Lam Đậm",
-				"Lam Tím",
+				"Lam đậm",
+				"Lam tím",
 				"Tím",
 				"Tím oải hương",
 				"Hồng",
