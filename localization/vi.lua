@@ -28,6 +28,8 @@ return {
 			['sysclock_time_format_setting'] = "Định dạng thời gian",
 			['sysclock_style_setting'] = "Kiểu",
 			['sysclock_colour_setting'] = "Màu",
+			['sysclock_text_colour_setting'] = "Màu chữ",
+			['sysclock_back_colour_setting'] = "Màu nền",
 			['sysclock_size_setting'] = "Kích thước",
 			['sysclock_x_position_setting'] = "Vị trí X",
 			['sysclock_y_position_setting'] = "Vị trí Y",
@@ -57,7 +59,8 @@ return {
 				"Tím oải hương",
 				"Hồng",
 				"Cầu vồng",
-				"Năng động"
+				"Năng động",
+				"Tối năng động"
 			}
 		}
 	}

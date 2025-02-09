@@ -34,7 +34,7 @@ SystemClock.COLOURS = {
 	G.C.RED, G.C.SECONDARY_SET.Voucher, G.C.ORANGE, G.C.GOLD,
 	G.C.GREEN, G.C.SECONDARY_SET.Planet, G.C.BLUE, G.C.PERISHABLE, G.C.BOOSTER,
     G.C.PURPLE, G.C.SECONDARY_SET.Tarot, G.C.ETERNAL, G.C.EDITION,
-	G.C.DYN_UI.MAIN
+	G.C.DYN_UI.MAIN, G.C.DYN_UI.DARK
 }
 
 SystemClock.FONT_SIZES = {
@@ -53,7 +53,7 @@ function SystemClock.get_formatted_time(format, time, forceLeadingZero)
 	end
 	local formatted_time = os.date(format[1], time)
 	if not forceLeadingZero and format[2] then
-		formatted_time = formatted_time:gsub("^0", "")
+		formatted_time = tostring(formatted_time):gsub("^0", "")
 	end
 	return formatted_time
 end
@@ -74,7 +74,7 @@ function SystemClock.calculate_max_text_width(formatIndex)
 	local format = SystemClock.CLOCK_FORMATS[formatIndex]
 	local string = SystemClock.get_formatted_time(format, SystemClock.exampleTime, true)
 	for _, c in utf8.chars(string) do
-		local dx = font.FONT:getWidth(c)*textSize*G.TILESCALE*font.FONTSCALE + 3*G.TILESCALE*font.FONTSCALE
+		local dx = font.FONT:getWidth(c) * textSize * G.TILESCALE * font.FONTSCALE + 3 * G.TILESCALE * font.FONTSCALE
 		dx = dx / (G.TILESIZE*G.TILESCALE)
 		width = width + dx
 	end
@@ -118,7 +118,7 @@ function G.FUNCS.set_Trance_font(...)
 	if g_funcs_set_Trance_font then
 		local ret = {g_funcs_set_Trance_font(...)}
 		SystemClock.reset_clock_ui()
-		return unpack(ret)
+		return table.unpack(ret)
 	end
 end
 
@@ -135,17 +135,24 @@ function SystemClock.set_popup(state)
 	end
 end
 
-function SystemClock.create_UIBox_clock(styleIndex, colour, textSize)
+function SystemClock.create_UIBox_clock(styleIndex, textSize, textColour, backColour)
 	styleIndex = styleIndex or 2
-	colour = colour or G.C.WHITE
 	textSize = textSize or 1
+	textColour = textColour or G.C.WHITE
+	backColour = backColour or G.C.BLACK
+
+	local translucentColour = (styleIndex == 3 or styleIndex == 4) and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR
+	local panelOuterColour = (styleIndex == 4) and backColour or G.C.CLEAR
+	local panelInnerColour = (styleIndex == 4) and G.C.DYN_UI.BOSS_DARK or (styleIndex == 5) and backColour or G.C.CLEAR
+	local embossAmount = (styleIndex == 5) and 0.05 or 0
+	local innerWidth = SystemClock.calculate_max_text_width()
 
 	return {
 		n = G.UIT.ROOT,
 		config = {
 			align = 'cm',
 			padding = 0.03,
-			colour = (styleIndex == 3 or styleIndex == 4) and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR,
+			colour = translucentColour,
 			r = 0.1
 		},
 		nodes = {{
@@ -153,15 +160,15 @@ function SystemClock.create_UIBox_clock(styleIndex, colour, textSize)
 			config = {
 				align = 'cm',
 				padding = 0.05,
-				colour = styleIndex == 4 and G.C.DYN_UI.MAIN or G.C.CLEAR,
+				colour = panelOuterColour,
 				r = 0.1
 			},
 			nodes = {{
-				n = G.UIT.R,
+				n = G.UIT.C,
 				config = {
 					align = 'cm',
-					colour = styleIndex == 4 and G.C.DYN_UI.BOSS_DARK or styleIndex == 5 and G.C.L_BLACK or G.C.CLEAR,
-					emboss = styleIndex == 5 and 0.05 or 0,
+					colour = panelInnerColour,
+					emboss = embossAmount,
 					r = 0.1,
 					minw = 0.5,
 					padding = 0.03
@@ -170,35 +177,27 @@ function SystemClock.create_UIBox_clock(styleIndex, colour, textSize)
 					n = G.UIT.R,
 					config = {
 						align = 'cm',
-					},
-					nodes = {}
-				}, {
-					n = G.UIT.R,
-					config = {
-						id = 'clock_right',
-						align = 'cm',
 						padding = 0.03,
-						minw = SystemClock.calculate_max_text_width(),
-						emboss = 0.05,
+						minw = innerWidth,
 						r = 0.1
 					},
 					nodes = {{
 						n = G.UIT.O,
 						config = {
-							align = 'cm',
+							align = 'cm', 
+							id = 'clock_text',
 							object = DynaText({
 								string = {{
 									ref_table = SystemClock,
 									ref_value = 'time'
 								}},
-								colours = colour,
+								colours = {textColour},
 								scale = textSize,
-								shadow = (styleIndex == 2),
+								shadow = (styleIndex > 1),
 								pop_in = 0,
 								pop_in_rate = 10,
 								silent = true
-							}),
-							id = 'clock'
+							})
 						}
 					}}
 				}}
@@ -225,8 +224,9 @@ function SystemClock.reset_clock_ui()
 			nodes = {
 				SystemClock.create_UIBox_clock(
 					SystemClock.config.clockStyleIndex,
+					SystemClock.config.clockTextSize,
 					SystemClock.config.clockColour,
-					SystemClock.config.clockTextSize
+					SystemClock.config.clockBackColour
 				)
 			}
 		}
@@ -266,7 +266,13 @@ end
 
 G.FUNCS.sysclock_change_clock_colour = function(e)
 	SystemClock.config.clockColourIndex = e.to_key
-	SystemClock.config.clockColour = {SystemClock.COLOURS[e.to_key]}
+	SystemClock.config.clockColour = SystemClock.COLOURS[e.to_key]
+	SystemClock.reset_clock_ui()
+end
+
+G.FUNCS.sysclock_change_clock_back_colour = function(e)
+	SystemClock.config.clockBackColourIndex = e.to_key
+	SystemClock.config.clockBackColour = SystemClock.COLOURS[e.to_key]
 	SystemClock.reset_clock_ui()
 end
 

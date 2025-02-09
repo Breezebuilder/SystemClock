@@ -27,7 +27,9 @@ return {
 			['sysclock_draggable_setting'] = "Allow dragging",
 			['sysclock_time_format_setting'] = "Time format",
 			['sysclock_style_setting'] = "Style",
-			['sysclock_colour_setting'] = "Color",
+			['sysclock_colour_setting'] = "Colour",
+			['sysclock_text_colour_setting'] = "Text colour",
+			['sysclock_back_colour_setting'] = "Back colour",
 			['sysclock_size_setting'] = "Size",
 			['sysclock_x_position_setting'] = "X position",
 			['sysclock_y_position_setting'] = "Y position",
@@ -57,7 +59,8 @@ return {
 				"Lavender",
 				"Pink",
 				"Rainbow",
-				"Dynamic"
+				"Dynamic",
+				"Dynamic dark"
 			}
 		}
 	}
