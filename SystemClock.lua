@@ -291,7 +291,7 @@ G.FUNCS.sysclock_change_clock_style = function(e)
 	SystemClock.reset_clock_ui()
 end
 
-G.FUNCS.sysclock_change_clock_colour = function(e)
+G.FUNCS.sysclock_change_clock_text_colour = function(e)
 	SystemClock.config.clockTextColourIndex = e.to_key
 	SystemClock.config.clockTextColourRef = SystemClock.COLOUR_REFS[e.to_key]
 	SystemClock.reset_clock_ui()
