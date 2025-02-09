@@ -29,12 +29,12 @@ SystemClock.CLOCK_FORMATS = {
 	{'%H:%M:%S', 	false}
 }
 
-SystemClock.COLOURS = {
-	G.C.WHITE, G.C.JOKER_GREY, G.C.GREY, G.C.L_BLACK, G.C.BLACK,
-	G.C.RED, G.C.SECONDARY_SET.Voucher, G.C.ORANGE, G.C.GOLD,
-	G.C.GREEN, G.C.SECONDARY_SET.Planet, G.C.BLUE, G.C.PERISHABLE, G.C.BOOSTER,
-    G.C.PURPLE, G.C.SECONDARY_SET.Tarot, G.C.ETERNAL, G.C.EDITION,
-	G.C.DYN_UI.MAIN, G.C.DYN_UI.DARK
+SystemClock.COLOUR_REFS = {
+	'WHITE', 'JOKER_GREY', 'GREY', 'L_BLACK', 'BLACK',
+	'RED', 'SECONDARY_SET.Voucher', 'ORANGE', 'GOLD',
+	'GREEN', 'SECONDARY_SET.Planet', 'BLUE', 'PERISHABLE', 'BOOSTER',
+	'PURPLE', 'SECONDARY_SET.Tarot', 'ETERNAL', 'EDITION',
+	'DYN_UI.MAIN', 'DYN_UI.DARK'
 }
 
 SystemClock.FONT_SIZES = {
@@ -225,8 +225,8 @@ function SystemClock.reset_clock_ui()
 				SystemClock.create_UIBox_clock(
 					SystemClock.config.clockStyleIndex,
 					SystemClock.config.clockTextSize,
-					SystemClock.config.clockColour,
-					SystemClock.config.clockBackColour
+					SystemClock.get_colour_from_ref(SystemClock.config.clockColourRef),
+					SystemClock.get_colour_from_ref(SystemClock.config.clockBackColourRef)
 				)
 			}
 		}
@@ -254,6 +254,21 @@ function SystemClock.save_mod_config()
 	end
 end
 
+function SystemClock.get_colour_from_ref(ref)
+	if not ref then return nil end
+
+	local depth = 0
+	local colour = G.C
+	for objName in ref:gmatch("[^%.]+") do
+		colour = colour[objName]
+		depth = depth + 1
+		if depth > 2 or not colour then
+			return nil
+		end
+	end
+	return type(colour) == 'table' and colour
+end
+
 G.FUNCS.sysclock_change_clock_time_format = function(e)
 	SystemClock.config.clockTimeFormatIndex = e.to_key
 	SystemClock.reset_clock_ui()
@@ -266,13 +281,13 @@ end
 
 G.FUNCS.sysclock_change_clock_colour = function(e)
 	SystemClock.config.clockColourIndex = e.to_key
-	SystemClock.config.clockColour = SystemClock.COLOURS[e.to_key]
+	SystemClock.config.clockColourRef = SystemClock.COLOUR_REFS[e.to_key]
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_back_colour = function(e)
 	SystemClock.config.clockBackColourIndex = e.to_key
-	SystemClock.config.clockBackColour = SystemClock.COLOURS[e.to_key]
+	SystemClock.config.clockBackColourRef = SystemClock.COLOUR_REFS[e.to_key]
 	SystemClock.reset_clock_ui()
 end
 
