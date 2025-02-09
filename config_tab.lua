@@ -1,5 +1,6 @@
 SMODS.current_mod.config_tab = function()
 	SystemClock.drawAsPopup = true
+	SystemClock.update_config_version()
 	SystemClock.reset_clock_ui()
 	return {
 		n = G.UIT.ROOT,
@@ -160,8 +161,8 @@ SMODS.current_mod.config_tab = function()
 								scale = 0.8,
 								w = 4.5,
 								options = localize('sysclock_colours'),
-								current_option = SystemClock.config.clockColourIndex,
-								opt_callback = 'sysclock_change_clock_colour',
+								current_option = SystemClock.config.clockTextColourIndex,
+								opt_callback = 'sysclock_change_clock_text_colour',
 								colour = G.C.BLUE
 							})
 						}

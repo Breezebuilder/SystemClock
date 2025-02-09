@@ -90,6 +90,7 @@ end
 local game_start_run_ref = Game.start_run
 function Game:start_run(args)
 	game_start_run_ref(self, args)
+	SystemClock.update_config_version()
 	SystemClock.reset_clock_ui()
 end
 
@@ -225,7 +226,7 @@ function SystemClock.reset_clock_ui()
 				SystemClock.create_UIBox_clock(
 					SystemClock.config.clockStyleIndex,
 					SystemClock.config.clockTextSize,
-					SystemClock.get_colour_from_ref(SystemClock.config.clockColourRef),
+					SystemClock.get_colour_from_ref(SystemClock.config.clockTextColourRef),
 					SystemClock.get_colour_from_ref(SystemClock.config.clockBackColourRef)
 				)
 			}
@@ -251,6 +252,17 @@ function SystemClock.save_mod_config()
 	local okay, err = pcall(SMODS.save_mod_config, mod_instance)
 	if not okay then
 		sendErrorMessage("Failed to perform a manual mod config save: "..err, 'SystemClock')
+	end
+end
+
+function SystemClock.update_config_version()
+	if SystemClock.config.clockColourIndex then
+		sendInfoMessage("Transferring v1 config settings", 'SystemClock')
+		SystemClock.config.clockTextColourRef = SystemClock.COLOUR_REFS[SystemClock.config.clockColourIndex]
+		SystemClock.config.clockTextColourIndex = SystemClock.config.clockColourIndex
+		SystemClock.config.clockColourIndex = nil
+		SystemClock.config.clockColour = nil
+		SystemClock.save_mod_config()
 	end
 end
 
@@ -280,8 +292,8 @@ G.FUNCS.sysclock_change_clock_style = function(e)
 end
 
 G.FUNCS.sysclock_change_clock_colour = function(e)
-	SystemClock.config.clockColourIndex = e.to_key
-	SystemClock.config.clockColourRef = SystemClock.COLOUR_REFS[e.to_key]
+	SystemClock.config.clockTextColourIndex = e.to_key
+	SystemClock.config.clockTextColourRef = SystemClock.COLOUR_REFS[e.to_key]
 	SystemClock.reset_clock_ui()
 end
 
