@@ -113,6 +113,15 @@ function G.FUNCS.change_tab(e)
     g_funcs_change_tab_ref(e)
 end
 
+local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
+function G.FUNCS.set_Trance_font(...)
+	if g_funcs_set_Trance_font then
+		local ret = {g_funcs_set_Trance_font(...)}
+		SystemClock.reset_clock_ui()
+		return unpack(ret)
+	end
+end
+
 function SystemClock.update(dt)
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
 		SystemClock.time = SystemClock.get_formatted_time()
