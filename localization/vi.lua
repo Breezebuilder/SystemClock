@@ -35,7 +35,8 @@ return {
 				"Đơn giản",
 				"Dổ bóng",
 				"Trong suốt",
-				"Thêm viền"
+				"Thêm viền",
+				"Dập nổi"
 			},
 			['sysclock_colours'] = {
 				"Trắng",
@@ -55,7 +56,8 @@ return {
 				"Tím",
 				"Tím oải hương",
 				"Hồng",
-				"Cầu vồng"
+				"Cầu vồng",
+				"Năng động"
 			}
 		}
 	}

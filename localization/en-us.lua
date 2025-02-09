@@ -35,7 +35,8 @@ return {
 				"Simple",
 				"Shadow",
 				"Translucent",
-				"Panel"
+				"Panel",
+				"Embossed"
 			},
 			['sysclock_colours'] = {
 				"White",
@@ -55,7 +56,8 @@ return {
 				"Purple",
 				"Lavender",
 				"Pink",
-				"Rainbow"
+				"Rainbow",
+				"Dynamic"
 			}
 		}
 	}

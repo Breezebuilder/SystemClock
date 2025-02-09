@@ -33,7 +33,8 @@ SystemClock.COLOURS = {
 	G.C.WHITE, G.C.JOKER_GREY, G.C.GREY, G.C.L_BLACK, G.C.BLACK,
 	G.C.RED, G.C.SECONDARY_SET.Voucher, G.C.ORANGE, G.C.GOLD,
 	G.C.GREEN, G.C.SECONDARY_SET.Planet, G.C.BLUE, G.C.PERISHABLE, G.C.BOOSTER,
-    G.C.PURPLE, G.C.SECONDARY_SET.Tarot, G.C.ETERNAL, G.C.EDITION
+    G.C.PURPLE, G.C.SECONDARY_SET.Tarot, G.C.ETERNAL, G.C.EDITION,
+	G.C.DYN_UI.MAIN
 }
 
 SystemClock.FONT_SIZES = {
@@ -126,13 +127,17 @@ function SystemClock.set_popup(state)
 	end
 end
 
-function SystemClock.create_UIBox_clock()
+function SystemClock.create_UIBox_clock(styleIndex, colour, textSize)
+	styleIndex = styleIndex or 2
+	colour = colour or G.C.WHITE
+	textSize = textSize or 1
+
 	return {
 		n = G.UIT.ROOT,
 		config = {
 			align = 'cm',
 			padding = 0.03,
-			colour = SystemClock.config.clockStyleIndex > 2 and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR,
+			colour = styleIndex > 2 and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR,
 			r = 0.1
 		},
 		nodes = {{
@@ -140,14 +145,15 @@ function SystemClock.create_UIBox_clock()
 			config = {
 				align = 'cm',
 				padding = 0.05,
-				colour = SystemClock.config.clockStyleIndex > 3 and G.C.DYN_UI.MAIN or G.C.CLEAR,
+				colour = styleIndex == 4 and G.C.DYN_UI.MAIN or G.C.CLEAR,
 				r = 0.1
 			},
 			nodes = {{
 				n = G.UIT.R,
 				config = {
 					align = 'cm',
-					colour = SystemClock.config.clockStyleIndex > 3 and G.C.DYN_UI.BOSS_DARK or G.C.CLEAR,
+					colour = styleIndex == 4 and G.C.DYN_UI.BOSS_DARK or styleIndex == 5 and G.C.L_BLACK or G.C.CLEAR,
+					emboss = styleIndex == 5 and 0.05 or 0,
 					r = 0.1,
 					minw = 0.5,
 					padding = 0.03
@@ -177,9 +183,9 @@ function SystemClock.create_UIBox_clock()
 									ref_table = SystemClock,
 									ref_value = 'time'
 								}},
-								colours = SystemClock.config.clockColour,
-								scale = SystemClock.config.clockTextSize,
-								shadow = (SystemClock.config.clockStyleIndex == 2),
+								colours = colour,
+								scale = textSize,
+								shadow = (styleIndex == 2),
 								pop_in = 0,
 								pop_in_rate = 10,
 								silent = true
@@ -208,7 +214,13 @@ function SystemClock.reset_clock_ui()
 				major = G,
 				instance_type = SystemClock.drawAsPopup and 'POPUP'
 			},
-			nodes = {SystemClock.create_UIBox_clock()}
+			nodes = {
+				SystemClock.create_UIBox_clock(
+					SystemClock.config.clockStyleIndex,
+					SystemClock.config.clockColour,
+					SystemClock.config.clockTextSize
+				)
+			}
 		}
 		G.HUD_clock.states.drag.can = SystemClock.config.clockAllowDrag
 		G.HUD_clock.T.x = SystemClock.config.clockX
