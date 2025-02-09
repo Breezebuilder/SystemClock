@@ -44,41 +44,40 @@ SystemClock.FONT_SIZES = {
 SystemClock.FORMAT_EXAMPLES = {}
 
 SystemClock.time = ''
+SystemClock.exampleTime = os.time({year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33})
 SystemClock.drawAsPopup = false
 
-function SystemClock.get_formatted_time(format, time)
+function SystemClock.get_formatted_time(format, time, forceLeadingZero)
 	if not format then
 		format = SystemClock.CLOCK_FORMATS[SystemClock.config.clockTimeFormatIndex]
 	end
 	local formatted_time = os.date(format[1], time)
-	if format[2] then
+	if not forceLeadingZero and format[2] then
 		formatted_time = formatted_time:gsub("^0", "")
 	end
 	return formatted_time
 end
 
 function SystemClock.generate_example_time_formats()
-	local example_time = os.time({year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33})
 	for i, format in ipairs(SystemClock.CLOCK_FORMATS) do
-		SystemClock.FORMAT_EXAMPLES[i] = SystemClock.get_formatted_time(format, example_time)
+		SystemClock.FORMAT_EXAMPLES[i] = SystemClock.get_formatted_time(format, SystemClock.exampleTime)
 	end
 end
 
 SystemClock.generate_example_time_formats()
 
-function SystemClock.calculate_max_text_width()
-	local width = 20
-	local format = SystemClock.CLOCK_FORMATS[SystemClock.config.clockTimeFormatIndex][1]
-	for char in format:gmatch(".") do
-		if char == ":" then
-			width = width + 65
-		elseif char == "p" then
-			width = width + 170
-		else
-			width = width + 150
-		end
+function SystemClock.calculate_max_text_width(formatIndex)
+	formatIndex = formatIndex or SystemClock.config.clockTimeFormatIndex
+	local font = G.LANG.font
+	local textSize = SystemClock.config.clockTextSize
+	local width = 0
+	local format = SystemClock.CLOCK_FORMATS[formatIndex]
+	local string = SystemClock.get_formatted_time(format, SystemClock.exampleTime, true)
+	for _, c in utf8.chars(string) do
+		local dx = font.FONT:getWidth(c)*textSize*G.TILESCALE*font.FONTSCALE + 3*G.TILESCALE*font.FONTSCALE
+		dx = dx / (G.TILESIZE*G.TILESCALE)
+		width = width + dx
 	end
-	width = width * SystemClock.config.clockTextSize * 0.003125
 	return width
 end
 
