@@ -137,7 +137,7 @@ function SystemClock.create_UIBox_clock(styleIndex, colour, textSize)
 		config = {
 			align = 'cm',
 			padding = 0.03,
-			colour = styleIndex > 2 and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR,
+			colour = (styleIndex == 3 or styleIndex == 4) and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR,
 			r = 0.1
 		},
 		nodes = {{
