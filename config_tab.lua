@@ -96,11 +96,11 @@ function SystemClock.config_panel()
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = { align = 'tm', minw = 5.5, id = 'sysclock_config_panel_column_left' },
+				config = { align = 'tm', minw = 5.2, id = 'sysclock_config_panel_column_left' },
 				nodes = {
 					{
 						n = G.UIT.R,
-						config = { align = 'cl' },
+						config = { align = 'tl' },
 						nodes = {
 							create_option_cycle({
 								label = localize('sysclock_time_format_setting'),
@@ -110,6 +110,16 @@ function SystemClock.config_panel()
 								current_option = SystemClock.config.clockTimeFormatIndex,
 								opt_callback = 'sysclock_change_clock_time_format'
 							}),
+						}
+					},
+					{
+						n = G.UIT.R,
+						config = { align = 'cl' },
+						nodes = {
+							{
+								n = G.UIT.B,
+								config = { w = 1, h = 1.4 },
+							}
 						}
 					},
 					{
@@ -132,7 +142,7 @@ function SystemClock.config_panel()
 			},
 			{
 				n = G.UIT.C,
-				config = { align = 'tr', minw = 5.5, id = 'sysclock_config_panel_column_right' },
+				config = { align = 'tr', minw = 5.2, id = 'sysclock_config_panel_column_right' },
 				nodes = {
 					{
 						n = G.UIT.R,
@@ -207,7 +217,7 @@ function SystemClock.config_position_sliders()
 		nodes = {
 			{
 				n = G.UIT.R,
-				config = { align = 'tm', padding = 0 },
+				config = { align = 'tm', padding = 0.1 },
 				nodes = {
 					create_slider({
 						label = localize('sysclock_x_position_setting'),
@@ -226,7 +236,7 @@ function SystemClock.config_position_sliders()
 			},
 			{
 				n = G.UIT.R,
-				config = { align = 'bm', padding = 0 },
+				config = { align = 'bm', padding = 0.1 },
 				nodes = {
 					create_slider({
 						label = localize('sysclock_y_position_setting'),
