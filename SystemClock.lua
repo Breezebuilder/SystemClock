@@ -45,14 +45,11 @@ SystemClock.FORMAT_EXAMPLES = {}
 SystemClock.PRESET_OPTIONS = {}
 
 SystemClock.PRESETS = {
-	{ name = '1', format = 1, style = 2, size = 6, colours = {text = 1, back = 19}, pos = {x =  0.80189, y = -0.65535} },
-	{ name = '2', format = 4, style = 5, size = 7, colours = {text = 1, back = 19}, pos = {x =  0.20467, y = -0.68521} },
-	{ name = '3', format = 6, style = 5, size = 4, colours = {text = 1, back = 10}, pos = {x = -0.39255, y = 11.55784} },
-	{ name = '4', format = 1, style = 4, size = 5, colours = {text = 1, back = 19}, pos = {x =  8.92411, y = -0.71507} },
-	{ name = '5', format = 4, style = 1, size = 3, colours = {text = 1, back = 19}, pos = {x = 13.12308, y =  2.50993} },
-	{ name = '6', format = 2, style = 3, size = 5, colours = {text = 1, back = 19}, pos = {x = 19.88314, y =  0.00159} },
-	{ name = '7', format = 4, style = 5, size = 5, colours = {text = 1, back = 08}, pos = {x =  9.68905, y = 11.49812} },
-	{ name = '8', format = 2, style = 1, size = 3, colours = {text = 1, back = 19}, pos = {x = 17.34843, y = 11.39360} },
+	{ name = '1', format = 4, style = 5, size = 7, colours = {text = 1, back = 19}, pos = {x =  0.20467, y = -0.68521} },
+	{ name = '2', format = 6, style = 2, size = 4, colours = {text = 1, back = 10}, pos = {x = -0.39255, y = 11.55784} },
+	{ name = '3', format = 4, style = 1, size = 3, colours = {text = 1, back = 19}, pos = {x = 13.12308, y =  2.50993} },
+	{ name = '4', format = 1, style = 3, size = 5, colours = {text = 1, back = 19}, pos = {x = 17.52411, y =  7.88492} },
+	{ name = '5', format = 2, style = 1, size = 3, colours = {text = 1, back = 19}, pos = {x = 17.34843, y = 11.39360} },
 }
 
 SystemClock.time = ''
