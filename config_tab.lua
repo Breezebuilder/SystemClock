@@ -1,6 +1,5 @@
 SMODS.current_mod.config_tab = function()
 	SystemClock.drawAsPopup = true
-	SystemClock.update_config_version()
 	SystemClock.reset_clock_ui()
 	return {
 		n = G.UIT.ROOT,
@@ -61,7 +60,7 @@ SMODS.current_mod.config_tab = function()
 												text_scale = 0.7,
 												w = 2,
 												h = 0.8,
-												options = SystemClock.PRESET_OPTIONS,
+												options = { "1", "2", "3", "4", "5" },
 												current_option = SystemClock.config.clockPresetIndex,
 												opt_callback = 'sysclock_change_clock_preset',
 												colour = G.C.JOKER_GREY,
@@ -92,7 +91,7 @@ SMODS.current_mod.config_tab = function()
 							id = 'sysclock_config_panel',
 							object = UIBox {
 								config = { align = 'cm', offset = { x = 0, y = 0 } },
-								definition = SystemClock.config_panel()
+								definition = SystemClock.create_UIBox_config_panel()
 							}
 						}
 					}
@@ -102,7 +101,7 @@ SMODS.current_mod.config_tab = function()
 	}
 end
 
-function SystemClock.config_panel()
+function SystemClock.create_UIBox_config_panel()
 	return {
 		n = G.UIT.ROOT,
 		config = { align = 'cm', minw = 10, r = 0.1, emboss = 0.1, colour = G.C.GREY },
@@ -120,7 +119,7 @@ function SystemClock.config_panel()
 								scale = 0.8,
 								w = 4.5,
 								options = SystemClock.FORMAT_EXAMPLES,
-								current_option = SystemClock.config.clockTimeFormatIndex,
+								current_option = SystemClock.indices.format,
 								opt_callback = 'sysclock_change_clock_time_format'
 							}),
 						}
@@ -145,7 +144,7 @@ function SystemClock.config_panel()
 									id = 'sysclock_config_position_sliders',
 									object = UIBox {
 										config = { align = 'cm', offset = { x = 0, y = 0 } },
-										definition = SystemClock.config_position_sliders()
+										definition = SystemClock.create_UIBox_position_sliders()
 									}
 								}
 							}
@@ -165,8 +164,8 @@ function SystemClock.config_panel()
 								label = localize('sysclock_size_setting'),
 								scale = 0.8,
 								w = 4.5,
-								options = SystemClock.FONT_SIZES,
-								current_option = SystemClock.config.clockTextSizeIndex,
+								options = SystemClock.TEXT_SIZES,
+								current_option = SystemClock.indices.size,
 								opt_callback = 'sysclock_change_clock_size',
 								colour = G.C.GREEN
 							})
@@ -181,7 +180,7 @@ function SystemClock.config_panel()
 								scale = 0.8,
 								w = 4.5,
 								options = localize('sysclock_styles'),
-								current_option = SystemClock.config.clockStyleIndex,
+								current_option = SystemClock.indices.style,
 								opt_callback = 'sysclock_change_clock_style',
 								colour = G.C.ORANGE
 							})
@@ -196,7 +195,7 @@ function SystemClock.config_panel()
 								scale = 0.8,
 								w = 4.5,
 								options = localize('sysclock_colours'),
-								current_option = SystemClock.config.clockTextColourIndex,
+								current_option = SystemClock.indices.textColour,
 								opt_callback = 'sysclock_change_clock_text_colour',
 								colour = G.C.BLUE
 							})
@@ -211,7 +210,7 @@ function SystemClock.config_panel()
 								scale = 0.8,
 								w = 4.5,
 								options = localize('sysclock_colours'),
-								current_option = SystemClock.config.clockBackColourIndex,
+								current_option = SystemClock.indices.backColour,
 								opt_callback = 'sysclock_change_clock_back_colour',
 								colour = G.C.BLUE
 							})
@@ -223,7 +222,7 @@ function SystemClock.config_panel()
 	}
 end
 
-function SystemClock.config_position_sliders()
+function SystemClock.create_UIBox_position_sliders()
 	return {
 		n = G.UIT.ROOT,
 		config = { align = 'cm', colour = G.C.CLEAR },
@@ -236,14 +235,14 @@ function SystemClock.config_position_sliders()
 						label = localize('sysclock_x_position_setting'),
 						scale = 0.8,
 						label_scale = 0.8 * 0.5,
-						ref_table = SystemClock.config,
-						ref_value = 'clockX',
+						ref_table = SystemClock.current.position,
+						ref_value = 'x',
 						w = 4,
 						min = -4,
 						max = 22,
 						step = 0.01,
 						decimal_places = 2,
-						callback = 'sysclock_set_position_x'
+						callback = 'sysclock_set_hud_position_x'
 					})
 				}
 			},
@@ -255,14 +254,14 @@ function SystemClock.config_position_sliders()
 						label = localize('sysclock_y_position_setting'),
 						scale = 0.8,
 						label_scale = 0.8 * 0.5,
-						ref_table = SystemClock.config,
-						ref_value = 'clockY',
+						ref_table = SystemClock.current.position,
+						ref_value = 'y',
 						w = 4,
 						min = -3,
 						max = 13,
 						step = 0.01,
 						decimal_places = 2,
-						callback = 'sysclock_set_position_y'
+						callback = 'sysclock_set_hud_position_y'
 					})
 				}
 			}

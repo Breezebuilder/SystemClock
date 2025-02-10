@@ -1,16 +1,73 @@
 return {
-	['clockConfigVersion'] = 2,
+	['clockConfigVersion'] = 3,
 	['clockVisible'] = true,
 	['clockAllowDrag'] = true,
 	['clockPresetIndex'] = 1,
-	['clockTimeFormatIndex'] = 1,
-	['clockStyleIndex'] = 2,
-	['clockTextSize'] = 0.6,
-	['clockTextSizeIndex'] = 6,
-	['clockTextColourIndex'] = 1,
-	['clockTextColourRef'] = 'WHITE',
-	['clockBackColourIndex'] = 19,
-	['clockBackColourRef'] = 'DYN_UI.MAIN',
-	['clockX'] = 0.80189,
-	['clockY'] = -0.65535,
+	['clockPresets'] = {
+		[1] = {
+			['format'] = 4,
+			['style'] = 5,
+			['size'] = 0.7,
+			['colours'] = {
+				['text'] = 'WHITE',
+				['back'] = 'DYN_UI.MAIN'
+			},
+			['position'] = {
+				['x'] = 0.20467,
+				['y'] = -0.68521
+			}
+		},
+		[2] = {
+			['format'] = 6,
+			['style'] = 2,
+			['size'] = 0.4,
+			['colours'] = {
+				['text'] = 'WHITE',
+				['back'] = 'GREEN'
+			},
+			['position'] = {
+				['x'] = -0.39255,
+				['y'] = 11.55784
+			}
+		},
+		[3] = {
+			['format'] = 4,
+			['style'] = 1,
+			['size'] = 0.3,
+			['colours'] = {
+				['text'] = 'WHITE',
+				['back'] = 'DYN_UI.MAIN'
+			},
+			['position'] = {
+				['x'] = 13.12308,
+				['y'] = 2.50993
+			}
+		},
+		[4] = {
+			['format'] = 1,
+			['style'] = 3,
+			['size'] = 0.5,
+			['colours'] = {
+				['text'] = 'WHITE',
+				['back'] = 'DYN_UI.MAIN'
+			},
+			['position'] = {
+				['x'] = 17.52411,
+				['y'] = 7.88492
+			}
+		},
+		[5] = {
+			['format'] = 2,
+			['style'] = 1,
+			['size'] = 0.3,
+			['colours'] = {
+				['text'] = 'WHITE',
+				['back'] = 'DYN_UI.MAIN'
+			},
+			['position'] = {
+				['x'] = 17.34843,
+				['y'] = 11.39360
+			}
+		}
+	}
 }
