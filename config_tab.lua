@@ -14,7 +14,7 @@ SMODS.current_mod.config_tab = function()
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = { align = 'tl', minw = 3, id = 'sysclock_config_sidebar' },
+				config = { align = 'tl', minw = 2, id = 'sysclock_config_sidebar' },
 				nodes = {
 					{
 						n = G.UIT.R,
@@ -29,6 +29,7 @@ SMODS.current_mod.config_tab = function()
 										nodes = {
 											create_toggle({
 												label = localize('sysclock_visibility_setting'),
+												w = 1.5,
 												text_scale = 0.8,
 												ref_table = SystemClock.config,
 												ref_value = 'clockVisible',
@@ -42,6 +43,7 @@ SMODS.current_mod.config_tab = function()
 										nodes = {
 											create_toggle({
 												label = localize('sysclock_draggable_setting'),
+												w = 1.5,
 												text_scale = 0.8,
 												ref_table = SystemClock.config,
 												ref_value = 'clockAllowDrag',
@@ -56,11 +58,13 @@ SMODS.current_mod.config_tab = function()
 											create_option_cycle({
 												label = localize('sysclock_preset_setting'),
 												scale = 0.8,
-												w = 2.5,
+												text_scale = 0.7,
+												w = 2,
+												h = 0.8,
 												options = SystemClock.PRESET_OPTIONS,
 												current_option = SystemClock.config.clockPresetIndex,
 												opt_callback = 'sysclock_change_clock_preset',
-												colour = G.C.GREY
+												colour = G.C.JOKER_GREY,
 											}),
 										}
 									},
@@ -68,6 +72,15 @@ SMODS.current_mod.config_tab = function()
 							}
 						}
 					},
+				}
+			},
+			{
+				n = G.UIT.C,
+				nodes = {
+					{
+						n = G.UIT.B,
+						config = { w = 0.2, h = 1 }
+					}
 				}
 			},
 			{
@@ -92,7 +105,7 @@ end
 function SystemClock.config_panel()
 	return {
 		n = G.UIT.ROOT,
-		config = { align = 'cm', minw = 11, r = 0.1, emboss = 0.1, colour = G.C.GREY },
+		config = { align = 'cm', minw = 10, r = 0.1, emboss = 0.1, colour = G.C.GREY },
 		nodes = {
 			{
 				n = G.UIT.C,
