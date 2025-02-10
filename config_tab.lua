@@ -78,7 +78,7 @@ SMODS.current_mod.config_tab = function()
 						config = {
 							id = 'sysclock_config_panel',
 							object = UIBox {
-								config = {align = 'cm', offset = {x = 0, y = 0}},
+								config = { align = 'cm', offset = { x = 0, y = 0 } },
 								definition = SystemClock.config_panel()
 							}
 						}
@@ -114,48 +114,15 @@ function SystemClock.config_panel()
 					},
 					{
 						n = G.UIT.R,
-						config = { align = 'bl', id = 'sysclock_config_position_sliders' },
+						config = { align = 'bl' },
 						nodes = {
 							{
-								n = G.UIT.C,
-								nodes = {
-									{
-										n = G.UIT.R,
-										config = { align = 'bm', padding = 0 },
-										nodes = {
-											create_slider({
-												label = localize('sysclock_x_position_setting'),
-												scale = 0.8,
-												label_scale = 0.8 * 0.5,
-												ref_table = SystemClock.config,
-												ref_value = 'clockX',
-												w = 4,
-												min = -4,
-												max = 22,
-												step = 0.01,
-												decimal_places = 2,
-												callback = 'sysclock_set_position_x'
-											})
-										}
-									},
-									{
-										n = G.UIT.R,
-										config = { align = 'bm', padding = 0 },
-										nodes = {
-											create_slider({
-												label = localize('sysclock_y_position_setting'),
-												scale = 0.8,
-												label_scale = 0.8 * 0.5,
-												ref_table = SystemClock.config,
-												ref_value = 'clockY',
-												w = 4,
-												min = -3,
-												max = 13,
-												step = 0.01,
-												decimal_places = 2,
-												callback = 'sysclock_set_position_y'
-											})
-										}
+								n = G.UIT.O,
+								config = {
+									id = 'sysclock_config_position_sliders',
+									object = UIBox {
+										config = { align = 'cm', offset = { x = 0, y = 0 } },
+										definition = SystemClock.config_position_sliders()
 									}
 								}
 							}
@@ -227,6 +194,53 @@ function SystemClock.config_panel()
 							})
 						}
 					}
+				}
+			}
+		}
+	}
+end
+
+function SystemClock.config_position_sliders()
+	return {
+		n = G.UIT.ROOT,
+		config = { align = 'cm', colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = 'tm', padding = 0 },
+				nodes = {
+					create_slider({
+						label = localize('sysclock_x_position_setting'),
+						scale = 0.8,
+						label_scale = 0.8 * 0.5,
+						ref_table = SystemClock.config,
+						ref_value = 'clockX',
+						w = 4,
+						min = -4,
+						max = 22,
+						step = 0.01,
+						decimal_places = 2,
+						callback = 'sysclock_set_position_x'
+					})
+				}
+			},
+			{
+				n = G.UIT.R,
+				config = { align = 'bm', padding = 0 },
+				nodes = {
+					create_slider({
+						label = localize('sysclock_y_position_setting'),
+						scale = 0.8,
+						label_scale = 0.8 * 0.5,
+						ref_table = SystemClock.config,
+						ref_value = 'clockY',
+						w = 4,
+						min = -3,
+						max = 13,
+						step = 0.01,
+						decimal_places = 2,
+						callback = 'sysclock_set_position_y'
+					})
 				}
 			}
 		}
