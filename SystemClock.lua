@@ -401,10 +401,15 @@ function SystemClock.update_config_panel()
 	panelContents.config.object:remove()
     panelContents.config.object = UIBox{
         config = {offset = {x = 0, y = 0}, parent = panelContents},
-        definition = SystemClock.config_panel()
-      }
+        definition = SystemClock.config_panel(),
+    }
 	panelContents.UIBox:recalculate()
-	panelContents.UIBox:juice_up(0.05, 0.05)
+	panelContents.config.object:set_role{
+		role_type = 'Major',
+		major = nil
+	}
+
+	panelContents.config.object:juice_up(0.05, 0.02)
 end
 
 function SystemClock.update_config_position_sliders()
