@@ -42,6 +42,51 @@ SystemClock.FONT_SIZES = {
 	1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0
 }
 SystemClock.FORMAT_EXAMPLES = {}
+SystemClock.PRESET_OPTIONS = {}
+
+SystemClock.PRESETS = {
+	{
+		name = '1',
+		format = 1,
+		style = 2,
+		size = 6,
+		colours = {text = 1, back = 19},
+		pos = {x = 0.80189, y = -0.65535}
+	},
+	{
+		name = '2',
+		format = 4,
+		style = 5,
+		size = 7,
+		colours = {text = 1, back = 19},
+		pos = {x = 0.20467, y = -0.68521}
+	},
+	{
+		name = '3',
+		format = 2,
+		style = 3,
+		size = 5,
+		colours = {text = 1, back = 19},
+		pos = {x = 19.88314, y = 0.00159}
+	},
+	{
+		name = '4',
+		format = 1,
+		style = 4,
+		size = 5,
+		colours = {text = 1, back = 19},
+		pos = {x = 17.47932, y = 7.85506}
+	},
+	{
+		name = '5',
+		format = 2,
+		style = 1,
+		size = 3,
+		colours = {text = 1, back = 19},
+		pos = {x = 17.34843, y = 11.393608}
+	},
+	
+}
 
 SystemClock.time = ''
 SystemClock.exampleTime = os.time({year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33})
@@ -49,7 +94,7 @@ SystemClock.drawAsPopup = false
 
 function SystemClock.get_formatted_time(format, time, forceLeadingZero)
 	if not format then
-		format = SystemClock.CLOCK_FORMATS[SystemClock.config.clockTimeFormatIndex]
+		format = SystemClock.get_clock_format()
 	end
 	local formatted_time = os.date(format[1], time)
 	if not forceLeadingZero and format[2] then
@@ -64,14 +109,25 @@ function SystemClock.generate_example_time_formats()
 	end
 end
 
+function SystemClock.generate_preset_options()
+	for i, preset in ipairs(SystemClock.PRESETS) do
+		SystemClock.PRESET_OPTIONS[i] = tostring(preset['name'])
+	end
+end
+
 SystemClock.generate_example_time_formats()
+SystemClock.generate_preset_options()
 
 function SystemClock.calculate_max_text_width(formatIndex)
-	formatIndex = formatIndex or SystemClock.config.clockTimeFormatIndex
+	local format
+	if formatIndex then
+		format = SystemClock.CLOCK_FORMATS[formatIndex]
+	else
+		format = SystemClock.get_clock_format()
+	end
 	local font = G.LANG.font
 	local textSize = SystemClock.config.clockTextSize
 	local width = 0
-	local format = SystemClock.CLOCK_FORMATS[formatIndex]
 	local string = SystemClock.get_formatted_time(format, SystemClock.exampleTime, true)
 	for _, c in utf8.chars(string) do
 		local dx = font.FONT:getWidth(c) * textSize * G.TILESCALE * font.FONTSCALE + 3 * G.TILESCALE * font.FONTSCALE
@@ -136,15 +192,14 @@ function SystemClock.set_popup(state)
 	end
 end
 
-function SystemClock.create_UIBox_clock(styleIndex, textSize, textColour, backColour)
+function SystemClock.create_UIBox_clock(styleIndex, textSize, colours)
 	styleIndex = styleIndex or 2
 	textSize = textSize or 1
-	textColour = textColour or G.C.WHITE
-	backColour = backColour or G.C.BLACK
+	colours = colours or {text = G.C.WHITE, back = G.C.BLACK}
 
 	local translucentColour = (styleIndex == 3 or styleIndex == 4) and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR
-	local panelOuterColour = (styleIndex == 4) and backColour or G.C.CLEAR
-	local panelInnerColour = (styleIndex == 4) and G.C.DYN_UI.BOSS_DARK or (styleIndex == 5) and backColour or G.C.CLEAR
+	local panelOuterColour = (styleIndex == 4) and colours['back'] or G.C.CLEAR
+	local panelInnerColour = (styleIndex == 4) and G.C.DYN_UI.BOSS_DARK or (styleIndex == 5) and colours['back'] or G.C.CLEAR
 	local embossAmount = (styleIndex == 5) and 0.05 or 0
 	local innerWidth = SystemClock.calculate_max_text_width()
 
@@ -185,14 +240,14 @@ function SystemClock.create_UIBox_clock(styleIndex, textSize, textColour, backCo
 					nodes = {{
 						n = G.UIT.O,
 						config = {
-							align = 'cm', 
+							align = 'cm',
 							id = 'clock_text',
 							object = DynaText({
 								string = {{
 									ref_table = SystemClock,
 									ref_value = 'time'
 								}},
-								colours = {textColour},
+								colours = {colours['text']},
 								scale = textSize,
 								shadow = (styleIndex > 1),
 								pop_in = 0,
@@ -224,16 +279,16 @@ function SystemClock.reset_clock_ui()
 			},
 			nodes = {
 				SystemClock.create_UIBox_clock(
-					SystemClock.config.clockStyleIndex,
-					SystemClock.config.clockTextSize,
-					SystemClock.get_colour_from_ref(SystemClock.config.clockTextColourRef),
-					SystemClock.get_colour_from_ref(SystemClock.config.clockBackColourRef)
+					SystemClock.get_clock_style_index(),
+					SystemClock.get_clock_size(),
+					SystemClock.get_clock_colours()
 				)
 			}
 		}
 		G.HUD_clock.states.drag.can = SystemClock.config.clockAllowDrag
-		G.HUD_clock.T.x = SystemClock.config.clockX
-		G.HUD_clock.T.y = SystemClock.config.clockY
+		local pos = SystemClock.get_clock_pos()
+		G.HUD_clock.T.x = pos['x']
+		G.HUD_clock.T.y = pos['y']
 
 		G.HUD_clock.move = function(self, dt)
 			MoveableContainer.move(self, dt)
@@ -243,7 +298,9 @@ function SystemClock.reset_clock_ui()
 
 		G.HUD_clock.stop_drag = function(self)
 			MoveableContainer.stop_drag(self)
+			SystemClock.config.clockPresetIndex = 1
 			SystemClock.save_mod_config()
+			SystemClock.update_config_panel()
 		end
 	end
 end
@@ -281,31 +338,113 @@ function SystemClock.get_colour_from_ref(ref)
 	return type(colour) == 'table' and colour
 end
 
+function SystemClock.get_clock_format()
+	return SystemClock.CLOCK_FORMATS[SystemClock.config.clockTimeFormatIndex]
+end
+
+function SystemClock.get_clock_style_index()
+	return SystemClock.config.clockStyleIndex
+end
+
+function SystemClock.get_clock_colours()
+	return {
+		text = SystemClock.get_colour_from_ref(SystemClock.config.clockTextColourRef),
+		back = SystemClock.get_colour_from_ref(SystemClock.config.clockBackColourRef)
+	}
+end
+
+function SystemClock.get_clock_size()
+	return SystemClock.config.clockTextSize
+end
+
+function SystemClock.get_clock_pos()
+	return {x = SystemClock.config.clockX, y = SystemClock.config.clockY}
+end
+
+function SystemClock.apply_preset_values(presetIndex)
+	presetIndex = presetIndex or SystemClock.config.clockPresetIndex
+
+	SystemClock.config.clockTimeFormatIndex = SystemClock.PRESETS[presetIndex]['format'] or SystemClock.config.clockTimeFormatIndex
+	SystemClock.config.clockStyleIndex = SystemClock.PRESETS[presetIndex]['style'] or SystemClock.config.clockStyleIndex
+	SystemClock.config.clockTextSizeIndex = SystemClock.PRESETS[presetIndex]['size'] or SystemClock.config.clockTextSizeIndex
+	SystemClock.config.clockTextColourIndex = SystemClock.PRESETS[presetIndex]['colours']['text'] or SystemClock.config.clockTextColourIndex
+	SystemClock.config.clockBackColourIndex = SystemClock.PRESETS[presetIndex]['colours']['back'] or SystemClock.config.clockBackColourIndex
+	SystemClock.config.clockX = SystemClock.PRESETS[presetIndex]['pos']['x'] or SystemClock.config.clockX
+	SystemClock.config.clockY = SystemClock.PRESETS[presetIndex]['pos']['y'] or SystemClock.config.clockY
+	
+	SystemClock.config.clockTextSize = SystemClock.config.clockTextSizeIndex and SystemClock.FONT_SIZES[SystemClock.config.clockTextSizeIndex]
+
+	SystemClock.config.clockTextColourRef = SystemClock.config.clockTextColourIndex and SystemClock.COLOUR_REFS[SystemClock.config.clockTextColourIndex]
+	SystemClock.config.clockBackColourRef = SystemClock.config.clockBackColourIndex and SystemClock.COLOUR_REFS[SystemClock.config.clockBackColourIndex]
+end
+
+function SystemClock.debug_print_config()
+	sendInfoMessage("clockTimeFormatIndex: " .. SystemClock.config.clockTimeFormatIndex, 'SystemClock')
+	sendInfoMessage("clockStyleIndex:      " .. SystemClock.config.clockStyleIndex, 'SystemClock')
+	sendInfoMessage("clockTextSizeIndex:   " .. SystemClock.config.clockTextSizeIndex, 'SystemClock')
+	sendInfoMessage("clockTextColourIndex: " .. SystemClock.config.clockTextColourIndex, 'SystemClock')
+	sendInfoMessage("clockBackColourIndex: " .. SystemClock.config.clockBackColourIndex, 'SystemClock')
+	sendInfoMessage("clockTextColourRef:   " .. SystemClock.config.clockTextColourRef, 'SystemClock')
+	sendInfoMessage("clockBackColourRef:   " .. SystemClock.config.clockBackColourRef, 'SystemClock')
+	sendInfoMessage("clockX:               " .. SystemClock.config.clockX, 'SystemClock')
+	sendInfoMessage("clockY:               " .. SystemClock.config.clockY, 'SystemClock')
+end
+
+function SystemClock.update_custom_preset()
+	--Todo
+end
+
+function SystemClock.update_config_panel()
+	local panelContents = G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
+	if not panelContents then return end
+
+	panelContents.config.object:remove()
+    panelContents.config.object = UIBox{
+        config = {offset = {x = 0, y = 0}, parent = panelContents},
+        definition = SystemClock.config_panel()
+      }
+	panelContents.UIBox:recalculate()
+	panelContents.UIBox:juice_up(0.05, 0.05)
+end
+
+G.FUNCS.sysclock_change_clock_preset = function(e)
+	if not e then return end
+	SystemClock.config.clockPresetIndex = e.to_key
+	SystemClock.apply_preset_values()
+	SystemClock.reset_clock_ui()
+	SystemClock.update_config_panel()
+end
+
 G.FUNCS.sysclock_change_clock_time_format = function(e)
 	SystemClock.config.clockTimeFormatIndex = e.to_key
+	SystemClock.update_custom_preset()
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_style = function(e)
 	SystemClock.config.clockStyleIndex = e.to_key
+	SystemClock.update_custom_preset()
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_text_colour = function(e)
 	SystemClock.config.clockTextColourIndex = e.to_key
 	SystemClock.config.clockTextColourRef = SystemClock.COLOUR_REFS[e.to_key]
+	SystemClock.update_custom_preset()
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_back_colour = function(e)
 	SystemClock.config.clockBackColourIndex = e.to_key
 	SystemClock.config.clockBackColourRef = SystemClock.COLOUR_REFS[e.to_key]
+	SystemClock.update_custom_preset()
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_size = function(e)
 	SystemClock.config.clockTextSizeIndex = e.to_key
 	SystemClock.config.clockTextSize = e.to_val
+	SystemClock.update_custom_preset()
 	SystemClock.reset_clock_ui()
 end
 
@@ -314,6 +453,7 @@ G.FUNCS.sysclock_set_position_x = function(e)
 	if G.HUD_clock then
 		G.HUD_clock.T.x = x
 	end
+	SystemClock.update_custom_preset()
 end
 
 G.FUNCS.sysclock_set_position_y = function(e)
@@ -321,4 +461,5 @@ G.FUNCS.sysclock_set_position_y = function(e)
 	if G.HUD_clock then
 		G.HUD_clock.T.y = y
 	end
+	SystemClock.update_custom_preset()
 end

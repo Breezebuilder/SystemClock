@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "SystemClock",
 			['sysclock_visibility_setting'] = "Show clock",
 			['sysclock_draggable_setting'] = "Allow dragging",
+			['sysclock_preset_setting'] = 'Preset',
 			['sysclock_time_format_setting'] = "Time format",
 			['sysclock_style_setting'] = "Style",
 			['sysclock_colour_setting'] = "Colour",

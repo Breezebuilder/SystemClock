@@ -14,18 +14,18 @@ SMODS.current_mod.config_tab = function()
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = {align = 'tl', minw = 5.5, id = 'sysclock_config_column_left'},
+				config = { align = 'tl', minw = 3, id = 'sysclock_config_sidebar' },
 				nodes = {
 					{
 						n = G.UIT.R,
-						config = {align = 'tr', id = 'sysclock_config_toggles'},
+						config = { align = 'tr', id = 'sysclock_config_toggles' },
 						nodes = {
 							{
 								n = G.UIT.C,
 								nodes = {
 									{
 										n = G.UIT.R,
-										config = {align = 'tr', padding = 0.05},
+										config = { align = 'tr', padding = 0.05 },
 										nodes = {
 											create_toggle({
 												label = localize('sysclock_visibility_setting'),
@@ -38,7 +38,7 @@ SMODS.current_mod.config_tab = function()
 									},
 									{
 										n = G.UIT.R,
-										config = {align = 'tr', padding = 0.05},
+										config = { align = 'tr', padding = 0.05 },
 										nodes = {
 											create_toggle({
 												label = localize('sysclock_draggable_setting'),
@@ -48,14 +48,59 @@ SMODS.current_mod.config_tab = function()
 												callback = SystemClock.reset_clock_ui
 											})
 										}
-									}
+									},
+									{
+										n = G.UIT.R,
+										config = { align = 'cm' },
+										nodes = {
+											create_option_cycle({
+												label = localize('sysclock_preset_setting'),
+												scale = 0.8,
+												w = 2.5,
+												options = SystemClock.PRESET_OPTIONS,
+												current_option = SystemClock.config.clockPresetIndex,
+												opt_callback = 'sysclock_change_clock_preset',
+												colour = G.C.GREY
+											}),
+										}
+									},
 								}
 							}
 						}
 					},
+				}
+			},
+			{
+				n = G.UIT.C,
+				nodes = {
+					{
+						n = G.UIT.O,
+						config = {
+							id = 'sysclock_config_panel',
+							object = UIBox {
+								config = {align = 'cm', offset = {x = 0, y = 0}},
+								definition = SystemClock.config_panel()
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+end
+
+function SystemClock.config_panel()
+	return {
+		n = G.UIT.ROOT,
+		config = { align = 'cm', minw = 11, r = 0.1, emboss = 0.1, colour = G.C.GREY },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = { align = 'tm', minw = 5.5, id = 'sysclock_config_panel_column_left' },
+				nodes = {
 					{
 						n = G.UIT.R,
-						config = {align = 'cl'},
+						config = { align = 'cl' },
 						nodes = {
 							create_option_cycle({
 								label = localize('sysclock_time_format_setting'),
@@ -69,14 +114,14 @@ SMODS.current_mod.config_tab = function()
 					},
 					{
 						n = G.UIT.R,
-						config = {align = 'bl', id = 'sysclock_config_position_sliders'},
+						config = { align = 'bl', id = 'sysclock_config_position_sliders' },
 						nodes = {
 							{
 								n = G.UIT.C,
 								nodes = {
 									{
 										n = G.UIT.R,
-										config = {align = 'bm', padding = 0},
+										config = { align = 'bm', padding = 0 },
 										nodes = {
 											create_slider({
 												label = localize('sysclock_x_position_setting'),
@@ -95,7 +140,7 @@ SMODS.current_mod.config_tab = function()
 									},
 									{
 										n = G.UIT.R,
-										config = {align = 'bm', padding = 0},
+										config = { align = 'bm', padding = 0 },
 										nodes = {
 											create_slider({
 												label = localize('sysclock_y_position_setting'),
@@ -120,11 +165,11 @@ SMODS.current_mod.config_tab = function()
 			},
 			{
 				n = G.UIT.C,
-				config = {align = 'tr', minw = 5.5, id = 'sysclock_config_column_right'},
+				config = { align = 'tr', minw = 5.5, id = 'sysclock_config_panel_column_right' },
 				nodes = {
 					{
 						n = G.UIT.R,
-						config = {align = 'cr', padding = 0},
+						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
 								label = localize('sysclock_size_setting'),
@@ -139,7 +184,7 @@ SMODS.current_mod.config_tab = function()
 					},
 					{
 						n = G.UIT.R,
-						config = {align = 'cr', padding = 0},
+						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
 								label = localize('sysclock_style_setting'),
@@ -154,7 +199,7 @@ SMODS.current_mod.config_tab = function()
 					},
 					{
 						n = G.UIT.R,
-						config = {align = 'cr', padding = 0},
+						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
 								label = localize('sysclock_text_colour_setting'),
@@ -169,7 +214,7 @@ SMODS.current_mod.config_tab = function()
 					},
 					{
 						n = G.UIT.R,
-						config = {align = 'cr', padding = 0},
+						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
 								label = localize('sysclock_back_colour_setting'),
