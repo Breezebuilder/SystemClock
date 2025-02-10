@@ -48,9 +48,9 @@ SystemClock.PRESETS = {
 	{ name = '1', format = 1, style = 2, size = 6, colours = {text = 1, back = 19}, pos = {x =  0.80189, y = -0.65535} },
 	{ name = '2', format = 4, style = 5, size = 7, colours = {text = 1, back = 19}, pos = {x =  0.20467, y = -0.68521} },
 	{ name = '3', format = 6, style = 5, size = 4, colours = {text = 1, back = 10}, pos = {x = -0.39255, y = 11.55784} },
-	{ name = '4', format = 2, style = 3, size = 5, colours = {text = 1, back = 19}, pos = {x = 19.88314, y =  0.00159} },
+	{ name = '4', format = 1, style = 4, size = 5, colours = {text = 1, back = 19}, pos = {x =  8.92411, y = -0.71507} },
 	{ name = '5', format = 4, style = 1, size = 3, colours = {text = 1, back = 19}, pos = {x = 13.12308, y =  2.50993} },
-	{ name = '6', format = 1, style = 4, size = 5, colours = {text = 1, back = 19}, pos = {x =  8.92411, y = -0.71507} },
+	{ name = '6', format = 2, style = 3, size = 5, colours = {text = 1, back = 19}, pos = {x = 19.88314, y =  0.00159} },
 	{ name = '7', format = 4, style = 5, size = 5, colours = {text = 1, back = 08}, pos = {x =  9.68905, y = 11.49812} },
 	{ name = '8', format = 2, style = 1, size = 3, colours = {text = 1, back = 19}, pos = {x = 17.34843, y = 11.39360} },
 }
@@ -159,7 +159,7 @@ function SystemClock.set_popup(state)
 	end
 end
 
-function SystemClock.create_UIBox_clock(styleIndex, textSize, colours)
+function SystemClock.create_UIBox_clock(styleIndex, textSize, colours, float)
 	styleIndex = styleIndex or 2
 	textSize = textSize or 1
 	colours = colours or {text = G.C.WHITE, back = G.C.BLACK}
@@ -219,6 +219,7 @@ function SystemClock.create_UIBox_clock(styleIndex, textSize, colours)
 								shadow = (styleIndex > 1),
 								pop_in = 0,
 								pop_in_rate = 10,
+								float = float,
 								silent = true
 							})
 						}
@@ -248,7 +249,8 @@ function SystemClock.reset_clock_ui()
 				SystemClock.create_UIBox_clock(
 					SystemClock.get_clock_style_index(),
 					SystemClock.get_clock_size(),
-					SystemClock.get_clock_colours()
+					SystemClock.get_clock_colours(),
+					SystemClock.drawAsPopup
 				)
 			}
 		}
