@@ -368,13 +368,13 @@ end
 
 G.FUNCS.sysclock_change_clock_time_format = function(e)
 	SystemClock.indices.format = e.to_key
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex].format = SystemClock.indices.format
+	SystemClock.current.format = SystemClock.indices.format
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_style = function(e)
 	SystemClock.indices.style = e.to_key
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex].style = SystemClock.indices.style
+	SystemClock.current.style = SystemClock.indices.style
 	SystemClock.reset_clock_ui()
 end
 
@@ -382,7 +382,6 @@ G.FUNCS.sysclock_change_clock_text_colour = function(e)
 	SystemClock.indices.textColour = e.to_key
 	local textColourRef = SystemClock.COLOUR_REFS[e.to_key]
 	SystemClock.current.colours.text = textColourRef
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex].colours.text = textColourRef
 	SystemClock.reset_clock_ui()
 end
 
@@ -390,14 +389,12 @@ G.FUNCS.sysclock_change_clock_back_colour = function(e)
 	SystemClock.indices.backColour = e.to_key
 	local backColourRef = SystemClock.COLOUR_REFS[e.to_key]
 	SystemClock.current.colours.back = backColourRef
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex].colours.back = backColourRef
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_size = function(e)
 	SystemClock.indices.size = e.to_key
 	SystemClock.current.size = e.to_val
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex].size = e.to_val
 	SystemClock.reset_clock_ui()
 end
 
@@ -406,7 +403,7 @@ G.FUNCS.sysclock_set_hud_position_x = function(e)
 	if G.HUD_clock then
 		G.HUD_clock.T.x = x
 	end
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex].position.x = x
+	SystemClock.current.position.x = x
 end
 
 G.FUNCS.sysclock_set_hud_position_y = function(e)
@@ -414,5 +411,5 @@ G.FUNCS.sysclock_set_hud_position_y = function(e)
 	if G.HUD_clock then
 		G.HUD_clock.T.y = y
 	end
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex].position.y = y
+	SystemClock.current.position.y = y
 end
