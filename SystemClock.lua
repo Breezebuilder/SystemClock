@@ -300,7 +300,7 @@ function SystemClock.reset_clock_ui()
 			MoveableContainer.stop_drag(self)
 			SystemClock.config.clockPresetIndex = 1
 			SystemClock.save_mod_config()
-			SystemClock.update_config_panel()
+			SystemClock.update_config_position_sliders()
 		end
 	end
 end
@@ -405,6 +405,18 @@ function SystemClock.update_config_panel()
       }
 	panelContents.UIBox:recalculate()
 	panelContents.UIBox:juice_up(0.05, 0.05)
+end
+
+function SystemClock.update_config_position_sliders()
+	local panelContents = G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
+	if not panelContents then return end
+
+	panelContents.config.object:remove()
+    panelContents.config.object = UIBox{
+        config = {offset = {x = 0, y = 0}, parent = panelContents},
+        definition = SystemClock.config_position_sliders()
+      }
+	panelContents.UIBox:recalculate()
 end
 
 G.FUNCS.sysclock_change_clock_preset = function(e)
