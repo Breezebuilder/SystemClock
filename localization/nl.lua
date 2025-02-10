@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "Systeemklok",
 			['sysclock_visibility_setting'] = "Toon klok",
 			['sysclock_draggable_setting'] = "Slepen toestaan",
+			['sysclock_preset_setting'] = 'Voorinstelling',
 			['sysclock_time_format_setting'] = "Tijdformaat",
 			['sysclock_style_setting'] = "Stijl",
 			['sysclock_colour_setting'] = "Kleur",

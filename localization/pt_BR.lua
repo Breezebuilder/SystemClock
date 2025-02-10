@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "Relógio do Sistema",
 			['sysclock_visibility_setting'] = "Mostrar relógio",
 			['sysclock_draggable_setting'] = "Permitir arrastar",
+			['sysclock_preset_setting'] = 'Predefinição',
 			['sysclock_time_format_setting'] = "Formato de hora",
 			['sysclock_style_setting'] = "Estilo",
 			['sysclock_colour_setting'] = "Cor",

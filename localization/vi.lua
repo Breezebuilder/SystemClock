@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "Đồng Hồ Hệ Thống",
 			['sysclock_visibility_setting'] = "Hiện đồng hồ",
 			['sysclock_draggable_setting'] = "Cho phép kéo thả",
+			['sysclock_preset_setting'] = 'Cài đặt sẵn',
 			['sysclock_time_format_setting'] = "Định dạng thời gian",
 			['sysclock_style_setting'] = "Kiểu",
 			['sysclock_colour_setting'] = "Màu",

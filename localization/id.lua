@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "Jam Sistem",
 			['sysclock_visibility_setting'] = "Tampilkan jam",
 			['sysclock_draggable_setting'] = "Izinkan penarikan",
+			['sysclock_preset_setting'] = 'Prasetel',
 			['sysclock_time_format_setting'] = "Format waktu",
 			['sysclock_style_setting'] = "Gaya",
 			['sysclock_colour_setting'] = "Warna",

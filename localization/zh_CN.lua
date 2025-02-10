@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "系统时钟",
 			['sysclock_visibility_setting'] = "显示时钟",
 			['sysclock_draggable_setting'] = "允许拖动",
+			['sysclock_preset_setting'] = '预设',
 			['sysclock_time_format_setting'] = "时间格式",
 			['sysclock_style_setting'] = "样式",
 			['sysclock_colour_setting'] = "颜色",

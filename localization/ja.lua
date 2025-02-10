@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "システムクロック",
 			['sysclock_visibility_setting'] = "時計を表示",
 			['sysclock_draggable_setting'] = "ドラッグを許可",
+			['sysclock_preset_setting'] = 'プリセット',
 			['sysclock_time_format_setting'] = "時間形式",
 			['sysclock_style_setting'] = "スタイル",
 			['sysclock_colour_setting'] = "色",

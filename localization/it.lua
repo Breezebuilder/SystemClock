@@ -26,6 +26,7 @@ return {
 			['sysclock_name'] = "Orologio di Sistema",
 			['sysclock_visibility_setting'] = "Mostra orologio",
 			['sysclock_draggable_setting'] = "Consenti trascinamento",
+			['sysclock_preset_setting'] = 'Preimpostazione',
 			['sysclock_time_format_setting'] = "Formato orario",
 			['sysclock_style_setting'] = "Stile",
 			['sysclock_colour_setting'] = "Colore",
