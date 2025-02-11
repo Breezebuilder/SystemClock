@@ -54,6 +54,16 @@ SMODS.current_mod.config_tab = function()
 										n = G.UIT.R,
 										config = { align = 'cm' },
 										nodes = {
+											{
+												n = G.UIT.B,
+												config = { w = 1, h = 1.7 }
+											}
+										}
+									},
+									{
+										n = G.UIT.R,
+										config = { align = 'cm' },
+										nodes = {
 											create_option_cycle({
 												label = localize('sysclock_preset_setting'),
 												scale = 0.8,
@@ -67,6 +77,20 @@ SMODS.current_mod.config_tab = function()
 											}),
 										}
 									},
+									{
+										n = G.UIT.R,
+										config = { align = 'cm' },
+										nodes = {
+											UIBox_button({
+												button = 'sysclock_default_current_preset',
+												label = { localize('sysclock_preset_default_button') },
+												colour = G.C.JOKER_GREY,
+												minw = 2.8,
+												minh = 0.6,
+												scale = 0.5 * 0.8,
+											})
+										}
+									}
 								}
 							}
 						}

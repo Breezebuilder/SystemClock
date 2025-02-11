@@ -89,7 +89,7 @@ function SystemClock.update_config_version()
 	end
 end
 
-function SystemClock.load_config_preset(presetIndex)
+function SystemClock.init_config_preset(presetIndex)
 	presetIndex = presetIndex or SystemClock.config.clockPresetIndex
 	SystemClock.config.clockPresetIndex = presetIndex
 
@@ -117,7 +117,7 @@ function SystemClock.generate_example_time_formats()
 end
 
 SystemClock.update_config_version()
-SystemClock.load_config_preset()
+SystemClock.init_config_preset()
 SystemClock.generate_example_time_formats()
 
 local game_update_ref = Game.update
@@ -361,7 +361,16 @@ function SystemClock.get_clock_colours()
 end
 
 G.FUNCS.sysclock_change_clock_preset = function(e)
-	SystemClock.load_config_preset(e.to_key)
+	SystemClock.init_config_preset(e.to_key)
+	SystemClock.reset_clock_ui()
+	SystemClock.update_config_ui()
+end
+
+G.FUNCS.sysclock_default_current_preset = function(e)
+	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex] = {}
+	SystemClock.save_mod_config()
+	SystemClock.config = SMODS.load_mod_config(mod_instance)
+	SystemClock.init_config_preset()
 	SystemClock.reset_clock_ui()
 	SystemClock.update_config_ui()
 end
