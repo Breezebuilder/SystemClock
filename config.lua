@@ -31,7 +31,7 @@ return {
 			}
 		},
 		[3] = {
-			['format'] = 4,
+			['format'] = 6,
 			['style'] = 1,
 			['size'] = 0.3,
 			['colours'] = {
@@ -39,7 +39,7 @@ return {
 				['back'] = 'DYN_UI.MAIN'
 			},
 			['position'] = {
-				['x'] = 13.12308,
+				['x'] = 13.51127,
 				['y'] = 2.50993
 			}
 		},
