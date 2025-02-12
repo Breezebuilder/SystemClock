@@ -2,6 +2,7 @@ return {
 	['clockConfigVersion'] = 3,
 	['clockVisible'] = true,
 	['clockAllowDrag'] = true,
+	['hourOffset'] = 0,
 	['clockPresetIndex'] = 1,
 	['clockPresets'] = {
 		[1] = {

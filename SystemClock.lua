@@ -101,8 +101,15 @@ function SystemClock.init_config_preset(presetIndex)
 	SystemClock.indices.backColour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.back) or 1
 end
 
-function SystemClock.get_formatted_time(formatRow, time, forceLeadingZero)
+function SystemClock.get_formatted_time(formatRow, time, forceLeadingZero, hour_offset)
 	formatRow = formatRow or SystemClock.CLOCK_FORMATS[SystemClock.current.format]
+	if hour_offset then
+		local offset = tonumber(hour_offset) * 3600
+		if time == nil then
+			time = os.time()
+		end
+		time = time + offset
+	end
 	local formatted_time = os.date(formatRow[1], time)
 	if not forceLeadingZero and formatRow[2] then
 		formatted_time = tostring(formatted_time):gsub("^0", "")
@@ -163,7 +170,7 @@ end
 
 function SystemClock.update(dt)
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
-		SystemClock.time = SystemClock.get_formatted_time()
+		SystemClock.time = SystemClock.get_formatted_time(nil, nil, nil, SystemClock.config.hourOffset)
 	end
 end
 
