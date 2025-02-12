@@ -14,8 +14,8 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
-					" ",
+
+
             		"不要掉進{C:purple,E:1}黑洞{}。"
 				}
 			}
@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "顯示時鐘",
 			['sysclock_draggable_setting'] = "允許拖動",
 			['sysclock_preset_setting'] = '預設',
+			['sysclock_preset_default_button'] = '恢復預設值',
 			['sysclock_time_format_setting'] = "時間格式",
 			['sysclock_style_setting'] = "樣式",
 			['sysclock_colour_setting'] = "顏色",

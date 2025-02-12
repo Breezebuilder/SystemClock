@@ -14,8 +14,8 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
-					" ",
+
+
 					"{C:purple,E:1}ブラックホール{}に落ちないように注意してください。"
 				}
 			}
@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "時計を表示",
 			['sysclock_draggable_setting'] = "ドラッグを許可",
 			['sysclock_preset_setting'] = 'プリセット',
+			['sysclock_preset_default_button'] = 'デフォルトに戻す',
 			['sysclock_time_format_setting'] = "時間形式",
 			['sysclock_style_setting'] = "スタイル",
 			['sysclock_colour_setting'] = "色",

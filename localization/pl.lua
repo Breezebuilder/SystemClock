@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "Pokaż zegar",
 			['sysclock_draggable_setting'] = "Zezwól na przeciąganie",
 			['sysclock_preset_setting'] = 'Ustawienie wstępne',
+			['sysclock_preset_default_button'] = 'Przywróć domyślny',
 			['sysclock_time_format_setting'] = "Format czasu",
 			['sysclock_style_setting'] = "Styl",
 			['sysclock_colour_setting'] = "Kolor",

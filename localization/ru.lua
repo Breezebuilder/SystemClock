@@ -25,8 +25,9 @@ return {
 		['dictionary'] = {
 			['sysclock_name'] = "Системные часы",
 			['sysclock_visibility_setting'] = "Показать часы",
-			['sysclock_draggable_setting'] = "Разрешить перетаскивание",
+			['sysclock_draggable_setting'] = "Перетаскивание",
 			['sysclock_preset_setting'] = 'Предустановка',
+			['sysclock_preset_default_button'] = 'Восстановить',
 			['sysclock_time_format_setting'] = "Формат времени",
 			['sysclock_style_setting'] = "Стиль",
 			['sysclock_colour_setting'] = "Цвет",

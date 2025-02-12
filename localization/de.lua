@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "Uhr anzeigen",
 			['sysclock_draggable_setting'] = "Verschieben erlauben",
 			['sysclock_preset_setting'] = 'Voreinstellung',
+			['sysclock_preset_default_button'] = 'Standard wiederherstellen',
 			['sysclock_time_format_setting'] = "Zeitformat",
 			['sysclock_style_setting'] = "Stil",
 			['sysclock_colour_setting'] = "Farbe",

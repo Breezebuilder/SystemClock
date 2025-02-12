@@ -14,8 +14,8 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
-					" ",
+
+
 					"{C:purple,E:1}블랙홀{}에 빠지지 마세요."
 				}
 			}
@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "시계 표시",
 			['sysclock_draggable_setting'] = "드래그 허용",
 			['sysclock_preset_setting'] = '프리셋',
+			['sysclock_preset_default_button'] = '기본값 복원',
 			['sysclock_time_format_setting'] = "시간 형식",
 			['sysclock_style_setting'] = "스타일",
 			['sysclock_colour_setting'] = "색상",

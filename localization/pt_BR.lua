@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "Mostrar relógio",
 			['sysclock_draggable_setting'] = "Permitir arrastar",
 			['sysclock_preset_setting'] = 'Predefinição',
+			['sysclock_preset_default_button'] = 'Restaurar padrão',
 			['sysclock_time_format_setting'] = "Formato de hora",
 			['sysclock_style_setting'] = "Estilo",
 			['sysclock_colour_setting'] = "Cor",

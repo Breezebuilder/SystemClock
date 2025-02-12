@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "Toon klok",
 			['sysclock_draggable_setting'] = "Slepen toestaan",
 			['sysclock_preset_setting'] = 'Voorinstelling',
+			['sysclock_preset_default_button'] = 'Standaard herstellen',
 			['sysclock_time_format_setting'] = "Tijdformaat",
 			['sysclock_style_setting'] = "Stijl",
 			['sysclock_colour_setting'] = "Kleur",

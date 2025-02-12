@@ -27,6 +27,7 @@ return {
 			['sysclock_visibility_setting'] = "Mostra orologio",
 			['sysclock_draggable_setting'] = "Consenti trascinamento",
 			['sysclock_preset_setting'] = 'Preimpostazione',
+			['sysclock_preset_default_button'] = 'Ripristina predefinito',
 			['sysclock_time_format_setting'] = "Formato orario",
 			['sysclock_style_setting'] = "Stile",
 			['sysclock_colour_setting'] = "Colore",
