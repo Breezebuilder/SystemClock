@@ -62,21 +62,26 @@ end
 
 function SystemClock.update_config_version()
 	if SystemClock.config.clockColourIndex then
-		sendInfoMessage("Transferring v1 config settings", 'SystemClock')
+		sendInfoMessage("Transferring config settings (v1 -> v2)", 'SystemClock')
 		SystemClock.config.clockTextColourRef = SystemClock.COLOUR_REFS[SystemClock.config.clockColourIndex]
 		SystemClock.config.clockTextColourIndex = SystemClock.config.clockColourIndex
+		SystemClock.config.clockBackColourRef = 'DYN_UI.MAIN'
 		SystemClock.config.clockColourIndex = nil
 		SystemClock.config.clockColour = nil
-	elseif SystemClock.config.clockConfigVersion == 2 then
-		SystemClock.config.clockPresets[1].format = SystemClock.config.clockTimeFormatIndex
-		SystemClock.config.clockPresets[1].style = SystemClock.config.clockStyleIndex
-		SystemClock.config.clockPresets[1].size = SystemClock.config.clockTextSize
-		SystemClock.config.clockPresets[1].colours.text = SystemClock.config.clockTextColourRef
-		SystemClock.config.clockPresets[1].colours.back = SystemClock.config.clockBackColourRef
-		SystemClock.config.clockPresets[1].position.x = SystemClock.config.clockX
-		SystemClock.config.clockPresets[1].position.y = SystemClock.config.clockY
 
-		SystemClock.config.clockPresetIndex = 1
+		SystemClock.config.clockConfigVersion = 2
+	end
+
+	if SystemClock.config.clockConfigVersion == 2 then
+		sendInfoMessage("Transferring config settings (v2 -> v3)", 'SystemClock')
+		SystemClock.config.clockPresets[5].format = SystemClock.config.clockTimeFormatIndex
+		SystemClock.config.clockPresets[5].style = SystemClock.config.clockStyleIndex
+		SystemClock.config.clockPresets[5].size = SystemClock.config.clockTextSize
+		SystemClock.config.clockPresets[5].colours.text = SystemClock.config.clockTextColourRef
+		SystemClock.config.clockPresets[5].colours.back = SystemClock.config.clockBackColourRef
+		SystemClock.config.clockPresets[5].position.x = SystemClock.config.clockX
+		SystemClock.config.clockPresets[5].position.y = SystemClock.config.clockY
+		SystemClock.config.clockPresetIndex = 5
 
 		SystemClock.config.clockTimeFormatIndex = nil
 		SystemClock.config.clockStyleIndex = nil
