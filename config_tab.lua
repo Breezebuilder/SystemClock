@@ -292,3 +292,33 @@ function SystemClock.create_UIBox_position_sliders()
 		}
 	}
 end
+
+function SystemClock.update_config_ui()
+	local panelContents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
+	if not panelContents then return end
+
+	panelContents.config.object:remove()
+	panelContents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = panelContents },
+		definition = SystemClock.create_UIBox_config_panel(),
+	}
+	panelContents.UIBox:recalculate()
+	panelContents.config.object:set_role {
+		role_type = 'Major',
+		major = nil
+	}
+
+	panelContents.config.object:juice_up(0.05, 0.02)
+end
+
+function SystemClock.update_config_position_sliders()
+	local panelContents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
+	if not panelContents then return end
+
+	panelContents.config.object:remove()
+	panelContents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = panelContents },
+		definition = SystemClock.create_UIBox_position_sliders()
+	}
+	panelContents.UIBox:recalculate()
+end
