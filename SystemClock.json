@@ -7,6 +7,6 @@
   "priority": 100000,
   "main_file": "SystemClock.lua",
   "badge_colour": "638fe1",
-  "version": "1.5.0~c", 
+  "version": "1.5.0~d",
   "dependencies": ["Steamodded (>=1.0.0~ALPHA-1220a)"]
 }
