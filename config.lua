@@ -18,7 +18,7 @@ return {
 			}
 		},
 		[2] = {
-			['format'] = 6,
+			['format'] = 1,
 			['style'] = 2,
 			['size'] = 0.4,
 			['colours'] = {
@@ -26,7 +26,7 @@ return {
 				['back'] = 'GREEN'
 			},
 			['position'] = {
-				['x'] = -0.39255,
+				['x'] = -0.45227,
 				['y'] = 11.55784
 			}
 		},
