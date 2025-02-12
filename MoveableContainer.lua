@@ -9,12 +9,12 @@ function MoveableContainer:init(args)
 		config = {
 			align = 'tm',
 			colour = G.C.CLEAR,
-			scale = 1
+			scale = 1,
 		},
-		nodes = {{
+		nodes = { {
 			n = G.UIT.R,
 			nodes = args.nodes or {}
-		}}
+		} },
 	}
 
 	UIBox.init(self, args)
@@ -30,16 +30,59 @@ function MoveableContainer:init(args)
 	end
 end
 
+function Moveable:set_hover_state(state)
+	self.zoom = true
+	self.states.hover.is = state
+	self.parrallax_dist = 1
+
+	if self.config.object then
+		self.config.object.zoom = true
+		self.config.object.states.hover.is = state
+	end
+
+	if self.children then
+		for k, v in pairs(self.children) do
+			v:set_hover_state(state)
+		end
+	end
+end
+
+function Moveable:set_drag_state(state)
+	self.zoom = true
+	self.states.drag.is = state
+
+	if self.config.object then
+		self.config.object.zoom = true
+		self.config.object.states.drag.is = state
+	end
+	if self.children then
+		for k, v in pairs(self.children) do
+			v:set_drag_state(state)
+		end
+	end
+end
+
 function MoveableContainer:hover()
 	if self.states.drag.can then
-		self:juice_up(0.08, 0.05)
-		self.hovering = true
+		self:juice_up(0.05, 0.02)
+		self.UIRoot:set_hover_state(true)
 		play_sound('chips1', math.random() * 0.1 + 0.55, 0.15)
 	end
+
 	UIBox.hover(self)
 end
 
 function MoveableContainer:stop_hover()
-	self.hovering = false
+	self.UIRoot:set_hover_state(false)
 	UIBox.stop_hover(self)
+end
+
+function MoveableContainer:drag()
+	self.UIRoot:set_drag_state(true)
+	UIBox.drag(self)
+end
+
+function MoveableContainer:stop_drag()
+	self.UIRoot:set_drag_state(false)
+	UIBox.stop_drag(self)
 end
