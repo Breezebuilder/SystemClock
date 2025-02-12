@@ -52,13 +52,7 @@ SMODS.current_mod.config_tab = function()
 									},
 									{
 										n = G.UIT.R,
-										config = { align = 'cm' },
-										nodes = {
-											{
-												n = G.UIT.B,
-												config = { w = 1, h = 1.7 }
-											}
-										}
+										config = { minh = 1.5 },
 									},
 									{
 										n = G.UIT.R,
@@ -79,6 +73,10 @@ SMODS.current_mod.config_tab = function()
 									},
 									{
 										n = G.UIT.R,
+										config = { minh = 0.2 }
+									},
+									{
+										n = G.UIT.R,
 										config = { align = 'cm' },
 										nodes = {
 											UIBox_button({
@@ -94,17 +92,12 @@ SMODS.current_mod.config_tab = function()
 								}
 							}
 						}
-					},
+					}
 				}
 			},
 			{
 				n = G.UIT.C,
-				nodes = {
-					{
-						n = G.UIT.B,
-						config = { w = 0.2, h = 1 }
-					}
-				}
+				config = { minw = 0.2 }
 			},
 			{
 				n = G.UIT.C,
@@ -150,13 +143,7 @@ function SystemClock.create_UIBox_config_panel()
 					},
 					{
 						n = G.UIT.R,
-						config = { align = 'cl' },
-						nodes = {
-							{
-								n = G.UIT.B,
-								config = { w = 1, h = 1.4 },
-							}
-						}
+						config = { minh = 1.4 },
 					},
 					{
 						n = G.UIT.R,
@@ -172,7 +159,7 @@ function SystemClock.create_UIBox_config_panel()
 									}
 								}
 							}
-						},
+						}
 					}
 				}
 			},
