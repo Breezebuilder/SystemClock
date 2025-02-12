@@ -21,12 +21,12 @@ SMODS.load_file('config_tab.lua')()
 SMODS.load_file('MoveableContainer.lua')()
 
 SystemClock.CLOCK_FORMATS = {
-	{'%I:%M %p', 	true},
-	{'%I:%M', 	 	true},
-	{'%H:%M', 		false},
-	{'%I:%M:%S %p', true},
-	{'%I:%M:%S', 	true},
-	{'%H:%M:%S', 	false}
+	{ '%I:%M %p',    true },
+	{ '%I:%M',       true },
+	{ '%H:%M',       false },
+	{ '%I:%M:%S %p', true },
+	{ '%I:%M:%S',    true },
+	{ '%H:%M:%S',    false }
 }
 
 SystemClock.COLOUR_REFS = {
@@ -47,15 +47,16 @@ SystemClock.PRESET_OPTIONS = {}
 SystemClock.time = ''
 SystemClock.current = {}
 SystemClock.indices = {}
-SystemClock.exampleTime = os.time({year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33})
+SystemClock.colours = {}
+SystemClock.exampleTime = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
 SystemClock.drawAsPopup = false
 
 local function index_of(table, val)
 	if not val then return nil end
-    for i, v in ipairs(table) do
-        if v == val then return i end
-    end
-    return nil
+	for i, v in ipairs(table) do
+		if v == val then return i end
+	end
+	return nil
 end
 
 function SystemClock.update_config_version()
@@ -153,16 +154,16 @@ end
 
 local g_funcs_change_tab_ref = G.FUNCS.change_tab
 function G.FUNCS.change_tab(e)
-    if e and e.config and e.config.id == 'tab_but_'..mod_instance.id then
-        SystemClock.set_popup(false)
-    end
-    g_funcs_change_tab_ref(e)
+	if e and e.config and e.config.id == 'tab_but_' .. mod_instance.id then
+		SystemClock.set_popup(false)
+	end
+	g_funcs_change_tab_ref(e)
 end
 
 local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
 function G.FUNCS.set_Trance_font(...)
 	if g_funcs_set_Trance_font then
-		local ret = {g_funcs_set_Trance_font(...)}
+		local ret = { g_funcs_set_Trance_font(...) }
 		SystemClock.reset_clock_ui()
 		return table.unpack(ret)
 	end
@@ -171,6 +172,10 @@ end
 function SystemClock.update(dt)
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
 		SystemClock.time = SystemClock.get_formatted_time(nil, nil, nil, SystemClock.config.hourOffset)
+
+		SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
+		SystemClock.colours.shadow[2] = SystemClock.colours.back[2]*(0.7)
+		SystemClock.colours.shadow[3] = SystemClock.colours.back[3]*(0.7)
 	end
 end
 
@@ -188,7 +193,8 @@ function SystemClock.calculate_max_text_width(formatIndex)
 	local width = 0
 	local string = SystemClock.get_formatted_time(format, SystemClock.exampleTime, true)
 	for _, c in utf8.chars(string) do
-		local dx = font.FONT:getWidth(c) * SystemClock.current.size * G.TILESCALE * font.FONTSCALE + 3 * G.TILESCALE * font.FONTSCALE
+		local dx = font.FONT:getWidth(c) * SystemClock.current.size * G.TILESCALE * font.FONTSCALE +
+			3 * G.TILESCALE * font.FONTSCALE
 		dx = dx / (G.TILESIZE * G.TILESCALE)
 		width = width + dx
 	end
@@ -198,11 +204,12 @@ end
 function SystemClock.create_UIBox_clock(style, textSize, colours, float)
 	style = style or 2
 	textSize = textSize or 1
-	colours = colours or {text = G.C.WHITE, back = G.C.BLACK}
+	colours = colours or { text = G.C.WHITE, back = G.C.BLACK }
 
 	local translucentColour = (style == 3 or style == 4) and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR
 	local panelOuterColour = (style == 4) and colours.back or G.C.CLEAR
 	local panelInnerColour = (style == 4) and G.C.DYN_UI.BOSS_DARK or (style == 5) and colours.back or G.C.CLEAR
+	local panelShadowColour = (style == 5) and colours.shadow or G.C.CLEAR
 	local embossAmount = (style == 5) and 0.05 or 0
 	local innerWidth = SystemClock.calculate_max_text_width()
 
@@ -214,55 +221,81 @@ function SystemClock.create_UIBox_clock(style, textSize, colours, float)
 			colour = translucentColour,
 			r = 0.1
 		},
-		nodes = {{
-			n = G.UIT.R,
-			config = {
-				align = 'cm',
-				padding = 0.05,
-				colour = panelOuterColour,
-				r = 0.1
-			},
-			nodes = {{
-				n = G.UIT.C,
+		nodes = {
+			{
+				n = G.UIT.R,
 				config = {
 					align = 'cm',
-					colour = panelInnerColour,
-					emboss = embossAmount,
-					r = 0.1,
-					minw = 0.5,
-					padding = 0.03
+					padding = 0.05,
+					colour = panelOuterColour,
+					r = 0.1
 				},
-				nodes = {{
-					n = G.UIT.R,
-					config = {
-						align = 'cm',
-						padding = 0.03,
-						minw = innerWidth,
-						r = 0.1
-					},
-					nodes = {{
-						n = G.UIT.O,
+				nodes = {
+					{
+						n = G.UIT.C,
 						config = {
-							align = 'cm',
-							id = 'clock_text',
-							object = DynaText({
-								string = {{
-									ref_table = SystemClock,
-									ref_value = 'time'
-								}},
-								colours = {colours.text},
-								scale = textSize,
-								shadow = (style > 1),
-								pop_in = 0,
-								pop_in_rate = 10,
-								float = float,
-								silent = true
-							})
+							align = 'tm',
+							r = 0.1,
+							minw = 1,
+							colour = panelShadowColour,
+						},
+						nodes = {
+							{
+								n = G.UIT.R,
+								config = {
+									align = 'cm',
+									colour = panelInnerColour,
+									r = 0.1,
+									minw = 0.5,
+									padding = 0.03
+								},
+								nodes = {
+									{
+										n = G.UIT.C,
+										config = {
+											align = 'cm',
+											padding = 0.03,
+											minw = innerWidth,
+											r = 0.1
+										},
+										nodes = { SystemClock.create_clock_DynaText(style, textSize, colours, float) }
+									}
+								}
+							},
+							{
+								n = G.UIT.R,
+								config = { minh = embossAmount }
+							}
 						}
-					}}
-				}}
-			}}
-		}}
+					}
+				}
+			}
+		}
+	}
+end
+
+function SystemClock.create_clock_DynaText(style, textSize, colours, float)
+	local dynaText = DynaText({
+		string = { {
+			ref_table = SystemClock,
+			ref_value = 'time'
+		} },
+		colours = { colours.text },
+		scale = textSize,
+		shadow = (style > 1),
+		pop_in = 0,
+		pop_in_rate = 10,
+		float = float,
+		silent = true,
+	})
+
+	return {
+		n = G.UIT.O,
+		config = {
+			align = 'cm',
+			id = 'clock_text',
+			object = dynaText
+		}
 	}
 end
 
@@ -271,13 +304,10 @@ function SystemClock.reset_clock_ui()
 		G.HUD_clock:remove()
 	end
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
-		G.HUD_clock = MoveableContainer {
+		G.HUD_clock = MoveableContainer({
 			config = {
 				align = 'cm',
-				offset = {
-					x = 0,
-					y = 0
-				},
+				offset = { x = 0, y = 0 },
 				major = G,
 				instance_type = SystemClock.drawAsPopup and 'POPUP'
 			},
@@ -289,7 +319,7 @@ function SystemClock.reset_clock_ui()
 					SystemClock.drawAsPopup
 				)
 			}
-		}
+		})
 		G.HUD_clock.states.drag.can = SystemClock.config.clockAllowDrag
 		local position = SystemClock.current.position
 		G.HUD_clock.T.x = position.x
@@ -297,7 +327,7 @@ function SystemClock.reset_clock_ui()
 
 		G.HUD_clock.move = function(self, dt)
 			MoveableContainer.move(self, dt)
-			SystemClock.current.position = {x = self.T.x, y = self.T.y}
+			SystemClock.current.position = { x = self.T.x, y = self.T.y }
 		end
 
 		G.HUD_clock.stop_drag = function(self)
@@ -313,12 +343,12 @@ function SystemClock.update_config_ui()
 	if not panelContents then return end
 
 	panelContents.config.object:remove()
-    panelContents.config.object = UIBox{
-        config = {offset = {x = 0, y = 0}, parent = panelContents},
-        definition = SystemClock.create_UIBox_config_panel(),
-    }
+	panelContents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = panelContents },
+		definition = SystemClock.create_UIBox_config_panel(),
+	}
 	panelContents.UIBox:recalculate()
-	panelContents.config.object:set_role{
+	panelContents.config.object:set_role {
 		role_type = 'Major',
 		major = nil
 	}
@@ -331,17 +361,17 @@ function SystemClock.update_config_position_sliders()
 	if not panelContents then return end
 
 	panelContents.config.object:remove()
-    panelContents.config.object = UIBox{
-        config = {offset = {x = 0, y = 0}, parent = panelContents},
-        definition = SystemClock.create_UIBox_position_sliders()
-      }
+	panelContents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = panelContents },
+		definition = SystemClock.create_UIBox_position_sliders()
+	}
 	panelContents.UIBox:recalculate()
 end
 
 function SystemClock.save_mod_config()
 	local okay, err = pcall(SMODS.save_mod_config, mod_instance)
 	if not okay then
-		sendErrorMessage("Failed to perform a manual mod config save: "..err, 'SystemClock')
+		sendErrorMessage("Failed to perform a manual mod config save: " .. err, 'SystemClock')
 	end
 end
 
@@ -361,10 +391,17 @@ function SystemClock.get_colour_from_ref(ref)
 end
 
 function SystemClock.get_clock_colours()
-	return {
-		text = SystemClock.get_colour_from_ref(SystemClock.current.colours.text),
-		back = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
+	local textColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.text)
+	local backColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
+	local shadowColour = darken(backColour, 0.3)
+
+	SystemClock.colours = {
+		text = textColour,
+		back = backColour,
+		shadow = shadowColour
 	}
+
+	return SystemClock.colours
 end
 
 G.FUNCS.sysclock_change_clock_preset = function(e)
