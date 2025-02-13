@@ -173,7 +173,7 @@ function G.FUNCS.set_Trance_font(...)
 	if g_funcs_set_Trance_font then
 		local ret = { g_funcs_set_Trance_font(...) }
 		SystemClock.reset_clock_ui()
-		return table.unpack(ret)
+		return unpack(ret)
 	end
 end
 
