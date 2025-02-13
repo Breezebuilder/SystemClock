@@ -49,6 +49,7 @@ SystemClock.time = ''
 SystemClock.current = {}
 SystemClock.indices = {}
 SystemClock.colours = {}
+SystemClock.initialised = false
 SystemClock.exampleTime = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
 SystemClock.drawAsPopup = false
 
@@ -98,6 +99,35 @@ function SystemClock.update_config_version()
 	end
 end
 
+function SystemClock.get_colour_from_ref(ref)
+	if not ref then return nil end
+
+	local depth = 0
+	local colour = G.C
+	for objName in ref:gmatch("[^%.]+") do
+		colour = colour[objName]
+		depth = depth + 1
+		if depth > 2 or not colour then
+			return nil
+		end
+	end
+	return type(colour) == 'table' and colour
+end
+
+function SystemClock.get_clock_colours()
+	local textColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.text)
+	local backColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
+	local shadowColour = darken(backColour, 0.3)
+
+	SystemClock.colours = {
+		text = textColour,
+		back = backColour,
+		shadow = shadowColour
+	}
+
+	return SystemClock.colours
+end
+
 function SystemClock.init_config_preset(presetIndex)
 	presetIndex = presetIndex or SystemClock.config.clockPresetIndex
 	SystemClock.config.clockPresetIndex = presetIndex
@@ -108,6 +138,9 @@ function SystemClock.init_config_preset(presetIndex)
 	SystemClock.indices.size = index_of(SystemClock.TEXT_SIZES, SystemClock.current.size) or 1
 	SystemClock.indices.textColour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.text) or 1
 	SystemClock.indices.backColour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.back) or 1
+	SystemClock.colours = SystemClock.get_clock_colours()
+
+	SystemClock.initialised = true
 end
 
 function SystemClock.get_formatted_time(formatRow, time, forceLeadingZero, hour_offset)
@@ -179,6 +212,12 @@ end
 
 function SystemClock.update(dt)
 	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
+		if not SystemClock.initialised then
+			sendWarnMessage("Update(dt) called before init", "SystemClock")
+			SystemClock.init_config_preset()
+			return
+		end
+
 		SystemClock.time = SystemClock.get_formatted_time(nil, nil, nil, SystemClock.config.hourOffset)
 
 		SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
@@ -199,35 +238,6 @@ function SystemClock.save_mod_config()
 	if not okay then
 		sendErrorMessage("Failed to perform a manual mod config save: " .. err, 'SystemClock')
 	end
-end
-
-function SystemClock.get_colour_from_ref(ref)
-	if not ref then return nil end
-
-	local depth = 0
-	local colour = G.C
-	for objName in ref:gmatch("[^%.]+") do
-		colour = colour[objName]
-		depth = depth + 1
-		if depth > 2 or not colour then
-			return nil
-		end
-	end
-	return type(colour) == 'table' and colour
-end
-
-function SystemClock.get_clock_colours()
-	local textColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.text)
-	local backColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
-	local shadowColour = darken(backColour, 0.3)
-
-	SystemClock.colours = {
-		text = textColour,
-		back = backColour,
-		shadow = shadowColour
-	}
-
-	return SystemClock.colours
 end
 
 G.FUNCS.sysclock_change_clock_preset = function(e)
