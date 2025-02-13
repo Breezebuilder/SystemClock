@@ -48,7 +48,7 @@ function SystemClock.create_UIBox_clock(style, textSize, colours, float)
                         config = {
                             align = 'tm',
                             r = 0.1,
-                            minw = 1,
+                            minw = 0.1,
                             colour = panelShadowColour,
                         },
                         nodes = {
