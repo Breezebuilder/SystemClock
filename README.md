@@ -1,7 +1,10 @@
 # SystemClock for Balatro
-![SystemClockHeader](https://github.com/user-attachments/assets/bcc987a2-3dc4-42f8-9f5b-9a7cb9d4a918)
+![SystemClockHeader_crt_wide](https://github.com/user-attachments/assets/a469b8e3-5e4e-452e-9699-4ed114d44ad1)
 
 SystemClock is a mod for [Balatro](https://store.steampowered.com/app/2379780/Balatro/) which adds a draggable, resizable, customizable clock to the game screen.
+It includes 5 editable presets and supports a variety of time formats, UI styles, and color options.
+Keep track of time - don't fall into the Black Hole.
+
 
 ## Installation
 1. Install [lovely and SMODS](https://github.com/Steamodded/smods/wiki) by following all installation instructions step-by-step.
