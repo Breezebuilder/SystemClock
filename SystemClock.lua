@@ -249,7 +249,7 @@ end
 G.FUNCS.sysclock_default_current_preset = function(e)
 	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex] = {}
 	SystemClock.save_mod_config()
-	SystemClock.config = SMODS.load_mod_config(mod_instance)
+	SystemClock.config.clockPresets = SMODS.load_mod_config(mod_instance).clockPresets
 	SystemClock.init_config_preset()
 	SystemClock.reset_clock_ui()
 	SystemClock.update_config_ui()
