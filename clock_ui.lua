@@ -137,13 +137,9 @@ function SystemClock.reset_clock_ui()
         G.HUD_clock.T.x = position.x
         G.HUD_clock.T.y = position.y
 
-        G.HUD_clock.move = function(self, dt)
-            MoveableContainer.move(self, dt)
-            SystemClock.current.position = { x = self.T.x, y = self.T.y }
-        end
-
         G.HUD_clock.stop_drag = function(self)
             MoveableContainer.stop_drag(self)
+            SystemClock.current.position = { x = self.T.x, y = self.T.y }
             SystemClock.save_config()
             SystemClock.update_config_position_sliders()
         end
