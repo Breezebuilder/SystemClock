@@ -6,22 +6,17 @@ MoveableContainer = UIBox:extend()
 function MoveableContainer:init(args)
 	args.definition = {
 		n = G.UIT.ROOT,
-		config = {
-			align = 'tm',
-			colour = G.C.CLEAR,
-			scale = 1,
-		},
+		config = { colour = G.C.CLEAR },
 		nodes = { {
 			n = G.UIT.R,
 			nodes = args.nodes or {}
-		} },
+		} }
 	}
 
 	UIBox.init(self, args)
 
-	self.states.drag.can = true
-	self.states.hover.can = true
-	self.attention_text = 'MoveableContainer' -- Workaround so that this is drawn over other elements
+	self.UIRoot:set_zoom(true, true, true)
+	self.attention_text = 'MoveableContainer'
 
 	if args.config.instance_type then
 		table.insert(G.I[args.config.instance_type], self)
@@ -30,37 +25,41 @@ function MoveableContainer:init(args)
 	end
 end
 
-function Moveable:set_hover_state(state)
-	if self.states.hover.is == state then return end
+function Moveable:set_zoom(state, recursive, force)
+	if self.zoom == state and not force then return end
 
-	self.zoom = true
-	self.states.hover.is = state
+	self.zoom = state
+	if self.config.object then self.config.object.zoom = state end
 
-	if self.config.object then
-		self.config.object.zoom = true
-		self.config.object.states.hover.is = state
-	end
-
-	if self.children then
+	if recursive and self.children then
 		for k, v in pairs(self.children) do
-			v:set_hover_state(state)
+			v:set_zoom(state, true, force)
 		end
 	end
 end
 
-function Moveable:set_drag_state(state)
-	if self.states.drag.is == state then return end
+function Moveable:set_hover_state(state, recursive, force)
+	if self.states.hover.is == state and not force then return end
 
-	self.zoom = true
-	self.states.drag.is = state
+	self.states.hover.is = state
+	if self.config.object then self.config.object.states.hover.is = state end
 
-	if self.config.object then
-		self.config.object.zoom = true
-		self.config.object.states.drag.is = state
-	end
-	if self.children then
+	if recursive and self.children then
 		for k, v in pairs(self.children) do
-			v:set_drag_state(state)
+			v:set_hover_state(state, true, force)
+		end
+	end
+end
+
+function Moveable:set_drag_state(state, recursive, force)
+	if self.states.drag.is == state and not force then return end
+
+	self.states.drag.is = state
+	if self.config.object then self.config.object.states.drag.is = state end
+
+	if recursive and self.children then
+		for k, v in pairs(self.children) do
+			v:set_drag_state(state, true, force)
 		end
 	end
 end
@@ -68,7 +67,7 @@ end
 function MoveableContainer:hover()
 	if self.states.drag.can then
 		self:juice_up(0.05, 0.02)
-		self.UIRoot:set_hover_state(true)
+		self.UIRoot:set_hover_state(true, true)
 		play_sound('chips1', math.random() * 0.1 + 0.55, 0.15)
 	end
 
@@ -76,16 +75,16 @@ function MoveableContainer:hover()
 end
 
 function MoveableContainer:stop_hover()
-	self.UIRoot:set_hover_state(false)
+	self.UIRoot:set_hover_state(false, true)
 	UIBox.stop_hover(self)
 end
 
 function MoveableContainer:drag()
-	self.UIRoot:set_drag_state(true)
+	self.UIRoot:set_drag_state(true, true)
 	UIBox.drag(self)
 end
 
 function MoveableContainer:stop_drag()
-	self.UIRoot:set_drag_state(false)
+	self.UIRoot:set_drag_state(false, true)
 	UIBox.stop_drag(self)
 end
