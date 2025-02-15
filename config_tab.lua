@@ -1,6 +1,5 @@
 SMODS.current_mod.config_tab = function()
-	SystemClock.drawAsPopup = true
-	SystemClock.reset_clock_ui()
+	SystemClock.set_popup(true)
 	return {
 		n = G.UIT.ROOT,
 		config = {
@@ -32,7 +31,7 @@ SMODS.current_mod.config_tab = function()
 												text_scale = 0.8,
 												ref_table = SystemClock.config,
 												ref_value = 'clockVisible',
-												callback = SystemClock.reset_clock_ui
+												callback = SystemClock.callback_clock_visibility
 											})
 										}
 									},

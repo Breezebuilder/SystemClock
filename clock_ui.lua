@@ -127,7 +127,7 @@ function SystemClock.reset_clock_ui()
                 SystemClock.create_UIBox_clock(
                     SystemClock.current.style,
                     SystemClock.current.size,
-                    SystemClock.get_clock_colours(),
+                    SystemClock.assign_clock_colours(),
                     SystemClock.drawAsPopup
                 )
             }
@@ -144,7 +144,7 @@ function SystemClock.reset_clock_ui()
 
         G.HUD_clock.stop_drag = function(self)
             MoveableContainer.stop_drag(self)
-            SystemClock.save_mod_config()
+            SystemClock.save_config()
             SystemClock.update_config_position_sliders()
         end
     end

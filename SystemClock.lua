@@ -143,7 +143,7 @@ end
 function SystemClock.get_formatted_time(formatRow, time, forceLeadingZero, hour_offset)
 	formatRow = formatRow or SystemClock.CLOCK_FORMATS[SystemClock.current.format]
 	if hour_offset then
-		local offset = tonumber(hour_offset) * 3600
+		local offset = hour_offset * 3600
 		if time == nil then
 			time = os.time()
 		end
@@ -226,18 +226,22 @@ function SystemClock.update(dt)
 	end
 end
 
-function SystemClock.set_popup(state)
-	if SystemClock.drawAsPopup ~= state then
+function SystemClock.set_popup(state, forceReset)
+	if forceReset or SystemClock.drawAsPopup ~= state then
 		SystemClock.drawAsPopup = state
 		SystemClock.reset_clock_ui()
 	end
 end
 
-function SystemClock.save_mod_config()
-	local okay, err = pcall(SMODS.save_mod_config, mod_instance)
-	if not okay then
-		sendErrorMessage("Failed to perform a manual mod config save: " .. err, 'SystemClock')
+function SystemClock.save_config()
+	if not (SMODS.save_mod_config(mod_instance)) then
+		sendErrorMessage("Failed to perform a manual mod config save", 'SystemClock')
 	end
+end
+
+SystemClock.callback_clock_visibility = function()
+	SystemClock.hook_game_update(SystemClock.config.clockVisible)
+	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_preset = function(e)
@@ -248,8 +252,11 @@ end
 
 G.FUNCS.sysclock_default_current_preset = function(e)
 	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex] = {}
-	SystemClock.save_mod_config()
-	SystemClock.config.clockPresets = SMODS.load_mod_config(mod_instance).clockPresets
+	SystemClock.save_config()
+	local loaded_config = SMODS.load_mod_config()
+	if loaded_config then
+		SystemClock.config.clockPresets = loaded_config.clockPresets
+	end
 	SystemClock.init_config_preset()
 	SystemClock.reset_clock_ui()
 	SystemClock.update_config_ui()
