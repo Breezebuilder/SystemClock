@@ -30,7 +30,7 @@ SMODS.current_mod.config_tab = function()
 												w = 1.5,
 												text_scale = 0.8,
 												ref_table = SystemClock.config,
-												ref_value = 'clockVisible',
+												ref_value = 'clock_visible',
 												callback = SystemClock.callback_clock_visibility
 											})
 										}
@@ -44,7 +44,7 @@ SMODS.current_mod.config_tab = function()
 												w = 1.5,
 												text_scale = 0.8,
 												ref_table = SystemClock.config,
-												ref_value = 'clockAllowDrag',
+												ref_value = 'clock_allow_drag',
 												callback = SystemClock.reset_clock_ui
 											})
 										}
@@ -64,7 +64,7 @@ SMODS.current_mod.config_tab = function()
 												w = 2,
 												h = 0.8,
 												options = { "1", "2", "3", "4", "5" },
-												current_option = SystemClock.config.clockPresetIndex,
+												current_option = SystemClock.config.clock_preset_index,
 												opt_callback = 'sysclock_change_clock_preset',
 												colour = G.C.JOKER_GREY,
 											}),
@@ -205,7 +205,7 @@ function SystemClock.create_UIBox_config_panel()
 								scale = 0.8,
 								w = 4.5,
 								options = localize('sysclock_colours'),
-								current_option = SystemClock.indices.textColour,
+								current_option = SystemClock.indices.text_colour,
 								opt_callback = 'sysclock_change_clock_text_colour',
 								colour = G.C.BLUE
 							})
@@ -220,7 +220,7 @@ function SystemClock.create_UIBox_config_panel()
 								scale = 0.8,
 								w = 4.5,
 								options = localize('sysclock_colours'),
-								current_option = SystemClock.indices.backColour,
+								current_option = SystemClock.indices.back_colour,
 								opt_callback = 'sysclock_change_clock_back_colour',
 								colour = G.C.BLUE
 							})
@@ -280,31 +280,31 @@ function SystemClock.create_UIBox_position_sliders()
 end
 
 function SystemClock.update_config_ui()
-	local panelContents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
-	if not panelContents then return end
+	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
+	if not panel_contents then return end
 
-	panelContents.config.object:remove()
-	panelContents.config.object = UIBox {
-		config = { offset = { x = 0, y = 0 }, parent = panelContents },
+	panel_contents.config.object:remove()
+	panel_contents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = panel_contents },
 		definition = SystemClock.create_UIBox_config_panel(),
 	}
-	panelContents.UIBox:recalculate()
-	panelContents.config.object:set_role {
+	panel_contents.UIBox:recalculate()
+	panel_contents.config.object:set_role {
 		role_type = 'Major',
 		major = nil
 	}
 
-	panelContents.config.object:juice_up(0.05, 0.02)
+	panel_contents.config.object:juice_up(0.05, 0.02)
 end
 
 function SystemClock.update_config_position_sliders()
-	local panelContents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
-	if not panelContents then return end
+	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
+	if not panel_contents then return end
 
-	panelContents.config.object:remove()
-	panelContents.config.object = UIBox {
-		config = { offset = { x = 0, y = 0 }, parent = panelContents },
+	panel_contents.config.object:remove()
+	panel_contents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = panel_contents },
 		definition = SystemClock.create_UIBox_position_sliders()
 	}
-	panelContents.UIBox:recalculate()
+	panel_contents.UIBox:recalculate()
 end

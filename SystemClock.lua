@@ -17,6 +17,7 @@ SMODS.current_mod.description_loc_vars = function(self)
 	}
 end
 
+SMODS.load_file('back_compat.lua')()
 SMODS.load_file('clock_ui.lua')()
 SMODS.load_file('config_tab.lua')()
 SMODS.load_file('MoveableContainer.lua')()
@@ -49,8 +50,8 @@ SystemClock.time = ''
 SystemClock.current = {}
 SystemClock.indices = {}
 SystemClock.colours = {}
-SystemClock.exampleTime = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
-SystemClock.drawAsPopup = false
+SystemClock.example_time = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
+SystemClock.draw_as_popup = false
 
 local function index_of(table, val)
 	if not val then return nil end
@@ -60,51 +61,13 @@ local function index_of(table, val)
 	return nil
 end
 
-function SystemClock.update_config_version()
-	if SystemClock.config.clockColourIndex then
-		sendInfoMessage("Transferring config settings (v1 -> v2)", 'SystemClock')
-		SystemClock.config.clockTextColourRef = SystemClock.COLOUR_REFS[SystemClock.config.clockColourIndex]
-		SystemClock.config.clockTextColourIndex = SystemClock.config.clockColourIndex
-		SystemClock.config.clockBackColourRef = 'DYN_UI.MAIN'
-		SystemClock.config.clockColourIndex = nil
-		SystemClock.config.clockColour = nil
-
-		SystemClock.config.clockConfigVersion = 2
-	end
-
-	if SystemClock.config.clockConfigVersion == 2 then
-		sendInfoMessage("Transferring config settings (v2 -> v3)", 'SystemClock')
-		SystemClock.config.clockPresets[5].format = SystemClock.config.clockTimeFormatIndex
-		SystemClock.config.clockPresets[5].style = SystemClock.config.clockStyleIndex
-		SystemClock.config.clockPresets[5].size = SystemClock.config.clockTextSize
-		SystemClock.config.clockPresets[5].colours.text = SystemClock.config.clockTextColourRef
-		SystemClock.config.clockPresets[5].colours.back = SystemClock.config.clockBackColourRef
-		SystemClock.config.clockPresets[5].position.x = SystemClock.config.clockX
-		SystemClock.config.clockPresets[5].position.y = SystemClock.config.clockY
-		SystemClock.config.clockPresetIndex = 5
-
-		SystemClock.config.clockTimeFormatIndex = nil
-		SystemClock.config.clockStyleIndex = nil
-		SystemClock.config.clockTextColourIndex = nil
-		SystemClock.config.clockTextColourRef = nil
-		SystemClock.config.clockBackColourIndex = nil
-		SystemClock.config.clockBackColourRef = nil
-		SystemClock.config.clockTextSize = nil
-		SystemClock.config.clockTextSizeIndex = nil
-		SystemClock.config.clockX = nil
-		SystemClock.config.clockY = nil
-
-		SystemClock.config.clockConfigVersion = 3
-	end
-end
-
 function SystemClock.get_colour_from_ref(ref)
 	if not ref then return nil end
 
 	local depth = 0
 	local colour = G.C
-	for objName in ref:gmatch("[^%.]+") do
-		colour = colour[objName]
+	for obj_name in ref:gmatch("[^%.]+") do
+		colour = colour[obj_name]
 		depth = depth + 1
 		if depth > 2 or not colour then
 			return nil
@@ -114,50 +77,56 @@ function SystemClock.get_colour_from_ref(ref)
 end
 
 function SystemClock.assign_clock_colours()
-	local textColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.text)
-	local backColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
-	local shadowColour = darken(backColour, 0.3)
+	local text_colour = SystemClock.get_colour_from_ref(SystemClock.current.colours.text)
+	local back_colour = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
+	local shadow_colour = darken(back_colour, 0.3)
 
 	SystemClock.colours = {
-		text = textColour,
-		back = backColour,
-		shadow = shadowColour
+		text = text_colour,
+		back = back_colour,
+		shadow = shadow_colour
 	}
 
 	return SystemClock.colours
 end
 
 function SystemClock.init_config_preset(presetIndex)
-	presetIndex = presetIndex or SystemClock.config.clockPresetIndex
-	SystemClock.config.clockPresetIndex = presetIndex
+	presetIndex = presetIndex or SystemClock.config.clock_preset_index
+	SystemClock.config.clock_preset_index = presetIndex
 
-	SystemClock.current = SystemClock.config.clockPresets[presetIndex]
+	SystemClock.current = SystemClock.config.clock_presets[presetIndex]
 	SystemClock.indices.format = SystemClock.current.format or 1
 	SystemClock.indices.style = SystemClock.current.style or 1
 	SystemClock.indices.size = index_of(SystemClock.TEXT_SIZES, SystemClock.current.size) or 1
-	SystemClock.indices.textColour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.text) or 1
-	SystemClock.indices.backColour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.back) or 1
+	SystemClock.indices.text_colour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.text) or 1
+	SystemClock.indices.back_colour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.back) or 1
 	SystemClock.assign_clock_colours()
 end
 
-function SystemClock.get_formatted_time(formatRow, time, forceLeadingZero, hour_offset)
-	formatRow = formatRow or SystemClock.CLOCK_FORMATS[SystemClock.indices.format]
+function SystemClock.save_config()
+	if not (SMODS.save_mod_config(mod_instance)) then
+		sendErrorMessage("Failed to perform a manual mod config save", 'SystemClock')
+	end
+end
+
+function SystemClock.get_formatted_time(format_style, time, force_leading_zero, hour_offset)
+	format_style = format_style or SystemClock.CLOCK_FORMATS[SystemClock.indices.format]
 	if hour_offset then
 		if time == nil then
 			time = os.time()
 		end
 		time = time + (hour_offset * 3600)
 	end
-	local formatted_time = os.date(formatRow[1], time)
-	if not forceLeadingZero and formatRow[2] then
+	local formatted_time = os.date(format_style[1], time)
+	if not force_leading_zero and format_style[2] then
 		formatted_time = tostring(formatted_time):gsub("^0", "")
 	end
 	return formatted_time
 end
 
 function SystemClock.generate_example_time_formats()
-	for i, formatRow in ipairs(SystemClock.CLOCK_FORMATS) do
-		SystemClock.FORMAT_EXAMPLES[i] = SystemClock.get_formatted_time(formatRow, SystemClock.exampleTime)
+	for i, format_style in ipairs(SystemClock.CLOCK_FORMATS) do
+		SystemClock.FORMAT_EXAMPLES[i] = SystemClock.get_formatted_time(format_style, SystemClock.example_time)
 	end
 end
 
@@ -214,9 +183,9 @@ function G.FUNCS.set_Trance_font(...)
 end
 
 function SystemClock.update(dt)
-	SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, SystemClock.config.hourOffset)
+	SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, SystemClock.config.hour_offset)
 
-	if SystemClock.indices.style == 5 and SystemClock.indices.backColour > 17 then
+	if SystemClock.indices.style == 5 and SystemClock.indices.back_colour > 17 then
 		SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
 		SystemClock.colours.shadow[2] = SystemClock.colours.back[2]*(0.7)
 		SystemClock.colours.shadow[3] = SystemClock.colours.back[3]*(0.7)
@@ -228,20 +197,14 @@ function SystemClock.update(dt)
 end
 
 function SystemClock.set_popup(state, forceReset)
-	if forceReset or SystemClock.drawAsPopup ~= state then
-		SystemClock.drawAsPopup = state
+	if forceReset or SystemClock.draw_as_popup ~= state then
+		SystemClock.draw_as_popup = state
 		SystemClock.reset_clock_ui()
 	end
 end
 
-function SystemClock.save_config()
-	if not (SMODS.save_mod_config(mod_instance)) then
-		sendErrorMessage("Failed to perform a manual mod config save", 'SystemClock')
-	end
-end
-
 SystemClock.callback_clock_visibility = function()
-	SystemClock.hook_game_update(SystemClock.config.clockVisible)
+	SystemClock.hook_game_update(SystemClock.config.clock_visible)
 	SystemClock.reset_clock_ui()
 end
 
@@ -252,11 +215,11 @@ G.FUNCS.sysclock_change_clock_preset = function(e)
 end
 
 G.FUNCS.sysclock_default_current_preset = function(e)
-	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex] = {}
+	SystemClock.config.clock_presets[SystemClock.config.clock_preset_index] = {}
 	SystemClock.save_config()
 	local loaded_config = SMODS.load_mod_config(mod_instance)
 	if loaded_config then
-		SystemClock.config.clockPresets = loaded_config.clockPresets
+		SystemClock.config.clock_presets = loaded_config.clock_presets
 	end
 	SystemClock.init_config_preset()
 	SystemClock.reset_clock_ui()
@@ -276,16 +239,16 @@ G.FUNCS.sysclock_change_clock_style = function(e)
 end
 
 G.FUNCS.sysclock_change_clock_text_colour = function(e)
-	SystemClock.indices.textColour = e.to_key
-	local textColourRef = SystemClock.COLOUR_REFS[e.to_key]
-	SystemClock.current.colours.text = textColourRef
+	SystemClock.indices.text_colour = e.to_key
+	local text_colour_ref = SystemClock.COLOUR_REFS[e.to_key]
+	SystemClock.current.colours.text = text_colour_ref
 	SystemClock.reset_clock_ui()
 end
 
 G.FUNCS.sysclock_change_clock_back_colour = function(e)
-	SystemClock.indices.backColour = e.to_key
-	local backColourRef = SystemClock.COLOUR_REFS[e.to_key]
-	SystemClock.current.colours.back = backColourRef
+	SystemClock.indices.back_colour = e.to_key
+	local back_colour_ref = SystemClock.COLOUR_REFS[e.to_key]
+	SystemClock.current.colours.back = back_colour_ref
 	SystemClock.reset_clock_ui()
 end
 

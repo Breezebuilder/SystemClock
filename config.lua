@@ -1,10 +1,10 @@
 return {
-	['clockConfigVersion'] = 3,
-	['clockVisible'] = true,
-	['clockAllowDrag'] = true,
-	['hourOffset'] = 0,
-	['clockPresetIndex'] = 1,
-	['clockPresets'] = {
+	['config_version'] = 3,
+	['clock_visible'] = true,
+	['clock_allow_drag'] = true,
+	['hour_offset'] = 0,
+	['clock_preset_index'] = 1,
+	['clock_presets'] = {
 		[1] = {
 			['format'] = 4,
 			['style'] = 5,
