@@ -141,13 +141,12 @@ function SystemClock.init_config_preset(presetIndex)
 end
 
 function SystemClock.get_formatted_time(formatRow, time, forceLeadingZero, hour_offset)
-	formatRow = formatRow or SystemClock.CLOCK_FORMATS[SystemClock.current.format]
+	formatRow = formatRow or SystemClock.CLOCK_FORMATS[SystemClock.indices.format]
 	if hour_offset then
-		local offset = hour_offset * 3600
 		if time == nil then
 			time = os.time()
 		end
-		time = time + offset
+		time = time + (hour_offset * 3600)
 	end
 	local formatted_time = os.date(formatRow[1], time)
 	if not forceLeadingZero and formatRow[2] then
@@ -215,11 +214,13 @@ function G.FUNCS.set_Trance_font(...)
 end
 
 function SystemClock.update(dt)
-	SystemClock.time = SystemClock.get_formatted_time(nil, nil, nil, SystemClock.config.hourOffset)
+	SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, SystemClock.config.hourOffset)
 
-	SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
-	SystemClock.colours.shadow[2] = SystemClock.colours.back[2]*(0.7)
-	SystemClock.colours.shadow[3] = SystemClock.colours.back[3]*(0.7)
+	if SystemClock.indices.style == 5 and SystemClock.indices.backColour > 17 then
+		SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
+		SystemClock.colours.shadow[2] = SystemClock.colours.back[2]*(0.7)
+		SystemClock.colours.shadow[3] = SystemClock.colours.back[3]*(0.7)
+	end
 
 	if G.STAGE ~= G.STAGES.RUN then
 		SystemClock.hook_game_update(false)
@@ -253,7 +254,7 @@ end
 G.FUNCS.sysclock_default_current_preset = function(e)
 	SystemClock.config.clockPresets[SystemClock.config.clockPresetIndex] = {}
 	SystemClock.save_config()
-	local loaded_config = SMODS.load_mod_config()
+	local loaded_config = SMODS.load_mod_config(mod_instance)
 	if loaded_config then
 		SystemClock.config.clockPresets = loaded_config.clockPresets
 	end
