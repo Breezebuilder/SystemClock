@@ -49,7 +49,6 @@ SystemClock.time = ''
 SystemClock.current = {}
 SystemClock.indices = {}
 SystemClock.colours = {}
-SystemClock.initialised = false
 SystemClock.exampleTime = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
 SystemClock.drawAsPopup = false
 
@@ -114,7 +113,7 @@ function SystemClock.get_colour_from_ref(ref)
 	return type(colour) == 'table' and colour
 end
 
-function SystemClock.get_clock_colours()
+function SystemClock.assign_clock_colours()
 	local textColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.text)
 	local backColour = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
 	local shadowColour = darken(backColour, 0.3)
@@ -138,9 +137,7 @@ function SystemClock.init_config_preset(presetIndex)
 	SystemClock.indices.size = index_of(SystemClock.TEXT_SIZES, SystemClock.current.size) or 1
 	SystemClock.indices.textColour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.text) or 1
 	SystemClock.indices.backColour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.back) or 1
-	SystemClock.colours = SystemClock.get_clock_colours()
-
-	SystemClock.initialised = true
+	SystemClock.assign_clock_colours()
 end
 
 function SystemClock.get_formatted_time(formatRow, time, forceLeadingZero, hour_offset)
@@ -170,14 +167,21 @@ SystemClock.init_config_preset()
 SystemClock.generate_example_time_formats()
 
 local game_update_ref = Game.update
-function Game:update(dt)
-	game_update_ref(self, dt)
-	SystemClock.update(dt)
+function SystemClock.hook_game_update(state)
+	if state == false then
+		Game.update = game_update_ref
+	else
+		function Game:update(dt)
+			game_update_ref(self, dt)
+			SystemClock.update(dt)
+		end
+	end
 end
 
 local game_start_run_ref = Game.start_run
 function Game:start_run(args)
 	game_start_run_ref(self, args)
+	SystemClock.hook_game_update(true)
 	SystemClock.reset_clock_ui()
 end
 
@@ -211,18 +215,14 @@ function G.FUNCS.set_Trance_font(...)
 end
 
 function SystemClock.update(dt)
-	if G.STAGE == G.STAGES.RUN and SystemClock.config.clockVisible then
-		if not SystemClock.initialised then
-			sendWarnMessage("Update(dt) called before init", "SystemClock")
-			SystemClock.init_config_preset()
-			return
-		end
+	SystemClock.time = SystemClock.get_formatted_time(nil, nil, nil, SystemClock.config.hourOffset)
 
-		SystemClock.time = SystemClock.get_formatted_time(nil, nil, nil, SystemClock.config.hourOffset)
+	SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
+	SystemClock.colours.shadow[2] = SystemClock.colours.back[2]*(0.7)
+	SystemClock.colours.shadow[3] = SystemClock.colours.back[3]*(0.7)
 
-		SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
-		SystemClock.colours.shadow[2] = SystemClock.colours.back[2]*(0.7)
-		SystemClock.colours.shadow[3] = SystemClock.colours.back[3]*(0.7)
+	if G.STAGE ~= G.STAGES.RUN then
+		SystemClock.hook_game_update(false)
 	end
 end
 
