@@ -31,9 +31,10 @@ function MoveableContainer:init(args)
 end
 
 function Moveable:set_hover_state(state)
+	if self.states.hover.is == state then return end
+
 	self.zoom = true
 	self.states.hover.is = state
-	self.parrallax_dist = 1
 
 	if self.config.object then
 		self.config.object.zoom = true
@@ -48,6 +49,8 @@ function Moveable:set_hover_state(state)
 end
 
 function Moveable:set_drag_state(state)
+	if self.states.drag.is == state then return end
+
 	self.zoom = true
 	self.states.drag.is = state
 
