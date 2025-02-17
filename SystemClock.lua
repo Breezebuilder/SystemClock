@@ -1,7 +1,4 @@
 SystemClock = {}
-SystemClock.path = SMODS.current_mod.path
-SystemClock.config = SMODS.current_mod.config
-local mod_instance = SMODS.current_mod
 
 SMODS.Atlas({
 	key = 'modicon',
@@ -17,12 +14,16 @@ SMODS.current_mod.description_loc_vars = function(self)
 	}
 end
 
-SMODS.load_file('back_compat.lua')()
+SMODS.load_file('utilities.lua')()
 SMODS.load_file('clock_ui.lua')()
 SMODS.load_file('config_ui.lua')()
+SMODS.load_file('config.lua')()
 SMODS.load_file('MoveableContainer.lua')()
 
 SMODS.current_mod.config_tab = SystemClock.config_ui
+
+SystemClock.load_config()
+SystemClock.save_config()
 
 SystemClock.CLOCK_FORMATS = {
 	{ '%I:%M %p',    true },
@@ -55,29 +56,6 @@ SystemClock.colours = {}
 SystemClock.example_time = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
 SystemClock.draw_as_popup = false
 
-local function index_of(table, val)
-	if not val then return nil end
-	for i, v in ipairs(table) do
-		if v == val then return i end
-	end
-	return nil
-end
-
-function SystemClock.get_colour_from_ref(ref)
-	if not ref then return nil end
-
-	local depth = 0
-	local colour = G.C
-	for obj_name in ref:gmatch("[^%.]+") do
-		colour = colour[obj_name]
-		depth = depth + 1
-		if depth > 2 or not colour then
-			return nil
-		end
-	end
-	return type(colour) == 'table' and colour
-end
-
 function SystemClock.assign_clock_colours()
 	local text_colour = SystemClock.get_colour_from_ref(SystemClock.current.colours.text)
 	local back_colour = SystemClock.get_colour_from_ref(SystemClock.current.colours.back)
@@ -99,16 +77,10 @@ function SystemClock.init_config_preset(presetIndex)
 	SystemClock.current = SystemClock.config.clock_presets[presetIndex]
 	SystemClock.indices.format = SystemClock.current.format or 1
 	SystemClock.indices.style = SystemClock.current.style or 1
-	SystemClock.indices.size = index_of(SystemClock.TEXT_SIZES, SystemClock.current.size) or 1
-	SystemClock.indices.text_colour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.text) or 1
-	SystemClock.indices.back_colour = index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.back) or 1
+	SystemClock.indices.size = SystemClock.index_of(SystemClock.TEXT_SIZES, SystemClock.current.size) or 1
+	SystemClock.indices.text_colour = SystemClock.index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.text) or 1
+	SystemClock.indices.back_colour = SystemClock.index_of(SystemClock.COLOUR_REFS, SystemClock.current.colours.back) or 1
 	SystemClock.assign_clock_colours()
-end
-
-function SystemClock.save_config()
-	if not (SMODS.save_mod_config(mod_instance)) then
-		sendErrorMessage("Failed to perform a manual mod config save", 'SystemClock')
-	end
 end
 
 function SystemClock.get_formatted_time(format_style, time, force_leading_zero, hour_offset)
@@ -132,7 +104,6 @@ function SystemClock.generate_example_time_formats()
 	end
 end
 
-SystemClock.update_config_version()
 SystemClock.init_config_preset()
 SystemClock.generate_example_time_formats()
 
@@ -159,6 +130,7 @@ local g_funcs_exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
 function G.FUNCS.exit_overlay_menu(e)
 	SystemClock.set_popup(false)
 	g_funcs_exit_overlay_menu_ref(e)
+	SystemClock.save_config()
 end
 
 if SMODS then
@@ -180,6 +152,12 @@ if SMODS then
 			SystemClock.set_popup(false)
 		end
 		g_funcs_change_tab_ref(e)
+	end
+
+	local smods_save_all_config_ref = SMODS.save_all_config
+	function SMODS.save_all_config()
+		smods_save_all_config_ref()
+		SystemClock.save_config()
 	end
 end
 
@@ -234,12 +212,11 @@ G.FUNCS.sysclock_change_clock_preset = function(e)
 end
 
 G.FUNCS.sysclock_default_current_preset = function(e)
-	SystemClock.config.clock_presets[SystemClock.config.clock_preset_index] = {}
-	SystemClock.save_config()
-	local loaded_config = SMODS.load_mod_config(mod_instance)
-	if loaded_config then
-		SystemClock.config.clock_presets = loaded_config.clock_presets
-	end
+	SystemClock.table_deep_copy(
+		SystemClock.CONFIG_DEFAULTS.clock_presets[SystemClock.config.clock_preset_index],
+		SystemClock.config.clock_presets[SystemClock.config.clock_preset_index],
+		true
+	)
 	SystemClock.init_config_preset()
 	SystemClock.reset_clock_ui()
 	SystemClock.update_config_ui()
