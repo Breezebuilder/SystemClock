@@ -130,7 +130,8 @@ function SystemClock.reset_clock_ui()
                     SystemClock.assign_clock_colours(),
                     SystemClock.draw_as_popup
                 )
-            }
+            },
+            zoom = true
         })
         G.HUD_clock.states.drag.can = SystemClock.config.clock_allow_drag
         local position = SystemClock.current.position

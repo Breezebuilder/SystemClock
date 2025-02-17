@@ -15,7 +15,11 @@ function MoveableContainer:init(args)
 
 	UIBox.init(self, args)
 
-	self.UIRoot:set_zoom(true, true, true)
+	self.zoom = args.zoom or args.config.zoom
+	if self.zoom then
+		self.UIRoot:set_zoom(true, true, true)
+	end
+
 	self.attention_text = 'MoveableContainer'
 
 	if args.config.instance_type then
@@ -67,24 +71,32 @@ end
 function MoveableContainer:hover()
 	if self.states.drag.can then
 		self:juice_up(0.05, 0.02)
-		self.UIRoot:set_hover_state(true, true)
 		play_sound('chips1', math.random() * 0.1 + 0.55, 0.15)
+		if self.zoom then
+			self.UIRoot:set_hover_state(true, true)
+		end
 	end
 
 	UIBox.hover(self)
 end
 
 function MoveableContainer:stop_hover()
-	self.UIRoot:set_hover_state(false, true)
+	if self.zoom then
+		self.UIRoot:set_hover_state(false, true)
+	end
 	UIBox.stop_hover(self)
 end
 
 function MoveableContainer:drag()
-	self.UIRoot:set_drag_state(true, true)
+	if self.zoom then
+		self.UIRoot:set_drag_state(true, true)
+	end
 	UIBox.drag(self)
 end
 
 function MoveableContainer:stop_drag()
-	self.UIRoot:set_drag_state(false, true)
+	if self.zoom then
+		self.UIRoot:set_drag_state(false, true)
+	end
 	UIBox.stop_drag(self)
 end
