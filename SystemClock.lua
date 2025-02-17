@@ -19,8 +19,10 @@ end
 
 SMODS.load_file('back_compat.lua')()
 SMODS.load_file('clock_ui.lua')()
-SMODS.load_file('config_tab.lua')()
+SMODS.load_file('config_ui.lua')()
 SMODS.load_file('MoveableContainer.lua')()
+
+SMODS.current_mod.config_tab = SystemClock.config_ui
 
 SystemClock.CLOCK_FORMATS = {
 	{ '%I:%M %p',    true },
@@ -153,24 +155,32 @@ function Game:start_run(args)
 	SystemClock.reset_clock_ui()
 end
 
-local g_funcs_exit_mods_ref = G.FUNCS.exit_mods
-function G.FUNCS.exit_mods(e)
+local g_funcs_exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
+function G.FUNCS.exit_overlay_menu(e)
 	SystemClock.set_popup(false)
-	g_funcs_exit_mods_ref(e)
+	g_funcs_exit_overlay_menu_ref(e)
 end
 
-local g_funcs_mods_button_ref = G.FUNCS.mods_button
-function G.FUNCS.mods_button(e)
-	SystemClock.set_popup(false)
-	g_funcs_mods_button_ref(e)
-end
-
-local g_funcs_change_tab_ref = G.FUNCS.change_tab
-function G.FUNCS.change_tab(e)
-	if e and e.config and e.config.id == 'tab_but_' .. mod_instance.id then
+if SMODS then
+	local g_funcs_exit_mods_ref = G.FUNCS.exit_mods
+	function G.FUNCS.exit_mods(e)
 		SystemClock.set_popup(false)
+		g_funcs_exit_mods_ref(e)
 	end
-	g_funcs_change_tab_ref(e)
+
+	local g_funcs_mods_button_ref = G.FUNCS.mods_button
+	function G.FUNCS.mods_button(e)
+		SystemClock.set_popup(false)
+		g_funcs_mods_button_ref(e)
+	end
+
+	local g_funcs_change_tab_ref = G.FUNCS.change_tab
+	function G.FUNCS.change_tab(e)
+		if e and e.config and e.config.id == 'tab_but_SystemClock' then
+			SystemClock.set_popup(false)
+		end
+		g_funcs_change_tab_ref(e)
+	end
 end
 
 local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
@@ -180,6 +190,15 @@ function G.FUNCS.set_Trance_font(...)
 		SystemClock.reset_clock_ui()
 		return unpack(ret)
 	end
+end
+
+local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
+function Controller:queue_R_cursor_press(x, y)
+    if self.locks.frame then return end
+	if G.HUD_clock and G.HUD_clock.states.hover.is and not SystemClock.draw_as_popup then
+		SystemClock.open_config_menu()
+	end
+	controller_queue_R_cursor_press_ref(self, x, y)
 end
 
 function SystemClock.update(dt)

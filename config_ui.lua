@@ -1,4 +1,4 @@
-SMODS.current_mod.config_tab = function()
+function SystemClock.config_ui()
 	SystemClock.set_popup(true)
 	return {
 		n = G.UIT.ROOT,
@@ -307,4 +307,19 @@ function SystemClock.update_config_position_sliders()
 		definition = SystemClock.create_UIBox_position_sliders()
 	}
 	panel_contents.UIBox:recalculate()
+end
+
+function SystemClock.open_config_menu()
+	if SMODS then
+		SMODS.LAST_SELECTED_MOD_TAB = 'config'
+		if G.FUNCS.openModUI_SystemClock then
+			G.FUNCS.openModUI_SystemClock()
+		else
+			sendErrorMessage("openModUI_SystemClock not found", "SystemClock")
+		end
+		local back_button_uie = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('overlay_menu_back_button')
+		if back_button_uie then
+			back_button_uie.config.button = 'exit_overlay_menu'
+		end
+	end
 end
