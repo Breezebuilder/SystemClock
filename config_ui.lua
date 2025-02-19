@@ -1,4 +1,8 @@
-function SystemClock.config_ui()
+local config_ui = {}
+
+local config = require('systemclock.config')
+
+function config_ui.create_config_tab()
 	SystemClock.set_popup(true)
 	return {
 		n = G.UIT.ROOT,
@@ -29,9 +33,9 @@ function SystemClock.config_ui()
 												label = localize('sysclock_visibility_setting'),
 												w = 1.5,
 												text_scale = 0.8,
-												ref_table = SystemClock.config,
+												ref_table = config,
 												ref_value = 'clock_visible',
-												callback = SystemClock.callback_clock_visibility
+												callback = SystemClock.toggle_callback
 											})
 										}
 									},
@@ -43,9 +47,9 @@ function SystemClock.config_ui()
 												label = localize('sysclock_draggable_setting'),
 												w = 1.5,
 												text_scale = 0.8,
-												ref_table = SystemClock.config,
+												ref_table = config,
 												ref_value = 'clock_allow_drag',
-												callback = SystemClock.reset_clock_ui
+												callback = SystemClock.toggle_callback
 											})
 										}
 									},
@@ -64,7 +68,7 @@ function SystemClock.config_ui()
 												w = 2,
 												h = 0.8,
 												options = { "1", "2", "3", "4", "5" },
-												current_option = SystemClock.config.clock_preset_index,
+												current_option = config.clock_preset_index,
 												opt_callback = 'sysclock_change_clock_preset',
 												colour = G.C.JOKER_GREY,
 											}),
@@ -107,7 +111,7 @@ function SystemClock.config_ui()
 							id = 'sysclock_config_panel',
 							object = UIBox {
 								config = { align = 'cm', offset = { x = 0, y = 0 } },
-								definition = SystemClock.create_UIBox_config_panel()
+								definition = config_ui.create_UIBox_config_panel()
 							}
 						}
 					}
@@ -117,7 +121,7 @@ function SystemClock.config_ui()
 	}
 end
 
-function SystemClock.create_UIBox_config_panel()
+function config_ui.create_UIBox_config_panel()
 	return {
 		n = G.UIT.ROOT,
 		config = { align = 'cm', minw = 10, r = 0.1, emboss = 0.1, colour = G.C.GREY },
@@ -154,7 +158,7 @@ function SystemClock.create_UIBox_config_panel()
 									id = 'sysclock_config_position_sliders',
 									object = UIBox {
 										config = { align = 'cm', offset = { x = 0, y = 0 } },
-										definition = SystemClock.create_UIBox_position_sliders()
+										definition = config_ui.create_UIBox_position_sliders()
 									}
 								}
 							}
@@ -232,7 +236,7 @@ function SystemClock.create_UIBox_config_panel()
 	}
 end
 
-function SystemClock.create_UIBox_position_sliders()
+function config_ui.create_UIBox_position_sliders()
 	return {
 		n = G.UIT.ROOT,
 		config = { align = 'cm', colour = G.C.CLEAR },
@@ -245,7 +249,7 @@ function SystemClock.create_UIBox_position_sliders()
 						label = localize('sysclock_x_position_setting'),
 						scale = 0.8,
 						label_scale = 0.8 * 0.5,
-						ref_table = SystemClock.current.position,
+						ref_table = SystemClock.current_preset.position,
 						ref_value = 'x',
 						w = 4,
 						min = -4,
@@ -264,7 +268,7 @@ function SystemClock.create_UIBox_position_sliders()
 						label = localize('sysclock_y_position_setting'),
 						scale = 0.8,
 						label_scale = 0.8 * 0.5,
-						ref_table = SystemClock.current.position,
+						ref_table = SystemClock.current_preset.position,
 						ref_value = 'y',
 						w = 4,
 						min = -3,
@@ -279,14 +283,14 @@ function SystemClock.create_UIBox_position_sliders()
 	}
 end
 
-function SystemClock.update_config_ui()
+function config_ui.update()
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
 	if not panel_contents then return end
 
 	panel_contents.config.object:remove()
 	panel_contents.config.object = UIBox {
 		config = { offset = { x = 0, y = 0 }, parent = panel_contents },
-		definition = SystemClock.create_UIBox_config_panel(),
+		definition = config_ui.create_UIBox_config_panel(),
 	}
 	panel_contents.UIBox:recalculate()
 	panel_contents.config.object:set_role {
@@ -297,19 +301,19 @@ function SystemClock.update_config_ui()
 	panel_contents.config.object:juice_up(0.05, 0.02)
 end
 
-function SystemClock.update_config_position_sliders()
+function config_ui.update_position_sliders()
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
 	if not panel_contents then return end
 
 	panel_contents.config.object:remove()
 	panel_contents.config.object = UIBox {
 		config = { offset = { x = 0, y = 0 }, parent = panel_contents },
-		definition = SystemClock.create_UIBox_position_sliders()
+		definition = config_ui.create_UIBox_position_sliders()
 	}
 	panel_contents.UIBox:recalculate()
 end
 
-function SystemClock.open_config_menu()
+function config_ui.open_config_menu()
 	if SMODS then
 		SMODS.LAST_SELECTED_MOD_TAB = 'config'
 		if G.FUNCS.openModUI_SystemClock then
@@ -323,3 +327,5 @@ function SystemClock.open_config_menu()
 		end
 	end
 end
+
+return config_ui
