@@ -283,7 +283,7 @@ function config_ui.create_UIBox_position_sliders()
 	}
 end
 
-function config_ui.update()
+function config_ui.update_panel()
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
 	if not panel_contents then return end
 
@@ -325,6 +325,25 @@ function config_ui.open_config_menu()
 		if back_button_uie then
 			back_button_uie.config.button = 'exit_overlay_menu'
 		end
+	else
+		G.FUNCS.overlay_menu(
+			{
+				definition = create_UIBox_generic_options({
+					back_func = 'exit_overlay_menu',
+					contents = {
+						create_tabs({
+							no_shoulders = true,
+							colour = G.C.BOOSTER,
+							tabs = { {
+								label = "SystemClock",
+								chosen = true,
+								tab_definition_function = config_ui.create_config_tab
+							} },
+						})
+					}
+				})
+			}
+		)
 	end
 end
 

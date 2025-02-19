@@ -5,8 +5,6 @@ local clock_ui = require('systemclock.clock_ui')
 local config_ui = require('systemclock.config_ui')
 local utilities = require('systemclock.utilities')
 
-print("code is actually running")
-
 config.load()
 config.save()
 
@@ -173,7 +171,7 @@ end
 G.FUNCS.sysclock_change_clock_preset = function(e)
 	init_config_preset(e.to_key)
 	clock_ui.reset()
-	config_ui.update()
+	config_ui.update_panel()
 end
 
 G.FUNCS.sysclock_default_current_preset = function(e)
