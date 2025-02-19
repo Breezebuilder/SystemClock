@@ -5,37 +5,37 @@ priority = 1
 
 [[patches]]
 [patches.module]
-source = 'moveablecontainer.lua'
+source = 'src/moveable_container.lua'
 before = 'main.lua'
 name = 'systemclock.moveablecontainer'
 
 [[patches]]
 [patches.module]
-source = 'utilities.lua'
+source = 'src/utilities.lua'
 before = 'main.lua'
 name = 'systemclock.utilities'
 
 [[patches]]
 [patches.module]
-source = 'config.lua'
+source = 'src/config.lua'
 before = 'main.lua'
 name = 'systemclock.config'
 
 [[patches]]
 [patches.module]
-source = 'config_ui.lua'
+source = 'src/config_ui.lua'
 before = 'main.lua'
 name = 'systemclock.config_ui'
 
 [[patches]]
 [patches.module]
-source = 'clock_ui.lua'
+source = 'src/clock_ui.lua'
 before = 'main.lua'
 name = 'systemclock.clock_ui'
 
 [[patches]]
 [patches.module]
-source = 'core.lua'
+source = 'src/core.lua'
 before = 'main.lua'
 name = 'systemclock.core'
 
@@ -44,5 +44,5 @@ name = 'systemclock.core'
 target = 'main.lua'
 position = 'append'
 sources = [
-    'init.lua'
+    'src/init.lua'
 ]
