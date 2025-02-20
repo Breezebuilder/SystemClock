@@ -82,11 +82,6 @@ local SAVE_DIR = 'config'
 local SAVE_PATH = SAVE_DIR .. '/' .. SAVE_FILE_NAME
 
 
-function config.get_defaults()
-	return DEFAULTS
-end
-
-
 local function serialize_config(tbl, indent)
 	indent = indent or 1
 	local str = "{\n"
