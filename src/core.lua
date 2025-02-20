@@ -178,7 +178,7 @@ G.FUNCS.sysclock_default_current_preset = function(e)
 	config.reset_preset(config.clock_preset_index)
 	init_config_preset()
 	clock_ui.reset()
-	config_ui.update()
+	config_ui.update_panel()
 end
 
 G.FUNCS.sysclock_change_clock_time_format = function(e)
