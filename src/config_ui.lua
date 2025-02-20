@@ -1,6 +1,6 @@
 local config_ui = {}
 
-local log = require('systemclock.log')
+local logger = require('systemclock.logger')
 local config = require('systemclock.config')
 local locale = require('systemclock.locale')
 
@@ -326,7 +326,7 @@ function config_ui.open_config_menu()
 			end
 			return
 		else
-			log.warn_message("G.FUNCS.openModUI_SystemClock does not exist, falling back to vanilla config menu")
+			logger.log_warn("G.FUNCS.openModUI_SystemClock does not exist, falling back to vanilla config menu")
 		end
 	end
 

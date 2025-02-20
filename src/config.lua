@@ -1,6 +1,6 @@
 local config = {}
 
-local log = require('systemclock.log')
+local logger = require('systemclock.logger')
 local utilities = require('systemclock.utilities')
 
 local DEFAULTS = {
@@ -115,10 +115,10 @@ end
 
 function config.save()
 	if not love.filesystem.getInfo(SAVE_DIR) then
-        log.info_message("Creating config folder...", "SystemClock")
+        logger.log_info("Creating config folder...", "SystemClock")
         local success = love.filesystem.createDirectory(SAVE_DIR)
 		if not success then
-			log.error_message("Failed to create config folder")
+			logger.log_error("Failed to create config folder")
 		end
     end
 
@@ -127,19 +127,19 @@ function config.save()
 		'return ' .. serialize_config(config or config.DEFAULTS)
 	)
     if not success then
-        log.error_message("Failed to save config file: " .. err)
+        logger.log_error("Failed to save config file: " .. err)
     end
 end
 
 
 local function update_config_version()
 	if not config then
-		log.error_message("Config not loaded", 'SystemClock')
+		logger.log_error("Config not loaded", 'SystemClock')
 		return
 	end
 
 	if config.clockColourIndex then
-		log.info_message("Transferring config settings (v1 -> v2)")
+		logger.log_info("Transferring config settings (v1 -> v2)")
 		print(os.date('%Y-%m-%d %X') .. " :: INFO :: SystemClock :: " .. "Transferring config settings (v1 -> v2)")
 		config.clockTextColourRef = SystemClock.COLOUR_REFS[config.clockColourIndex]
 		config.clockTextColourIndex = config.clockColourIndex
@@ -183,7 +183,7 @@ local function update_config_version()
 	end
 
 	if config.clockConfigVersion == 3 then
-		log.info_message("Transferring config settings (v3 -> v4)")
+		logger.log_info("Transferring config settings (v3 -> v4)")
 		config.clock_visible = config.clockVisible
 		config.clock_allow_drag = config.clockAllowDrag
 		config.hour_offset = config.hourOffset
@@ -209,13 +209,13 @@ function config.load()
 	if love.filesystem.getInfo(SAVE_PATH) then
 		local config_contents, read_err = love.filesystem.read(SAVE_PATH)
 		if not config_contents then
-			log.error_message("Failed to read config file: " .. read_err)
+			logger.log_error("Failed to read config file: " .. read_err)
 		else
 			local success, load_err = pcall(function()
 				loaded_config = load(config_contents, 'systemclock_load_config')()
 			end)
 			if not success then
-				log.error_message("Error loading existing config file: " .. load_err)
+				logger.log_error("Error loading existing config file: " .. load_err)
 			end
 		end
 	end
