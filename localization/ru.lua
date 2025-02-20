@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Часы",
 			['sysclock_name'] = "Системные часы",
 			['sysclock_visibility_setting'] = "Показать часы",
 			['sysclock_draggable_setting'] = "Перетаскивание",

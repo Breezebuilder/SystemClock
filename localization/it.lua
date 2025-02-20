@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Orologio",
 			['sysclock_name'] = "Orologio di Sistema",
 			['sysclock_visibility_setting'] = "Mostra orologio",
 			['sysclock_draggable_setting'] = "Consenti trascinamento",

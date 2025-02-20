@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Uhr",
 			['sysclock_name'] = "Systemuhr",
 			['sysclock_visibility_setting'] = "Uhr anzeigen",
 			['sysclock_draggable_setting'] = "Verschieben erlauben",

@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Đồng hồ",
 			['sysclock_name'] = "Đồng Hồ Hệ Thống",
 			['sysclock_visibility_setting'] = "Hiện đồng hồ",
 			['sysclock_draggable_setting'] = "Cho phép kéo thả",

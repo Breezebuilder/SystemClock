@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Clock",
 			['sysclock_name'] = "SystemClock",
 			['sysclock_visibility_setting'] = "Show clock",
 			['sysclock_draggable_setting'] = "Allow dragging",

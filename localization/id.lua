@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Jam",
 			['sysclock_name'] = "Jam Sistem",
 			['sysclock_visibility_setting'] = "Tampilkan jam",
 			['sysclock_draggable_setting'] = "Izinkan penarikan",

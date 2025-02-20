@@ -23,7 +23,7 @@ end
 
 function locale.translate(key)
     if SMODS then return localize(key) end
-    return locale[G.SETTINGS.language][key] or locale['en-us'][key] or nil
+    return locale[G.SETTINGS.language][key] or locale['en-us'][key] or 'ERROR'
 end
 
 return locale

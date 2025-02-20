@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Reloj",
 			['sysclock_name'] = "Reloj del Sistema",
 			['sysclock_visibility_setting'] = "Mostrar reloj",
 			['sysclock_draggable_setting'] = "Permitir arrastrar",

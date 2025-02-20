@@ -23,6 +23,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "時鐘",
 			['sysclock_name'] = "系統時鐘",
 			['sysclock_visibility_setting'] = "顯示時鐘",
 			['sysclock_draggable_setting'] = "允許拖動",
