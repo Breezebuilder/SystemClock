@@ -35,6 +35,12 @@ name = 'systemclock.clock_ui'
 
 [[patches]]
 [patches.module]
+source = 'src/locale.lua'
+before = 'main.lua'
+name = 'systemclock.locale'
+
+[[patches]]
+[patches.module]
 source = 'src/core.lua'
 before = 'main.lua'
 name = 'systemclock.core'

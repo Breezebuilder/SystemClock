@@ -1,6 +1,7 @@
 local config_ui = {}
 
 local config = require('systemclock.config')
+local locale = require('systemclock.locale')
 
 function config_ui.create_config_tab()
 	SystemClock.set_popup(true)
@@ -30,7 +31,7 @@ function config_ui.create_config_tab()
 										config = { align = 'tr', padding = 0.05 },
 										nodes = {
 											create_toggle({
-												label = localize('sysclock_visibility_setting'),
+												label = locale.translate('sysclock_visibility_setting'),
 												w = 1.5,
 												text_scale = 0.8,
 												ref_table = config,
@@ -44,7 +45,7 @@ function config_ui.create_config_tab()
 										config = { align = 'tr', padding = 0.05 },
 										nodes = {
 											create_toggle({
-												label = localize('sysclock_draggable_setting'),
+												label = locale.translate('sysclock_draggable_setting'),
 												w = 1.5,
 												text_scale = 0.8,
 												ref_table = config,
@@ -62,7 +63,7 @@ function config_ui.create_config_tab()
 										config = { align = 'cm' },
 										nodes = {
 											create_option_cycle({
-												label = localize('sysclock_preset_setting'),
+												label = locale.translate('sysclock_preset_setting'),
 												scale = 0.8,
 												text_scale = 0.7,
 												w = 2,
@@ -84,7 +85,7 @@ function config_ui.create_config_tab()
 										nodes = {
 											UIBox_button({
 												button = 'sysclock_default_current_preset',
-												label = { localize('sysclock_preset_default_button') },
+												label = { locale.translate('sysclock_preset_default_button') },
 												colour = G.C.JOKER_GREY,
 												minw = 2.8,
 												minh = 0.6,
@@ -135,7 +136,7 @@ function config_ui.create_UIBox_config_panel()
 						config = { align = 'tl' },
 						nodes = {
 							create_option_cycle({
-								label = localize('sysclock_time_format_setting'),
+								label = locale.translate('sysclock_time_format_setting'),
 								scale = 0.8,
 								w = 4.5,
 								options = SystemClock.FORMAT_EXAMPLES,
@@ -175,7 +176,7 @@ function config_ui.create_UIBox_config_panel()
 						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
-								label = localize('sysclock_size_setting'),
+								label = locale.translate('sysclock_size_setting'),
 								scale = 0.8,
 								w = 4.5,
 								options = SystemClock.TEXT_SIZES,
@@ -190,10 +191,10 @@ function config_ui.create_UIBox_config_panel()
 						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
-								label = localize('sysclock_style_setting'),
+								label = locale.translate('sysclock_style_setting'),
 								scale = 0.8,
 								w = 4.5,
-								options = localize('sysclock_styles'),
+								options = locale.translate('sysclock_styles'),
 								current_option = SystemClock.indices.style,
 								opt_callback = 'sysclock_change_clock_style',
 								colour = G.C.ORANGE
@@ -205,10 +206,10 @@ function config_ui.create_UIBox_config_panel()
 						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
-								label = localize('sysclock_text_colour_setting'),
+								label = locale.translate('sysclock_text_colour_setting'),
 								scale = 0.8,
 								w = 4.5,
-								options = localize('sysclock_colours'),
+								options = locale.translate('sysclock_colours'),
 								current_option = SystemClock.indices.text_colour,
 								opt_callback = 'sysclock_change_clock_text_colour',
 								colour = G.C.BLUE
@@ -220,10 +221,10 @@ function config_ui.create_UIBox_config_panel()
 						config = { align = 'cr', padding = 0 },
 						nodes = {
 							create_option_cycle({
-								label = localize('sysclock_back_colour_setting'),
+								label = locale.translate('sysclock_back_colour_setting'),
 								scale = 0.8,
 								w = 4.5,
-								options = localize('sysclock_colours'),
+								options = locale.translate('sysclock_colours'),
 								current_option = SystemClock.indices.back_colour,
 								opt_callback = 'sysclock_change_clock_back_colour',
 								colour = G.C.BLUE
@@ -246,7 +247,7 @@ function config_ui.create_UIBox_position_sliders()
 				config = { align = 'tm', padding = 0.1 },
 				nodes = {
 					create_slider({
-						label = localize('sysclock_x_position_setting'),
+						label = locale.translate('sysclock_x_position_setting'),
 						scale = 0.8,
 						label_scale = 0.8 * 0.5,
 						ref_table = SystemClock.current_preset.position,
@@ -265,7 +266,7 @@ function config_ui.create_UIBox_position_sliders()
 				config = { align = 'bm', padding = 0.1 },
 				nodes = {
 					create_slider({
-						label = localize('sysclock_y_position_setting'),
+						label = locale.translate('sysclock_y_position_setting'),
 						scale = 0.8,
 						label_scale = 0.8 * 0.5,
 						ref_table = SystemClock.current_preset.position,
