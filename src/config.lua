@@ -218,8 +218,8 @@ function config.load()
 		end
 	end
 
+	utilities.table_deep_merge(loaded_config, config)
 	utilities.table_deep_merge(DEFAULTS, config)
-	utilities.table_deep_merge(loaded_config, config, true)
 
 	update_config_version()
 

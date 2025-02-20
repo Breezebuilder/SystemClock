@@ -1,13 +1,5 @@
 SystemClock = {}
 
-local config = require('systemclock.config')
-local clock_ui = require('systemclock.clock_ui')
-local config_ui = require('systemclock.config_ui')
-local utilities = require('systemclock.utilities')
-
-config.load()
-config.save()
-
 SystemClock.CLOCK_FORMATS = {
 	{ '%I:%M %p',    true },
 	{ '%I:%M',       true },
@@ -30,6 +22,14 @@ SystemClock.TEXT_SIZES = {
 	1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0
 }
 SystemClock.FORMAT_EXAMPLES = {}
+
+local config = require('systemclock.config')
+local clock_ui = require('systemclock.clock_ui')
+local config_ui = require('systemclock.config_ui')
+local utilities = require('systemclock.utilities')
+
+config.load()
+config.save()
 
 SystemClock.time = ''
 SystemClock.current_preset = {}
