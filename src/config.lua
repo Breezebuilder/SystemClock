@@ -77,7 +77,7 @@ local DEFAULTS = {
 	}
 }
 
-local SAVE_FILE_NAME = 'SystemClock_v4.jkr'
+local SAVE_FILE_NAME = 'SystemClock.jkr'
 local SAVE_DIR = 'config'
 local SAVE_PATH = SAVE_DIR .. '/' .. SAVE_FILE_NAME
 
