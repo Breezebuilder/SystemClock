@@ -1,5 +1,6 @@
 local config = {}
 
+local log = require('systemclock.log')
 local utilities = require('systemclock.utilities')
 
 local DEFAULTS = {
@@ -114,10 +115,10 @@ end
 
 function config.save()
 	if not love.filesystem.getInfo(SAVE_DIR) then
-        sendInfoMessage("Creating config folder...", "SystemClock")
+        log.info_message("Creating config folder...", "SystemClock")
         local success = love.filesystem.createDirectory(SAVE_DIR)
 		if not success then
-			sendErrorMessage("Failed to create config folder", "SystemClock")
+			log.error_message("Failed to create config folder")
 		end
     end
 
@@ -126,19 +127,20 @@ function config.save()
 		'return ' .. serialize_config(config or config.DEFAULTS)
 	)
     if not success then
-        sendErrorMessage("Failed to save config file: " .. err, 'SystemClock')
+        log.error_message("Failed to save config file: " .. err)
     end
 end
 
 
 local function update_config_version()
 	if not config then
-		sendErrorMessage("Config not loaded", 'SystemClock')
+		log.error_message("Config not loaded", 'SystemClock')
 		return
 	end
 
 	if config.clockColourIndex then
-		sendInfoMessage("Transferring config settings (v1 -> v2)", 'SystemClock')
+		log.info_message("Transferring config settings (v1 -> v2)")
+		print(os.date('%Y-%m-%d %X') .. " :: INFO :: SystemClock :: " .. "Transferring config settings (v1 -> v2)")
 		config.clockTextColourRef = SystemClock.COLOUR_REFS[config.clockColourIndex]
 		config.clockTextColourIndex = config.clockColourIndex
 		config.clockBackColourRef = 'DYN_UI.MAIN'
@@ -149,7 +151,7 @@ local function update_config_version()
 	end
 
 	if config.clockConfigVersion == 2 then
-		sendInfoMessage("Transferring config settings (v2 -> v4)", 'SystemClock')
+		print("Transferring config settings (v2 -> v4)", 'SystemClock')
 		config.clock_presets[5].format = config.clockTimeFormatIndex
 		config.clock_presets[5].style = config.clockStyleIndex
 		config.clock_presets[5].size = config.clockTextSize
@@ -181,7 +183,7 @@ local function update_config_version()
 	end
 
 	if config.clockConfigVersion == 3 then
-		sendInfoMessage("Transferring config settings (v3 -> v4)", 'SystemClock')
+		log.info_message("Transferring config settings (v3 -> v4)")
 		config.clock_visible = config.clockVisible
 		config.clock_allow_drag = config.clockAllowDrag
 		config.hour_offset = config.hourOffset
@@ -207,13 +209,13 @@ function config.load()
 	if love.filesystem.getInfo(SAVE_PATH) then
 		local config_contents, read_err = love.filesystem.read(SAVE_PATH)
 		if not config_contents then
-			sendErrorMessage("Failed to read config file: " .. read_err, 'SystemClock')
+			log.error_message("Failed to read config file: " .. read_err)
 		else
 			local success, load_err = pcall(function()
 				loaded_config = load(config_contents, 'systemclock_load_config')()
 			end)
 			if not success then
-				sendErrorMessage("Error loading existing config file: " .. load_err, 'SystemClock')
+				log.error_message("Error loading existing config file: " .. load_err)
 			end
 		end
 	end

@@ -1,5 +1,6 @@
 local config_ui = {}
 
+local log = require('systemclock.log')
 local config = require('systemclock.config')
 local locale = require('systemclock.locale')
 
@@ -316,36 +317,37 @@ end
 
 function config_ui.open_config_menu()
 	if SMODS then
-		SMODS.LAST_SELECTED_MOD_TAB = 'config'
 		if G.FUNCS.openModUI_SystemClock then
+			SMODS.LAST_SELECTED_MOD_TAB = 'config'
 			G.FUNCS.openModUI_SystemClock()
+			local back_button_uie = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('overlay_menu_back_button')
+			if back_button_uie then
+				back_button_uie.config.button = 'exit_overlay_menu'
+			end
+			return
 		else
-			sendErrorMessage("openModUI_SystemClock not found", "SystemClock")
+			log.warn_message("G.FUNCS.openModUI_SystemClock does not exist, falling back to vanilla config menu")
 		end
-		local back_button_uie = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('overlay_menu_back_button')
-		if back_button_uie then
-			back_button_uie.config.button = 'exit_overlay_menu'
-		end
-	else
-		G.FUNCS.overlay_menu(
-			{
-				definition = create_UIBox_generic_options({
-					back_func = 'exit_overlay_menu',
-					contents = {
-						create_tabs({
-							no_shoulders = true,
-							colour = G.C.BOOSTER,
-							tabs = { {
-								label = "SystemClock",
-								chosen = true,
-								tab_definition_function = config_ui.create_config_tab
-							} },
-						})
-					}
-				})
-			}
-		)
 	end
+
+	G.FUNCS.overlay_menu(
+		{
+			definition = create_UIBox_generic_options({
+				back_func = 'exit_overlay_menu',
+				contents = {
+					create_tabs({
+						no_shoulders = true,
+						colour = G.C.BOOSTER,
+						tabs = { {
+							label = "SystemClock",
+							chosen = true,
+							tab_definition_function = config_ui.create_config_tab
+						} },
+					})
+				}
+			})
+		}
+	)
 end
 
 return config_ui

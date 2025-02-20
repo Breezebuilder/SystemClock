@@ -41,6 +41,12 @@ name = 'systemclock.locale'
 
 [[patches]]
 [patches.module]
+source = 'src/log.lua'
+before = 'main.lua'
+name = 'systemclock.log'
+
+[[patches]]
+[patches.module]
 source = 'src/core.lua'
 before = 'main.lua'
 name = 'systemclock.core'
