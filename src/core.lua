@@ -93,9 +93,9 @@ local function update(dt)
 	SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, config.hour_offset)
 
 	if SystemClock.indices.style == 5 and SystemClock.indices.back_colour > 17 then
-		SystemClock.colours.shadow[1] = SystemClock.colours.back[1]*(0.7)
-		SystemClock.colours.shadow[2] = SystemClock.colours.back[2]*(0.7)
-		SystemClock.colours.shadow[3] = SystemClock.colours.back[3]*(0.7)
+		SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * (0.7)
+		SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * (0.7)
+		SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * (0.7)
 	end
 
 	if G.STAGE ~= G.STAGES.RUN then
@@ -128,7 +128,6 @@ function G.FUNCS.exit_overlay_menu(e)
 	g_funcs_exit_overlay_menu_ref(e)
 	config.save()
 end
-
 
 local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
 function G.FUNCS.set_Trance_font(...)

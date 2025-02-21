@@ -127,7 +127,6 @@ function config_ui.create_config_tab()
 	}
 end
 
-
 function config_ui.create_UIBox_config_panel()
 	return {
 		n = G.UIT.ROOT,
@@ -243,7 +242,6 @@ function config_ui.create_UIBox_config_panel()
 	}
 end
 
-
 function config_ui.create_UIBox_visibility_toggle()
 	return {
 		n = G.UIT.ROOT,
@@ -267,7 +265,6 @@ function config_ui.create_UIBox_visibility_toggle()
 	}
 end
 
-
 function config_ui.create_UIBox_draggable_toggle()
 	return {
 		n = G.UIT.ROOT,
@@ -290,7 +287,6 @@ function config_ui.create_UIBox_draggable_toggle()
 		}
 	}
 end
-
 
 function config_ui.create_UIBox_position_sliders()
 	return {
@@ -339,7 +335,6 @@ function config_ui.create_UIBox_position_sliders()
 	}
 end
 
-
 function config_ui.update_panel(juice)
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
 	if not panel_contents then return end
@@ -357,7 +352,6 @@ function config_ui.update_panel(juice)
 
 	if juice then panel_contents.config.object:juice_up(0.05, 0.02) end
 end
-
 
 function config_ui.update_visibility_toggle(juice)
 	local toggle_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_visibility_toggle')
@@ -377,7 +371,6 @@ function config_ui.update_visibility_toggle(juice)
 	if juice then toggle_contents.config.object:juice_up(0.05, 0.05) end
 end
 
-
 function config_ui.update_draggable_toggle(juice)
 	local toggle_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_draggable_toggle')
 	if not toggle_contents then return end
@@ -388,14 +381,13 @@ function config_ui.update_draggable_toggle(juice)
 		definition = config_ui.create_UIBox_draggable_toggle()
 	}
 	toggle_contents.UIBox:recalculate()
-		toggle_contents.config.object:set_role {
+	toggle_contents.config.object:set_role {
 		role_type = 'Major',
 		major = nil
 	}
 
 	if juice then toggle_contents.config.object:juice_up(0.05, 0.05) end
 end
-
 
 function config_ui.update_position_sliders()
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
@@ -408,7 +400,6 @@ function config_ui.update_position_sliders()
 	}
 	panel_contents.UIBox:recalculate()
 end
-
 
 function config_ui.open_config_menu()
 	if SMODS then
@@ -444,6 +435,5 @@ function config_ui.open_config_menu()
 		}
 	)
 end
-
 
 return config_ui

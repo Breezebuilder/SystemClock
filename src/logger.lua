@@ -1,7 +1,7 @@
 local logger = {}
 
 function logger.log_trace(message)
-	logger.log("TRACE", message)
+    logger.log("TRACE", message)
 end
 
 function logger.log_debug(message)
@@ -13,7 +13,7 @@ function logger.log_info(message)
 end
 
 function logger.log_warn(message)
-	logger.log("WARN ", message)
+    logger.log("WARN ", message)
 end
 
 function logger.log_error(message)

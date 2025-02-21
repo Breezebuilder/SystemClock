@@ -82,55 +82,55 @@ local SAVE_FILE_NAME = 'SystemClock.jkr'
 local SAVE_DIR = 'config'
 local SAVE_PATH = SAVE_DIR .. '/' .. SAVE_FILE_NAME
 
-
 local function serialize_config(tbl, indent)
 	indent = indent or 1
 	local str = "{\n"
 
-    local function v_to_str(v, indent)
-        if (type(v) == 'table') then return serialize_config(v, indent + 1)
-        elseif (type(v) == 'number' or type(v) == 'boolean') then return tostring(v)
-        else return "\'" .. tostring(v) .. "\'"
-        end
-    end
-
-	for k, v in ipairs(tbl) do
-		if type(v) ~= 'function' then
-			str = str .. string.rep("\t", indent) .. "[" .. tostring(k) .. "] = " .. v_to_str(v, indent)  .. ",\n"
+	local function v_to_str(v, indent)
+		if (type(v) == 'table') then
+			return serialize_config(v, indent + 1)
+		elseif (type(v) == 'number' or type(v) == 'boolean') then
+			return tostring(v)
+		else
+			return "\'" .. tostring(v) .. "\'"
 		end
 	end
 
-    for k, v in pairs(tbl) do
-        if type(k) == 'string' and type(v) ~= 'function' then
-            str = str .. string.rep("\t", indent)
-            str = str .. "[\'" .. tostring(k) .. "\'] = "
-            str = str .. v_to_str(v, indent) .. ",\n"
-        end
-    end
+	for k, v in ipairs(tbl) do
+		if type(v) ~= 'function' then
+			str = str .. string.rep("\t", indent) .. "[" .. tostring(k) .. "] = " .. v_to_str(v, indent) .. ",\n"
+		end
+	end
+
+	for k, v in pairs(tbl) do
+		if type(k) == 'string' and type(v) ~= 'function' then
+			str = str .. string.rep("\t", indent)
+			str = str .. "[\'" .. tostring(k) .. "\'] = "
+			str = str .. v_to_str(v, indent) .. ",\n"
+		end
+	end
 
 	str = str .. string.rep("\t", indent - 1) .. "}"
 	return str
 end
 
-
 function config.save()
 	if not love.filesystem.getInfo(SAVE_DIR) then
-        logger.log_info("Creating config folder...", "SystemClock")
-        local success = love.filesystem.createDirectory(SAVE_DIR)
+		logger.log_info("Creating config folder...", "SystemClock")
+		local success = love.filesystem.createDirectory(SAVE_DIR)
 		if not success then
 			logger.log_error("Failed to create config folder")
 		end
-    end
+	end
 
 	local success, err = love.filesystem.write(
-		'config/' .. SAVE_FILE_NAME, 
+		'config/' .. SAVE_FILE_NAME,
 		'return ' .. serialize_config(config or config.DEFAULTS)
 	)
-    if not success then
-        logger.log_error("Failed to save config file: " .. err)
-    end
+	if not success then
+		logger.log_error("Failed to save config file: " .. err)
+	end
 end
-
 
 local function update_config_version()
 	if not config then
@@ -158,8 +158,8 @@ local function update_config_version()
 		config.clock_presets[5].colours.back = config.clockBackColourRef
 		config.clock_presets[5].position.x = config.clockX
 		config.clock_presets[5].position.y = config.clockY
-        config.clock_preset_index = 5
-        config.clock_visible = config.clockVisible
+		config.clock_preset_index = 5
+		config.clock_visible = config.clockVisible
 		config.clock_allow_drag = config.clockAllowDrag
 		config.hour_offset = config.hourOffset
 
@@ -173,10 +173,10 @@ local function update_config_version()
 		config.clockTextSizeIndex = nil
 		config.clockX = nil
 		config.clockY = nil
-        config.clockVisible = nil
+		config.clockVisible = nil
 		config.clockAllowDrag = nil
 		config.hourOffset = nil
-        config.clockConfigVersion = nil
+		config.clockConfigVersion = nil
 
 		config.config_version = 4
 	end
@@ -187,21 +187,20 @@ local function update_config_version()
 		config.clock_allow_drag = config.clockAllowDrag
 		config.hour_offset = config.hourOffset
 		config.clock_preset_index = config.clockPresetIndex
-        config.clock_presets = config.clockPresets
+		config.clock_presets = config.clockPresets
 
 		config.clockVisible = nil
 		config.clockAllowDrag = nil
 		config.hourOffset = nil
 		config.clockPresetIndex = nil
-        config.clockPresets = nil
-        config.clockConfigVersion = nil
+		config.clockPresets = nil
+		config.clockConfigVersion = nil
 
 		config.config_version = 4
 	end
 
-    config.save()
+	config.save()
 end
-
 
 function config.load()
 	local loaded_config = {}
@@ -226,7 +225,6 @@ function config.load()
 
 	return config
 end
-
 
 function config.reset_preset(preset_index)
 	config.clock_presets[preset_index] = utilities.table_deep_copy(DEFAULTS.clock_presets[preset_index])
