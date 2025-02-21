@@ -1,8 +1,9 @@
 local config_ui = require('systemclock.config_ui')
 local config = require('systemclock.config')
+local logger = require('systemclock.logger')
 
 if not SMODS then
-	print('SystemClock: SMODS initialiser could not find SMODS')
+	logger.log_warn('SMODS initialiser could not find SMODS instance')
 	return
 end
 

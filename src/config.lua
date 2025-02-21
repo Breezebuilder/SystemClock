@@ -140,7 +140,6 @@ local function update_config_version()
 
 	if config.clockColourIndex then
 		logger.log_info("Transferring config settings (v1 -> v2)")
-		print(os.date('%Y-%m-%d %X') .. " :: INFO :: SystemClock :: " .. "Transferring config settings (v1 -> v2)")
 		config.clockTextColourRef = SystemClock.COLOUR_REFS[config.clockColourIndex]
 		config.clockTextColourIndex = config.clockColourIndex
 		config.clockBackColourRef = 'DYN_UI.MAIN'
@@ -151,7 +150,7 @@ local function update_config_version()
 	end
 
 	if config.clockConfigVersion == 2 then
-		print("Transferring config settings (v2 -> v4)", 'SystemClock')
+		logger.log_info("Transferring config settings (v2 -> v4)")
 		config.clock_presets[5].format = config.clockTimeFormatIndex
 		config.clock_presets[5].style = config.clockStyleIndex
 		config.clock_presets[5].size = config.clockTextSize
