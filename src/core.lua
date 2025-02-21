@@ -133,7 +133,7 @@ local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
 function G.FUNCS.set_Trance_font(...)
 	if g_funcs_set_Trance_font then
 		local ret = { g_funcs_set_Trance_font(...) }
-		config_ui.reset()
+		clock_ui.reset()
 		return unpack(ret)
 	end
 end
