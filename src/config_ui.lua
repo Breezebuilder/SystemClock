@@ -37,7 +37,7 @@ function config_ui.create_config_tab()
 												text_scale = 0.8,
 												ref_table = config,
 												ref_value = 'clock_visible',
-												callback = SystemClock.toggle_callback
+												callback = SystemClock.set_visibility
 											})
 										}
 									},
@@ -51,7 +51,7 @@ function config_ui.create_config_tab()
 												text_scale = 0.8,
 												ref_table = config,
 												ref_value = 'clock_allow_drag',
-												callback = SystemClock.toggle_callback
+												callback = SystemClock.set_draggable
 											})
 										}
 									},

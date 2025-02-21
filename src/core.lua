@@ -161,9 +161,17 @@ function SystemClock.set_position(pos)
 	config_ui.update_position_sliders()
 end
 
-function SystemClock.toggle_callback()
+function SystemClock.set_visibility(state)
+	config.clock_visible = state
 	hook_game_update(config.clock_visible)
 	clock_ui.reset()
+end
+
+function SystemClock.set_draggable(state)
+	config.clock_allow_drag = state
+	if G.HUD_clock then
+		G.HUD_clock.states.drag.can = state
+	end
 end
 
 G.FUNCS.sysclock_change_clock_preset = function(e)
