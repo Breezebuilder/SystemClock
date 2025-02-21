@@ -340,7 +340,7 @@ function config_ui.create_UIBox_position_sliders()
 end
 
 
-function config_ui.update_panel()
+function config_ui.update_panel(juice)
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
 	if not panel_contents then return end
 
@@ -355,7 +355,7 @@ function config_ui.update_panel()
 		major = nil
 	}
 
-	panel_contents.config.object:juice_up(0.05, 0.02)
+	if juice then panel_contents.config.object:juice_up(0.05, 0.02) end
 end
 
 
