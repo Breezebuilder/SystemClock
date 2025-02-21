@@ -1,27 +1,33 @@
 # SystemClock for Balatro
-![SystemClockHeader](https://github.com/user-attachments/assets/6de7287f-9968-4681-b315-e732a44036f4)
 
-SystemClock is a mod for [Balatro](https://store.steampowered.com/app/2379780/Balatro/) which adds a draggable, resizable, customizable clock to the game screen.
+<p align="center">
+    <img width="80%" alt="Header" src="https://github.com/user-attachments/assets/6de7287f-9968-4681-b315-e732a44036f4"/>
+    &nbsp;
+    <img width="49%" alt="In-game examples" src="https://github.com/user-attachments/assets/23fd4fcd-27c3-433d-916f-fca5eb64f971"/>
+    &nbsp;
+    <img width="46%" alt="Configuration menu" src="https://github.com/user-attachments/assets/d6059c8f-4c41-4cc2-99d7-a5188872f713"/>
+</p>
+
+SystemClock is a mod for [Balatro 1.0.1n](https://store.steampowered.com/app/2379780/Balatro/) which adds a draggable, resizable, customizable clock to the game screen.
 
 It includes 5 editable presets and supports a variety of time formats, UI styles, and color options.
 
-![config_v1 5 0](https://github.com/user-attachments/assets/d6059c8f-4c41-4cc2-99d7-a5188872f713)
+Keep track of time - don't fall into the `Black Hole`.
 
-Keep track of time - don't fall into the Black Hole.
 
 ## Installation
-1. Install [lovely and SMODS](https://github.com/Steamodded/smods/wiki) by following all installation instructions step-by-step.
-   
-2. Download the [latest release](https://github.com/Breezebuilder/SystemClock/releases/latest) of SystemClock.
-   
-3. Move the `SystemClock` folder from `SystemClock-[version].zip` into Balatro's `Mods` folder.
-    - On Windows this is located at `%appdata%/Balatro/Mods/`
-    
-4. Start Balatro. If installed correctly, you will have a new `MODS` button on the main menu.
-   
-5. SystemClock's settings can be found by first clicking the `MODS` menu, selecting `SystemClock`, then selecting the `Config` tab at the top.
+1. Install [Lovely](https://github.com/ethangreen-dev/lovely-injector/releases) by following the [installation instructions here](https://github.com/ethangreen-dev/lovely-injector?tab=readme-ov-file#manual-installation).
+    - `version.dll` should be in the same folder as `Balatro.exe` or the **Balatro** application
 
-7. The clock will appear in-game and can be dragged wherever you like.
+2. Open the **Mods** folder or create one if it does not exist.
+    - On **Windows** this should be located at `%AppData%/Balatro/Mods`
+    - On **macOS** this should be located at `/Users/$USER/Library/Application Support/Balatro/Mods`
+
+3. ﻿**Install SystemClock** by copying the **SystemClock** folder **from inside** [SystemClock-version.zip](https://github.com/Breezebuilder/SystemClock/releases) into the **Mods** folder.
+
+4. **Configure SystemClock** to your liking by **right-clicking** on the clock
+    - With only Lovely installed, this menu can also be found at **Settings** -> **Clock**
+    - If [Steamodded](https://github.com/Steamodded/smods) is also installed, this menu can be found at **MODS** -> **SystemClock** -> **Config** tab
 
 
 ## Contribute
