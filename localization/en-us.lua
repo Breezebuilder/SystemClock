@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
             		"Don't fall into the {C:purple,E:1}Black Hole{}."
 				}
 			}

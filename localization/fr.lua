@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Ne tombez pas dans le {C:purple,E:1}Trou Noir{}."
 				}
 			}

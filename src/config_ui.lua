@@ -29,7 +29,7 @@ function config_ui.create_config_tab()
 								nodes = {
 									{
 										n = G.UIT.R,
-										config = { align = 'tr', padding = 0.05 },
+										config = { align = 'tr' },
 										nodes = {
 											{
 												n = G.UIT.O,
@@ -45,7 +45,11 @@ function config_ui.create_config_tab()
 									},
 									{
 										n = G.UIT.R,
-										config = { align = 'tr', padding = 0.05 },
+										config = { minh = 0.2 },
+									},
+									{
+										n = G.UIT.R,
+										config = { align = 'tr' },
 										nodes = {
 											{
 												n = G.UIT.O,
@@ -61,7 +65,7 @@ function config_ui.create_config_tab()
 									},
 									{
 										n = G.UIT.R,
-										config = { minh = 1.5 },
+										config = { minh = 1.6 },
 									},
 									{
 										n = G.UIT.R,
@@ -152,7 +156,7 @@ function config_ui.create_UIBox_config_panel()
 					},
 					{
 						n = G.UIT.R,
-						config = { minh = 1.4 },
+						config = { minh = 1.55 },
 					},
 					{
 						n = G.UIT.R,
@@ -245,7 +249,7 @@ end
 function config_ui.create_UIBox_visibility_toggle()
 	return {
 		n = G.UIT.ROOT,
-		config = { align = 'cm', colour = G.C.CLEAR },
+		config = { align = 'cm', colour = G.C.CLEAR},
 		nodes = {
 			{
 				n = G.UIT.R,
@@ -295,7 +299,7 @@ function config_ui.create_UIBox_position_sliders()
 		nodes = {
 			{
 				n = G.UIT.R,
-				config = { align = 'tm', padding = 0.1 },
+				config = { align = 'tm' },
 				nodes = {
 					create_slider({
 						label = locale.translate('sysclock_x_position_setting'),
@@ -314,7 +318,11 @@ function config_ui.create_UIBox_position_sliders()
 			},
 			{
 				n = G.UIT.R,
-				config = { align = 'bm', padding = 0.1 },
+				config = { minh = 0.22 },
+			},
+			{
+				n = G.UIT.R,
+				config = { align = 'bm' },
 				nodes = {
 					create_slider({
 						label = locale.translate('sysclock_y_position_setting'),

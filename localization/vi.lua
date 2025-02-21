@@ -13,7 +13,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"{C:green}Bản dịch của {C:gold}HuayTheLocFixer{}",
 					" ",
             		"Đừng để rơi vào {C:purple,E:1}Hố Đen{} nhé."

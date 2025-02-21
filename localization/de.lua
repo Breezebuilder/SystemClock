@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Fallen Sie nicht in das {C:purple,E:1}Schwarze Loch{}."
 				}
 			}

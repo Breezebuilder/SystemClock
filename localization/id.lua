@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Jangan jatuh ke dalam {C:purple,E:1}Lubang Hitam{}."
 				}
 			}

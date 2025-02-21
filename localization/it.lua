@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Non cadere nel {C:purple,E:1}Buco Nero{}."
 				}
 			}

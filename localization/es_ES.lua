@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"No caigas en el {C:purple,E:1}Agujero Negro{}."
 				}
 			}

@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Nie wpadaj w {C:purple,E:1}Czarną Dziurę{}."
 				}
 			}

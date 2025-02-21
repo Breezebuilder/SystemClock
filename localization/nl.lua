@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Val niet in het {C:purple,E:1}Zwarte Gat{}."
 				}
 			}
