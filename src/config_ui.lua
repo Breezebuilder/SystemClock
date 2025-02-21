@@ -75,7 +75,7 @@ function config_ui.create_config_tab()
 												h = 0.8,
 												options = { "1", "2", "3", "4", "5" },
 												current_option = config.clock_preset_index,
-												opt_callback = 'sysclock_change_clock_preset',
+												opt_callback = 'sysclock_cycle_clock_preset',
 												colour = G.C.JOKER_GREY,
 											}),
 										}
@@ -89,7 +89,7 @@ function config_ui.create_config_tab()
 										config = { align = 'cm' },
 										nodes = {
 											UIBox_button({
-												button = 'sysclock_default_current_preset',
+												button = 'sysclock_restore_preset_defaults',
 												label = { locale.translate('sysclock_preset_default_button') },
 												colour = G.C.JOKER_GREY,
 												minw = 2.8,
@@ -147,7 +147,7 @@ function config_ui.create_UIBox_config_panel()
 								w = 4.5,
 								options = SystemClock.FORMAT_EXAMPLES,
 								current_option = SystemClock.indices.format,
-								opt_callback = 'sysclock_change_clock_time_format'
+								opt_callback = 'sysclock_cycle_clock_time_format'
 							}),
 						}
 					},
@@ -187,7 +187,7 @@ function config_ui.create_UIBox_config_panel()
 								w = 4.5,
 								options = SystemClock.TEXT_SIZES,
 								current_option = SystemClock.indices.size,
-								opt_callback = 'sysclock_change_clock_size',
+								opt_callback = 'sysclock_cycle_clock_size',
 								colour = G.C.GREEN
 							})
 						}
@@ -202,7 +202,7 @@ function config_ui.create_UIBox_config_panel()
 								w = 4.5,
 								options = locale.translate('sysclock_styles'),
 								current_option = SystemClock.indices.style,
-								opt_callback = 'sysclock_change_clock_style',
+								opt_callback = 'sysclock_cycle_clock_style',
 								colour = G.C.ORANGE
 							})
 						}
@@ -217,7 +217,7 @@ function config_ui.create_UIBox_config_panel()
 								w = 4.5,
 								options = locale.translate('sysclock_colours'),
 								current_option = SystemClock.indices.text_colour,
-								opt_callback = 'sysclock_change_clock_text_colour',
+								opt_callback = 'sysclock_cycle_clock_text_colour',
 								colour = G.C.BLUE
 							})
 						}
@@ -232,7 +232,7 @@ function config_ui.create_UIBox_config_panel()
 								w = 4.5,
 								options = locale.translate('sysclock_colours'),
 								current_option = SystemClock.indices.back_colour,
-								opt_callback = 'sysclock_change_clock_back_colour',
+								opt_callback = 'sysclock_cycle_clock_back_colour',
 								colour = G.C.BLUE
 							})
 						}
@@ -312,7 +312,7 @@ function config_ui.create_UIBox_position_sliders()
 						max = 22,
 						step = 0.01,
 						decimal_places = 2,
-						callback = 'sysclock_set_hud_position_x'
+						callback = 'sysclock_slider_clock_position_x'
 					})
 				}
 			},
@@ -331,7 +331,7 @@ function config_ui.create_UIBox_position_sliders()
 						max = 13,
 						step = 0.01,
 						decimal_places = 2,
-						callback = 'sysclock_set_hud_position_y'
+						callback = 'sysclock_slider_clock_position_y'
 					})
 				}
 			}

@@ -179,35 +179,35 @@ function SystemClock.set_draggable(state, juice)
 	config_ui.update_draggable_toggle(juice)
 end
 
-G.FUNCS.sysclock_change_clock_preset = function(e)
+G.FUNCS.sysclock_cycle_clock_preset = function(e)
 	init_config_preset(e.to_key)
 	clock_ui.reset()
 	config_ui.update_panel(true)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 end
 
-G.FUNCS.sysclock_default_current_preset = function(e)
+G.FUNCS.sysclock_restore_preset_defaults = function(e)
 	config.reset_preset(config.clock_preset_index)
 	init_config_preset()
 	clock_ui.reset()
 	config_ui.update_panel(true)
 end
 
-G.FUNCS.sysclock_change_clock_time_format = function(e)
+G.FUNCS.sysclock_cycle_clock_time_format = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.format = e.to_key
 	SystemClock.current_preset.format = SystemClock.indices.format
 	clock_ui.reset()
 end
 
-G.FUNCS.sysclock_change_clock_style = function(e)
+G.FUNCS.sysclock_cycle_clock_style = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.style = e.to_key
 	SystemClock.current_preset.style = SystemClock.indices.style
 	clock_ui.reset()
 end
 
-G.FUNCS.sysclock_change_clock_text_colour = function(e)
+G.FUNCS.sysclock_cycle_clock_text_colour = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.text_colour = e.to_key
 	local text_colour_ref = SystemClock.COLOUR_REFS[e.to_key]
@@ -215,7 +215,7 @@ G.FUNCS.sysclock_change_clock_text_colour = function(e)
 	clock_ui.reset()
 end
 
-G.FUNCS.sysclock_change_clock_back_colour = function(e)
+G.FUNCS.sysclock_cycle_clock_back_colour = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.back_colour = e.to_key
 	local back_colour_ref = SystemClock.COLOUR_REFS[e.to_key]
@@ -223,14 +223,14 @@ G.FUNCS.sysclock_change_clock_back_colour = function(e)
 	clock_ui.reset()
 end
 
-G.FUNCS.sysclock_change_clock_size = function(e)
+G.FUNCS.sysclock_cycle_clock_size = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.size = e.to_key
 	SystemClock.current_preset.size = e.to_val
 	clock_ui.reset()
 end
 
-G.FUNCS.sysclock_set_hud_position_x = function(e)
+G.FUNCS.sysclock_slider_clock_position_x = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	local x = e.ref_table[e.ref_value]
 	if G.HUD_clock then
@@ -239,7 +239,7 @@ G.FUNCS.sysclock_set_hud_position_x = function(e)
 	SystemClock.current_preset.position.x = x
 end
 
-G.FUNCS.sysclock_set_hud_position_y = function(e)
+G.FUNCS.sysclock_slider_clock_position_y = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	local y = e.ref_table[e.ref_value]
 	if G.HUD_clock then
