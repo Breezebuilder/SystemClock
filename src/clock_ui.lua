@@ -138,14 +138,28 @@ function clock_ui.reset()
             },
             zoom = true
         })
-        G.HUD_clock.states.drag.can = config.clock_allow_drag
+        G.HUD_clock.states.drag.can = SystemClock.draw_as_popup or config.clock_allow_drag
         local position = SystemClock.current_preset.position
         G.HUD_clock.T.x = position.x
         G.HUD_clock.T.y = position.y
 
+        local temporary_drag = false
+
+        G.HUD_clock.drag = function(self)
+            if not config.clock_allow_drag then
+                SystemClock.set_draggable(true, true)
+                temporary_drag = true
+            end
+            MoveableContainer.drag(self)
+        end
+
         G.HUD_clock.stop_drag = function(self)
             MoveableContainer.stop_drag(self)
             SystemClock.set_position({ x = self.T.x, y = self.T.y })
+            if temporary_drag then
+                SystemClock.set_draggable(false, true)
+                temporary_drag = false
+            end
         end
     end
 end

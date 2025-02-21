@@ -151,6 +151,9 @@ end
 function SystemClock.set_popup(state, forceReset)
 	if forceReset or SystemClock.draw_as_popup ~= state then
 		SystemClock.draw_as_popup = state
+		if G.HUD_clock then
+			G.HUD_clock.states.drag.can = state or config.clock_allow_drag
+		end
 		clock_ui.reset()
 	end
 end
@@ -161,17 +164,19 @@ function SystemClock.set_position(pos)
 	config_ui.update_position_sliders()
 end
 
-function SystemClock.set_visibility(state)
+function SystemClock.set_visibility(state, juice)
 	config.clock_visible = state
 	hook_game_update(config.clock_visible)
 	clock_ui.reset()
+	config_ui.update_visibility_toggle(juice)
 end
 
-function SystemClock.set_draggable(state)
+function SystemClock.set_draggable(state, juice)
 	config.clock_allow_drag = state
 	if G.HUD_clock then
-		G.HUD_clock.states.drag.can = state
+		G.HUD_clock.states.drag.can = state or SystemClock.draw_as_popup
 	end
+	config_ui.update_draggable_toggle(juice)
 end
 
 G.FUNCS.sysclock_change_clock_preset = function(e)

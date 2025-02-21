@@ -31,28 +31,32 @@ function config_ui.create_config_tab()
 										n = G.UIT.R,
 										config = { align = 'tr', padding = 0.05 },
 										nodes = {
-											create_toggle({
-												label = locale.translate('sysclock_visibility_setting'),
-												w = 1.5,
-												text_scale = 0.8,
-												ref_table = config,
-												ref_value = 'clock_visible',
-												callback = SystemClock.set_visibility
-											})
+											{
+												n = G.UIT.O,
+												config = {
+													id = 'sysclock_visibility_toggle',
+													object = UIBox {
+														config = { align = 'cm', offset = { x = 0, y = 0 } },
+														definition = config_ui.create_UIBox_visibility_toggle()
+													}
+												}
+											}
 										}
 									},
 									{
 										n = G.UIT.R,
 										config = { align = 'tr', padding = 0.05 },
 										nodes = {
-											create_toggle({
-												label = locale.translate('sysclock_draggable_setting'),
-												w = 1.5,
-												text_scale = 0.8,
-												ref_table = config,
-												ref_value = 'clock_allow_drag',
-												callback = SystemClock.set_draggable
-											})
+											{
+												n = G.UIT.O,
+												config = {
+													id = 'sysclock_draggable_toggle',
+													object = UIBox {
+														config = { align = 'cm', offset = { x = 0, y = 0 } },
+														definition = config_ui.create_UIBox_draggable_toggle()
+													}
+												}
+											}
 										}
 									},
 									{
@@ -122,6 +126,7 @@ function config_ui.create_config_tab()
 		}
 	}
 end
+
 
 function config_ui.create_UIBox_config_panel()
 	return {
@@ -238,6 +243,55 @@ function config_ui.create_UIBox_config_panel()
 	}
 end
 
+
+function config_ui.create_UIBox_visibility_toggle()
+	return {
+		n = G.UIT.ROOT,
+		config = { align = 'cm', colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = 'cm' },
+				nodes = {
+					create_toggle({
+						label = locale.translate('sysclock_visibility_setting'),
+						w = 1.5,
+						text_scale = 0.8,
+						ref_table = config,
+						ref_value = 'clock_visible',
+						callback = SystemClock.set_visibility
+					})
+				}
+			}
+		}
+	}
+end
+
+
+function config_ui.create_UIBox_draggable_toggle()
+	return {
+		n = G.UIT.ROOT,
+		config = { align = 'cm', colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = 'cm' },
+				nodes = {
+					create_toggle({
+						label = locale.translate('sysclock_draggable_setting'),
+						w = 1.5,
+						text_scale = 0.8,
+						ref_table = config,
+						ref_value = 'clock_allow_drag',
+						callback = SystemClock.set_draggable
+					})
+				}
+			}
+		}
+	}
+end
+
+
 function config_ui.create_UIBox_position_sliders()
 	return {
 		n = G.UIT.ROOT,
@@ -285,6 +339,7 @@ function config_ui.create_UIBox_position_sliders()
 	}
 end
 
+
 function config_ui.update_panel()
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
 	if not panel_contents then return end
@@ -303,6 +358,45 @@ function config_ui.update_panel()
 	panel_contents.config.object:juice_up(0.05, 0.02)
 end
 
+
+function config_ui.update_visibility_toggle(juice)
+	local toggle_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_visibility_toggle')
+	if not toggle_contents then return end
+
+	toggle_contents.config.object:remove()
+	toggle_contents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = toggle_contents },
+		definition = config_ui.create_UIBox_visibility_toggle()
+	}
+	toggle_contents.UIBox:recalculate()
+	toggle_contents.config.object:set_role {
+		role_type = 'Major',
+		major = nil
+	}
+
+	if juice then toggle_contents.config.object:juice_up(0.05, 0.05) end
+end
+
+
+function config_ui.update_draggable_toggle(juice)
+	local toggle_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_draggable_toggle')
+	if not toggle_contents then return end
+
+	toggle_contents.config.object:remove()
+	toggle_contents.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = toggle_contents },
+		definition = config_ui.create_UIBox_draggable_toggle()
+	}
+	toggle_contents.UIBox:recalculate()
+		toggle_contents.config.object:set_role {
+		role_type = 'Major',
+		major = nil
+	}
+
+	if juice then toggle_contents.config.object:juice_up(0.05, 0.05) end
+end
+
+
 function config_ui.update_position_sliders()
 	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
 	if not panel_contents then return end
@@ -314,6 +408,7 @@ function config_ui.update_position_sliders()
 	}
 	panel_contents.UIBox:recalculate()
 end
+
 
 function config_ui.open_config_menu()
 	if SMODS then
@@ -349,5 +444,6 @@ function config_ui.open_config_menu()
 		}
 	)
 end
+
 
 return config_ui
