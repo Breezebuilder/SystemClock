@@ -13,7 +13,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"{C:green}Bản dịch của {C:gold}HuayTheLocFixer{}",
 					" ",
             		"Đừng để rơi vào {C:purple,E:1}Hố Đen{} nhé."
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Đồng hồ",
 			['sysclock_name'] = "Đồng Hồ Hệ Thống",
 			['sysclock_visibility_setting'] = "Hiện đồng hồ",
 			['sysclock_draggable_setting'] = "Cho phép kéo thả",

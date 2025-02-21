@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Nie wpadaj w {C:purple,E:1}Czarną Dziurę{}."
 				}
 			}
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Zegar",
 			['sysclock_name'] = "Zegar Systemowy",
 			['sysclock_visibility_setting'] = "Pokaż zegar",
 			['sysclock_draggable_setting'] = "Zezwól na przeciąganie",

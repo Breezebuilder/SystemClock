@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 
-
 					"{C:purple,E:1}ブラックホール{}に落ちないように注意してください。"
 				}
 			}
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "時計",
 			['sysclock_name'] = "システムクロック",
 			['sysclock_visibility_setting'] = "時計を表示",
 			['sysclock_draggable_setting'] = "ドラッグを許可",

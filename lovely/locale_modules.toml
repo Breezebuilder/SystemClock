@@ -1,0 +1,100 @@
+[manifest]
+version = '1.0.0'
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.module]
+source = 'localization/de.lua'
+before = 'main.lua'
+name = 'systemclock.locale.de'
+
+[[patches]]
+[patches.module]
+source = 'localization/en-us.lua'
+before = 'main.lua'
+name = 'systemclock.locale.en-us'
+
+[[patches]]
+[patches.module]
+source = 'localization/es_419.lua'
+before = 'main.lua'
+name = 'systemclock.locale.es_419'
+
+[[patches]]
+[patches.module]
+source = 'localization/es_ES.lua'
+before = 'main.lua'
+name = 'systemclock.locale.es_es'
+
+[[patches]]
+[patches.module]
+source = 'localization/fr.lua'
+before = 'main.lua'
+name = 'systemclock.locale.fr'
+
+[[patches]]
+[patches.module]
+source = 'localization/id.lua'
+before = 'main.lua'
+name = 'systemclock.locale.id'
+
+[[patches]]
+[patches.module]
+source = 'localization/it.lua'
+before = 'main.lua'
+name = 'systemclock.locale.it'
+
+[[patches]]
+[patches.module]
+source = 'localization/ja.lua'
+before = 'main.lua'
+name = 'systemclock.locale.ja'
+
+[[patches]]
+[patches.module]
+source = 'localization/ko.lua'
+before = 'main.lua'
+name = 'systemclock.locale.ko'
+
+[[patches]]
+[patches.module]
+source = 'localization/nl.lua'
+before = 'main.lua'
+name = 'systemclock.locale.nl'
+
+[[patches]]
+[patches.module]
+source = 'localization/pl.lua'
+before = 'main.lua'
+name = 'systemclock.locale.pl'
+
+[[patches]]
+[patches.module]
+source = 'localization/pt_BR.lua'
+before = 'main.lua'
+name = 'systemclock.locale.pt_br'
+
+[[patches]]
+[patches.module]
+source = 'localization/ru.lua'
+before = 'main.lua'
+name = 'systemclock.locale.ru'
+
+[[patches]]
+[patches.module]
+source = 'localization/vi.lua'
+before = 'main.lua'
+name = 'systemclock.locale.vi'
+
+[[patches]]
+[patches.module]
+source = 'localization/zh_CN.lua'
+before = 'main.lua'
+name = 'systemclock.locale.zh_cn'
+
+[[patches]]
+[patches.module]
+source = 'localization/zh_TW.lua'
+before = 'main.lua'
+name = 'systemclock.locale.zh_tw'

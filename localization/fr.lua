@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Ne tombez pas dans le {C:purple,E:1}Trou Noir{}."
 				}
 			}
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Horloge",
 			['sysclock_name'] = "Horloge Système",
 			['sysclock_visibility_setting'] = "Afficher l'horloge",
 			['sysclock_draggable_setting'] = "Autoriser le déplacement",

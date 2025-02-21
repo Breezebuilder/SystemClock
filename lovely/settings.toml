@@ -1,0 +1,19 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 10
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+match_indent = true
+position = "before"
+pattern = '''local t = create_UIBox_generic_options({back_func = 'options',contents = {create_tabs('''
+payload = '''
+if not SMODS then
+    tabs[#tabs+1] = {
+    label = require('systemclock.locale').translate('sysclock_settings_tab'),
+    tab_definition_function = require('systemclock.config_ui').create_config_tab
+  }
+end
+'''

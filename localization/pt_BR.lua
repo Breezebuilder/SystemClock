@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
             		"Não caia no {C:purple,E:1}Buraco Negro{}."
 				}
 			}
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Relógio",
 			['sysclock_name'] = "Relógio do Sistema",
 			['sysclock_visibility_setting'] = "Mostrar relógio",
 			['sysclock_draggable_setting'] = "Permitir arrastar",

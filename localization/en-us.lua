@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
             		"Don't fall into the {C:purple,E:1}Black Hole{}."
 				}
 			}
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Clock",
 			['sysclock_name'] = "SystemClock",
 			['sysclock_visibility_setting'] = "Show clock",
 			['sysclock_draggable_setting'] = "Allow dragging",

@@ -1,0 +1,60 @@
+[manifest]
+version = '1.0.0'
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.module]
+source = 'src/moveable_container.lua'
+before = 'main.lua'
+name = 'systemclock.moveablecontainer'
+
+[[patches]]
+[patches.module]
+source = 'src/utilities.lua'
+before = 'main.lua'
+name = 'systemclock.utilities'
+
+[[patches]]
+[patches.module]
+source = 'src/config.lua'
+before = 'main.lua'
+name = 'systemclock.config'
+
+[[patches]]
+[patches.module]
+source = 'src/config_ui.lua'
+before = 'main.lua'
+name = 'systemclock.config_ui'
+
+[[patches]]
+[patches.module]
+source = 'src/clock_ui.lua'
+before = 'main.lua'
+name = 'systemclock.clock_ui'
+
+[[patches]]
+[patches.module]
+source = 'src/locale.lua'
+before = 'main.lua'
+name = 'systemclock.locale'
+
+[[patches]]
+[patches.module]
+source = 'src/logger.lua'
+before = 'main.lua'
+name = 'systemclock.logger'
+
+[[patches]]
+[patches.module]
+source = 'src/core.lua'
+before = 'main.lua'
+name = 'systemclock.core'
+
+[[patches]]
+[patches.copy]
+target = 'main.lua'
+position = 'append'
+sources = [
+    'src/init.lua'
+]

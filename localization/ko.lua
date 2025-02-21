@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 
-
 					"{C:purple,E:1}블랙홀{}에 빠지지 마세요."
 				}
 			}
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "시계",
 			['sysclock_name'] = "시스템 클럭",
 			['sysclock_visibility_setting'] = "시계 표시",
 			['sysclock_draggable_setting'] = "드래그 허용",

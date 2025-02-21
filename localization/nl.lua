@@ -15,7 +15,6 @@ return {
 					" ",
 					" ",
 					" ",
-					" ",
 					"Val niet in het {C:purple,E:1}Zwarte Gat{}."
 				}
 			}
@@ -23,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_settings_tab'] = "Klok",
 			['sysclock_name'] = "Systeemklok",
 			['sysclock_visibility_setting'] = "Toon klok",
 			['sysclock_draggable_setting'] = "Slepen toestaan",

@@ -2,7 +2,7 @@
 -- Modified for use in Ankh by MathIsFun0 (https://github.com/MathIsFun0/Ankh)
 -- Further modified for use in SystemClock
 
-MoveableContainer = UIBox:extend()
+local MoveableContainer = UIBox:extend()
 function MoveableContainer:init(args)
 	args.definition = {
 		n = G.UIT.ROOT,
@@ -100,3 +100,5 @@ function MoveableContainer:stop_drag()
 	end
 	UIBox.stop_drag(self)
 end
+
+return MoveableContainer
