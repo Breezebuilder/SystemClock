@@ -182,7 +182,6 @@ G.FUNCS.sysclock_cycle_clock_preset = function(e)
 	init_config_preset(e.to_key)
 	clock_ui.reset()
 	config_ui.update_panel(true)
-	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 end
 
 G.FUNCS.sysclock_restore_preset_defaults = function(e)
