@@ -35,14 +35,6 @@ function G.FUNCS.mods_button(e)
 	g_funcs_mods_button_ref(e)
 end
 
-local g_funcs_change_tab_ref = G.FUNCS.change_tab
-function G.FUNCS.change_tab(e)
-	if e and e.config and e.config.id == 'tab_but_SystemClock' then
-		SystemClock.set_popup(false)
-	end
-	g_funcs_change_tab_ref(e)
-end
-
 local smods_save_all_config_ref = SMODS.save_all_config
 function SMODS.save_all_config()
 	smods_save_all_config_ref()

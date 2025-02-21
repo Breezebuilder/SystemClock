@@ -97,17 +97,13 @@ local function update(dt)
 		SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * (0.7)
 		SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * (0.7)
 	end
-
-	if G.STAGE ~= G.STAGES.RUN then
-		hook_game_update(false)
-	end
 end
 
 local game_update_ref = Game.update
 hook_game_update = function(state)
 	if state == false then
 		Game.update = game_update_ref
-	else
+	elseif Game.update == game_update_ref then
 		function Game:update(dt)
 			game_update_ref(self, dt)
 			update(dt)
@@ -115,18 +111,28 @@ hook_game_update = function(state)
 	end
 end
 
-local game_start_run_ref = Game.start_run
-function Game:start_run(args)
-	game_start_run_ref(self, args)
+local g_main_menu_ref = G.main_menu
+function G:main_menu()
+	local ret = g_main_menu_ref(self)
 	hook_game_update(true)
 	clock_ui.reset()
+	return ret
+end
+
+local game_start_run_ref = Game.start_run
+function Game:start_run(args)
+	local ret = game_start_run_ref(self, args)
+	hook_game_update(true)
+	clock_ui.reset()
+	return ret
 end
 
 local g_funcs_exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
 function G.FUNCS.exit_overlay_menu(e)
 	SystemClock.set_popup(false)
-	g_funcs_exit_overlay_menu_ref(e)
+	local ret = g_funcs_exit_overlay_menu_ref(e)
 	config.save()
+	return ret
 end
 
 local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
@@ -144,7 +150,19 @@ function Controller:queue_R_cursor_press(x, y)
 	if G.HUD_clock and G.HUD_clock.states.hover.is and not SystemClock.draw_as_popup then
 		config_ui.open_config_menu()
 	end
-	controller_queue_R_cursor_press_ref(self, x, y)
+	return controller_queue_R_cursor_press_ref(self, x, y)
+end
+
+local g_funcs_change_tab_ref = G.FUNCS.change_tab
+function G.FUNCS.change_tab(e)
+	SystemClock.set_popup(false)
+	return g_funcs_change_tab_ref(e)
+end
+
+local g_funcs_options = G.FUNCS.options
+function G.FUNCS.options(e)
+	SystemClock.set_popup(false)
+	return g_funcs_options(e)
 end
 
 function SystemClock.set_popup(state, forceReset)

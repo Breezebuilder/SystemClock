@@ -120,7 +120,7 @@ function clock_ui.reset()
     if G.HUD_clock then
         G.HUD_clock:remove()
     end
-    if G.STAGE == G.STAGES.RUN and config.clock_visible then
+    if config.clock_visible and (G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
         G.HUD_clock = MoveableContainer({
             config = {
                 align = 'cm',
