@@ -17,7 +17,8 @@ Keep track of time - don't fall into the `Black Hole`.
 
 ## Installation
 1. Install [Lovely](https://github.com/ethangreen-dev/lovely-injector/releases) by following the [installation instructions here](https://github.com/ethangreen-dev/lovely-injector?tab=readme-ov-file#manual-installation).
-    - `version.dll` should be in the same folder as `Balatro.exe` or the **Balatro** application
+    - On **Windows**, `version.dll` should be in the same folder as `Balatro.exe`
+    - On **macOS**, `liblovely.dylib` should be in the same folder as `Balatro.app`
 
 2. Open the **Mods** folder or create one if it does not exist.
     - On **Windows** this should be located at `%AppData%/Balatro/Mods`
