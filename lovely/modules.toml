@@ -5,9 +5,9 @@ priority = 1
 
 [[patches]]
 [patches.module]
-source = 'src/moveable_container.lua'
+source = 'src/draggable_container.lua'
 before = 'main.lua'
-name = 'systemclock.moveablecontainer'
+name = 'systemclock.draggablecontainer'
 
 [[patches]]
 [patches.module]

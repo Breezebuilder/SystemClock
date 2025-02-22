@@ -2,8 +2,8 @@
 -- Modified for use in Ankh by MathIsFun0 (https://github.com/MathIsFun0/Ankh)
 -- Further modified for use in SystemClock
 
-local MoveableContainer = UIBox:extend()
-function MoveableContainer:init(args)
+local DraggableContainer = UIBox:extend()
+function DraggableContainer:init(args)
 	args.definition = {
 		n = G.UIT.ROOT,
 		config = { colour = G.C.CLEAR },
@@ -20,7 +20,7 @@ function MoveableContainer:init(args)
 		self.UIRoot:set_zoom(true, true, true)
 	end
 
-	self.attention_text = 'MoveableContainer'
+	self.attention_text = 'DraggableContainer'
 
 	if args.config.instance_type then
 		table.insert(G.I[args.config.instance_type], self)
@@ -68,7 +68,7 @@ function Moveable:set_drag_state(state, recursive, force)
 	end
 end
 
-function MoveableContainer:hover()
+function DraggableContainer:hover()
 	if self.states.drag.can then
 		self:juice_up(0.05, 0.02)
 		play_sound('chips1', math.random() * 0.1 + 0.55, 0.15)
@@ -80,25 +80,25 @@ function MoveableContainer:hover()
 	UIBox.hover(self)
 end
 
-function MoveableContainer:stop_hover()
+function DraggableContainer:stop_hover()
 	if self.zoom then
 		self.UIRoot:set_hover_state(false, true)
 	end
 	UIBox.stop_hover(self)
 end
 
-function MoveableContainer:drag()
+function DraggableContainer:drag()
 	if self.zoom then
 		self.UIRoot:set_drag_state(true, true)
 	end
 	UIBox.drag(self)
 end
 
-function MoveableContainer:stop_drag()
+function DraggableContainer:stop_drag()
 	if self.zoom then
 		self.UIRoot:set_drag_state(false, true)
 	end
 	UIBox.stop_drag(self)
 end
 
-return MoveableContainer
+return DraggableContainer

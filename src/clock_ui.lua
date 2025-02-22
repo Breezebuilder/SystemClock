@@ -1,7 +1,7 @@
 local clock_ui = {}
 
 local config = require('systemclock.config')
-local MoveableContainer = require('systemclock.moveablecontainer')
+local DraggableContainer = require('systemclock.draggablecontainer')
 
 local function calculate_max_text_width(format_index)
     format_index = format_index or SystemClock.current_preset.format
@@ -121,7 +121,7 @@ function clock_ui.reset()
         G.HUD_clock:remove()
     end
     if config.clock_visible and (G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
-        G.HUD_clock = MoveableContainer({
+        G.HUD_clock = DraggableContainer({
             config = {
                 align = 'cm',
                 offset = { x = 0, y = 0 },
@@ -150,11 +150,11 @@ function clock_ui.reset()
                 SystemClock.set_draggable(true, true)
                 temporary_drag = true
             end
-            MoveableContainer.drag(self)
+            DraggableContainer.drag(self)
         end
 
         G.HUD_clock.stop_drag = function(self)
-            MoveableContainer.stop_drag(self)
+            DraggableContainer.stop_drag(self)
             SystemClock.set_position({ x = self.T.x, y = self.T.y })
             if temporary_drag then
                 SystemClock.set_draggable(false, true)
