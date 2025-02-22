@@ -192,6 +192,7 @@ function SystemClock.set_draggable(state, juice)
 	config.clock_allow_drag = state
 	if G.HUD_clock then
 		G.HUD_clock.states.drag.can = state or SystemClock.draw_as_popup
+		G.HUD_clock:juice_up(0.05, 0.03)
 	end
 	config_ui.update_draggable_toggle(juice)
 end
