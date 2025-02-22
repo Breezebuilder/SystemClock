@@ -107,14 +107,16 @@ end
 
 local g_main_menu_ref = G.main_menu
 function G:main_menu()
+	local ret = g_main_menu_ref(self)
 	clock_ui.reset()
-	return g_main_menu_ref(self)
+	return ret
 end
 
 local game_start_run_ref = Game.start_run
 function Game:start_run(args)
+	local ret = game_start_run_ref(self, args)
 	clock_ui.reset()
-	return game_start_run_ref(self, args)
+	return ret
 end
 
 local g_funcs_exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
