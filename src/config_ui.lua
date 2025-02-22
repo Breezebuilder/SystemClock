@@ -4,134 +4,105 @@ local logger = require('systemclock.logger')
 local config = require('systemclock.config')
 local locale = require('systemclock.locale')
 
-function config_ui.create_config_tab()
-	SystemClock.set_popup(true)
+
+local function create_UIBox_visibility_toggle()
 	return {
 		n = G.UIT.ROOT,
-		config = {
-			r = 0.1,
-			minh = 6,
-			minw = 6,
-			align = 'cm',
-			colour = G.C.CLEAR
-		},
+		config = { align = 'cm', colour = G.C.CLEAR },
 		nodes = {
 			{
-				n = G.UIT.C,
-				config = { align = 'tl', minw = 2, id = 'sysclock_config_sidebar' },
+				n = G.UIT.R,
+				config = { align = 'cm' },
 				nodes = {
-					{
-						n = G.UIT.R,
-						config = { align = 'tr', id = 'sysclock_config_toggles' },
-						nodes = {
-							{
-								n = G.UIT.C,
-								nodes = {
-									{
-										n = G.UIT.R,
-										config = { align = 'tr' },
-										nodes = {
-											{
-												n = G.UIT.O,
-												config = {
-													id = 'sysclock_visibility_toggle',
-													object = UIBox {
-														config = { align = 'cm', offset = { x = 0, y = 0 } },
-														definition = config_ui.create_UIBox_visibility_toggle()
-													}
-												}
-											}
-										}
-									},
-									{
-										n = G.UIT.R,
-										config = { minh = 0.2 },
-									},
-									{
-										n = G.UIT.R,
-										config = { align = 'tr' },
-										nodes = {
-											{
-												n = G.UIT.O,
-												config = {
-													id = 'sysclock_draggable_toggle',
-													object = UIBox {
-														config = { align = 'cm', offset = { x = 0, y = 0 } },
-														definition = config_ui.create_UIBox_draggable_toggle()
-													}
-												}
-											}
-										}
-									},
-									{
-										n = G.UIT.R,
-										config = { minh = 1.6 },
-									},
-									{
-										n = G.UIT.R,
-										config = { align = 'cm' },
-										nodes = {
-											create_option_cycle({
-												label = locale.translate('sysclock_preset_setting'),
-												scale = 0.8,
-												text_scale = 0.7,
-												w = 2,
-												h = 0.8,
-												options = { "1", "2", "3", "4", "5" },
-												current_option = config.clock_preset_index,
-												opt_callback = 'sysclock_cycle_clock_preset',
-												colour = G.C.JOKER_GREY,
-											}),
-										}
-									},
-									{
-										n = G.UIT.R,
-										config = { minh = 0.2 }
-									},
-									{
-										n = G.UIT.R,
-										config = { align = 'cm' },
-										nodes = {
-											UIBox_button({
-												button = 'sysclock_restore_preset_defaults',
-												label = { locale.translate('sysclock_preset_default_button') },
-												colour = G.C.JOKER_GREY,
-												minw = 2.8,
-												minh = 0.6,
-												scale = 0.5 * 0.8,
-											})
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			{
-				n = G.UIT.C,
-				config = { minw = 0.2 }
-			},
-			{
-				n = G.UIT.C,
-				nodes = {
-					{
-						n = G.UIT.O,
-						config = {
-							id = 'sysclock_config_panel',
-							object = UIBox {
-								config = { align = 'cm', offset = { x = 0, y = 0 } },
-								definition = config_ui.create_UIBox_config_panel()
-							}
-						}
-					}
+					create_toggle({
+						label = locale.translate('sysclock_visibility_setting'),
+						w = 1.5,
+						text_scale = 0.8,
+						ref_table = config,
+						ref_value = 'clock_visible',
+						callback = SystemClock.set_visibility
+					})
 				}
 			}
 		}
 	}
 end
 
-function config_ui.create_UIBox_config_panel()
+local function create_UIBox_draggable_toggle()
+	return {
+		n = G.UIT.ROOT,
+		config = { align = 'cm', colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = 'cm' },
+				nodes = {
+					create_toggle({
+						label = locale.translate('sysclock_draggable_setting'),
+						w = 1.5,
+						text_scale = 0.8,
+						ref_table = config,
+						ref_value = 'clock_allow_drag',
+						callback = SystemClock.set_draggable
+					})
+				}
+			}
+		}
+	}
+end
+
+local function create_UIBox_position_sliders()
+	return {
+		n = G.UIT.ROOT,
+		config = { align = 'cm', colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = 'tm' },
+				nodes = {
+					create_slider({
+						label = locale.translate('sysclock_x_position_setting'),
+						scale = 0.8,
+						label_scale = 0.8 * 0.5,
+						ref_table = SystemClock.current_preset.position,
+						ref_value = 'x',
+						w = 4,
+						min = -4,
+						max = 22,
+						step = 0.01,
+						decimal_places = 2,
+						callback = 'sysclock_slider_clock_position_x'
+					})
+				}
+			},
+			{
+				n = G.UIT.R,
+				config = { minh = 0.22 },
+			},
+			{
+				n = G.UIT.R,
+				config = { align = 'bm' },
+				nodes = {
+					create_slider({
+						label = locale.translate('sysclock_y_position_setting'),
+						scale = 0.8,
+						label_scale = 0.8 * 0.5,
+						ref_table = SystemClock.current_preset.position,
+						ref_value = 'y',
+						w = 4,
+						min = -3,
+						max = 13,
+						step = 0.01,
+						decimal_places = 2,
+						callback = 'sysclock_slider_clock_position_y'
+					})
+				}
+			}
+		}
+	}
+end
+
+local function create_UIBox_config_panel()
 	return {
 		n = G.UIT.ROOT,
 		config = { align = 'cm', minw = 10, r = 0.1, emboss = 0.1, colour = G.C.GREY },
@@ -168,7 +139,7 @@ function config_ui.create_UIBox_config_panel()
 									id = 'sysclock_config_position_sliders',
 									object = UIBox {
 										config = { align = 'cm', offset = { x = 0, y = 0 } },
-										definition = config_ui.create_UIBox_position_sliders()
+										definition = create_UIBox_position_sliders()
 									}
 								}
 							}
@@ -246,167 +217,169 @@ function config_ui.create_UIBox_config_panel()
 	}
 end
 
-function config_ui.create_UIBox_visibility_toggle()
+function config_ui.create_config_tab()
+	SystemClock.set_popup(true)
 	return {
 		n = G.UIT.ROOT,
-		config = { align = 'cm', colour = G.C.CLEAR},
+		config = {
+			r = 0.1,
+			minh = 6,
+			minw = 6,
+			align = 'cm',
+			colour = G.C.CLEAR
+		},
 		nodes = {
 			{
-				n = G.UIT.R,
-				config = { align = 'cm' },
+				n = G.UIT.C,
+				config = { align = 'tl', minw = 2, id = 'sysclock_config_sidebar' },
 				nodes = {
-					create_toggle({
-						label = locale.translate('sysclock_visibility_setting'),
-						w = 1.5,
-						text_scale = 0.8,
-						ref_table = config,
-						ref_value = 'clock_visible',
-						callback = SystemClock.set_visibility
-					})
+					{
+						n = G.UIT.R,
+						config = { align = 'tr', id = 'sysclock_config_toggles' },
+						nodes = {
+							{
+								n = G.UIT.C,
+								nodes = {
+									{
+										n = G.UIT.R,
+										config = { align = 'tr' },
+										nodes = {
+											{
+												n = G.UIT.O,
+												config = {
+													id = 'sysclock_visibility_toggle',
+													object = UIBox {
+														config = { align = 'cm', offset = { x = 0, y = 0 } },
+														definition = create_UIBox_visibility_toggle()
+													}
+												}
+											}
+										}
+									},
+									{
+										n = G.UIT.R,
+										config = { minh = 0.2 },
+									},
+									{
+										n = G.UIT.R,
+										config = { align = 'tr' },
+										nodes = {
+											{
+												n = G.UIT.O,
+												config = {
+													id = 'sysclock_draggable_toggle',
+													object = UIBox {
+														config = { align = 'cm', offset = { x = 0, y = 0 } },
+														definition = create_UIBox_draggable_toggle()
+													}
+												}
+											}
+										}
+									},
+									{
+										n = G.UIT.R,
+										config = { minh = 1.6 },
+									},
+									{
+										n = G.UIT.R,
+										config = { align = 'cm' },
+										nodes = {
+											create_option_cycle({
+												label = locale.translate('sysclock_preset_setting'),
+												scale = 0.8,
+												text_scale = 0.7,
+												w = 2,
+												h = 0.8,
+												options = { "1", "2", "3", "4", "5" },
+												current_option = config.clock_preset_index,
+												opt_callback = 'sysclock_cycle_clock_preset',
+												colour = G.C.JOKER_GREY,
+											}),
+										}
+									},
+									{
+										n = G.UIT.R,
+										config = { minh = 0.2 }
+									},
+									{
+										n = G.UIT.R,
+										config = { align = 'cm' },
+										nodes = {
+											UIBox_button({
+												button = 'sysclock_restore_preset_defaults',
+												label = { locale.translate('sysclock_preset_default_button') },
+												colour = G.C.JOKER_GREY,
+												minw = 2.8,
+												minh = 0.6,
+												scale = 0.5 * 0.8,
+											})
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			{
+				n = G.UIT.C,
+				config = { minw = 0.2 }
+			},
+			{
+				n = G.UIT.C,
+				nodes = {
+					{
+						n = G.UIT.O,
+						config = {
+							id = 'sysclock_config_panel',
+							object = UIBox {
+								config = { align = 'cm', offset = { x = 0, y = 0 } },
+								definition = create_UIBox_config_panel()
+							}
+						}
+					}
 				}
 			}
 		}
 	}
 end
 
-function config_ui.create_UIBox_draggable_toggle()
-	return {
-		n = G.UIT.ROOT,
-		config = { align = 'cm', colour = G.C.CLEAR },
-		nodes = {
-			{
-				n = G.UIT.R,
-				config = { align = 'cm' },
-				nodes = {
-					create_toggle({
-						label = locale.translate('sysclock_draggable_setting'),
-						w = 1.5,
-						text_scale = 0.8,
-						ref_table = config,
-						ref_value = 'clock_allow_drag',
-						callback = SystemClock.set_draggable
-					})
-				}
-			}
-		}
-	}
-end
+local function rebuild_UIBox_element(uie_id, build_func, juice)
+	local ui_element = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID(uie_id)
+	if not ui_element then 
+		logger.log_warn("Could not find UIE " .. 'sysclock_config_panel')
+		return
+	end
 
-function config_ui.create_UIBox_position_sliders()
-	return {
-		n = G.UIT.ROOT,
-		config = { align = 'cm', colour = G.C.CLEAR },
-		nodes = {
-			{
-				n = G.UIT.R,
-				config = { align = 'tm' },
-				nodes = {
-					create_slider({
-						label = locale.translate('sysclock_x_position_setting'),
-						scale = 0.8,
-						label_scale = 0.8 * 0.5,
-						ref_table = SystemClock.current_preset.position,
-						ref_value = 'x',
-						w = 4,
-						min = -4,
-						max = 22,
-						step = 0.01,
-						decimal_places = 2,
-						callback = 'sysclock_slider_clock_position_x'
-					})
-				}
-			},
-			{
-				n = G.UIT.R,
-				config = { minh = 0.22 },
-			},
-			{
-				n = G.UIT.R,
-				config = { align = 'bm' },
-				nodes = {
-					create_slider({
-						label = locale.translate('sysclock_y_position_setting'),
-						scale = 0.8,
-						label_scale = 0.8 * 0.5,
-						ref_table = SystemClock.current_preset.position,
-						ref_value = 'y',
-						w = 4,
-						min = -3,
-						max = 13,
-						step = 0.01,
-						decimal_places = 2,
-						callback = 'sysclock_slider_clock_position_y'
-					})
-				}
-			}
-		}
+	ui_element.config.object:remove()
+	ui_element.config.object = UIBox {
+		config = { offset = { x = 0, y = 0 }, parent = ui_element },
+		definition = build_func()
 	}
+	ui_element.UIBox:recalculate()
+	ui_element.config.object:set_role {
+		role_type = 'Major',
+		major = nil
+	}
+
+	if juice then ui_element.config.object:juice_up(0.05, 0.03) end
+	return ui_element
 end
 
 function config_ui.update_panel(juice)
-	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_panel')
-	if not panel_contents then return end
-
-	panel_contents.config.object:remove()
-	panel_contents.config.object = UIBox {
-		config = { offset = { x = 0, y = 0 }, parent = panel_contents },
-		definition = config_ui.create_UIBox_config_panel(),
-	}
-	panel_contents.UIBox:recalculate()
-	panel_contents.config.object:set_role {
-		role_type = 'Major',
-		major = nil
-	}
-
-	if juice then panel_contents.config.object:juice_up(0.05, 0.02) end
+	rebuild_UIBox_element('sysclock_config_panel', create_UIBox_config_panel, juice)
 end
 
 function config_ui.update_visibility_toggle(juice)
-	local toggle_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_visibility_toggle')
-	if not toggle_contents then return end
-
-	toggle_contents.config.object:remove()
-	toggle_contents.config.object = UIBox {
-		config = { offset = { x = 0, y = 0 }, parent = toggle_contents },
-		definition = config_ui.create_UIBox_visibility_toggle()
-	}
-	toggle_contents.UIBox:recalculate()
-	toggle_contents.config.object:set_role {
-		role_type = 'Major',
-		major = nil
-	}
-
-	if juice then toggle_contents.config.object:juice_up(0.05, 0.05) end
+	rebuild_UIBox_element('sysclock_visibility_toggle', create_UIBox_visibility_toggle, juice)
 end
 
 function config_ui.update_draggable_toggle(juice)
-	local toggle_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_draggable_toggle')
-	if not toggle_contents then return end
-
-	toggle_contents.config.object:remove()
-	toggle_contents.config.object = UIBox {
-		config = { offset = { x = 0, y = 0 }, parent = toggle_contents },
-		definition = config_ui.create_UIBox_draggable_toggle()
-	}
-	toggle_contents.UIBox:recalculate()
-	toggle_contents.config.object:set_role {
-		role_type = 'Major',
-		major = nil
-	}
-
-	if juice then toggle_contents.config.object:juice_up(0.05, 0.05) end
+	rebuild_UIBox_element('sysclock_draggable_toggle', create_UIBox_draggable_toggle, juice)
 end
 
-function config_ui.update_position_sliders()
-	local panel_contents = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('sysclock_config_position_sliders')
-	if not panel_contents then return end
-
-	panel_contents.config.object:remove()
-	panel_contents.config.object = UIBox {
-		config = { offset = { x = 0, y = 0 }, parent = panel_contents },
-		definition = config_ui.create_UIBox_position_sliders()
-	}
-	panel_contents.UIBox:recalculate()
+function config_ui.update_position_sliders(juice)
+	rebuild_UIBox_element('sysclock_config_position_sliders', create_UIBox_position_sliders, juice)
 end
 
 function config_ui.open_config_menu()
@@ -422,6 +395,7 @@ function config_ui.open_config_menu()
 				logger.log_debug("    back_button_uie:   " .. tostring(back_button_uie))
 				logger.log_debug("    G.FUNCS.exit_mods: " .. tostring(G.FUNCS.exit_mods))
 			end
+			return
 		else
 			logger.log_warn("G.FUNCS.openModUI_SystemClock does not exist, falling back to vanilla config menu")
 		end
@@ -439,7 +413,7 @@ function config_ui.open_config_menu()
 							label = "SystemClock",
 							chosen = true,
 							tab_definition_function = config_ui.create_config_tab
-						} },
+						} }
 					})
 				}
 			})
