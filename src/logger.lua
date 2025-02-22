@@ -5,7 +5,7 @@ function logger.log_trace(message)
 end
 
 function logger.log_debug(message)
-    logger.log("DEBUG", message)
+    if G.DEBUG then logger.log("DEBUG", message) end
 end
 
 function logger.log_info(message)

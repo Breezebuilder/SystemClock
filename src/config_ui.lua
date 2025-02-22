@@ -417,6 +417,10 @@ function config_ui.open_config_menu()
 			local back_button_uie = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID('overlay_menu_back_button')
 			if back_button_uie and G.FUNCS.exit_mods then
 				back_button_uie.config.button = 'exit_mods'
+			else
+				logger.log_warn("Could not replace config back button function")
+				logger.log_debug("    back_button_uie:   " .. tostring(back_button_uie))
+				logger.log_debug("    G.FUNCS.exit_mods: " .. tostring(G.FUNCS.exit_mods))
 			end
 		else
 			logger.log_warn("G.FUNCS.openModUI_SystemClock does not exist, falling back to vanilla config menu")
