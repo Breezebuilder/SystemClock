@@ -88,51 +88,40 @@ end
 init_config_preset()
 generate_example_time_formats()
 
-local hook_game_update
-local function update(dt)
-	SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, config.hour_offset)
-
-	if SystemClock.indices.style == 5 and SystemClock.indices.back_colour > 17 then
-		SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * (0.7)
-		SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * (0.7)
-		SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * (0.7)
-	end
-end
-
 local game_update_ref = Game.update
-hook_game_update = function(state)
-	if state == false then
-		Game.update = game_update_ref
-	elseif Game.update == game_update_ref then
-		function Game:update(dt)
-			game_update_ref(self, dt)
-			update(dt)
+function Game:update(dt)
+	local ret = game_update_ref(self, dt)
+
+	if config then
+		SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, config.hour_offset)
+
+		if SystemClock.indices.style == 5 and SystemClock.indices.back_colour > 17 then
+			SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * (0.7)
+			SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * (0.7)
+			SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * (0.7)
 		end
 	end
+
+	return ret
 end
 
 local g_main_menu_ref = G.main_menu
 function G:main_menu()
-	local ret = g_main_menu_ref(self)
-	hook_game_update(true)
 	clock_ui.reset()
-	return ret
+	return g_main_menu_ref(self)
 end
 
 local game_start_run_ref = Game.start_run
 function Game:start_run(args)
-	local ret = game_start_run_ref(self, args)
-	hook_game_update(true)
 	clock_ui.reset()
-	return ret
+	return game_start_run_ref(self, args)
 end
 
 local g_funcs_exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
 function G.FUNCS.exit_overlay_menu(e)
 	SystemClock.set_popup(false)
-	local ret = g_funcs_exit_overlay_menu_ref(e)
 	config.save()
-	return ret
+	return g_funcs_exit_overlay_menu_ref(e)
 end
 
 local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
@@ -183,7 +172,6 @@ end
 
 function SystemClock.set_visibility(state, juice)
 	config.clock_visible = state
-	hook_game_update(config.clock_visible)
 	clock_ui.reset()
 	config_ui.update_visibility_toggle(juice)
 end
