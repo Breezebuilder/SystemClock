@@ -8,7 +8,7 @@
     <img width="46%" alt="Configuration menu" src="https://github.com/user-attachments/assets/d6059c8f-4c41-4cc2-99d7-a5188872f713"/>
 </p>
 
-SystemClock is a mod for [Balatro 1.0.1n](https://store.steampowered.com/app/2379780/Balatro/) which adds a draggable, resizable, customizable clock to the game screen.
+SystemClock is a mod for [Balatro](https://store.steampowered.com/app/2379780/Balatro/) which adds a draggable, resizable, customizable clock to the game screen.
 
 It includes 5 editable presets and supports a variety of time formats, UI styles, and color options.
 
