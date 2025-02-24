@@ -105,9 +105,9 @@ function Game:update(dt)
 	return ret
 end
 
-local g_main_menu_ref = G.main_menu
-function G:main_menu()
-	local ret = g_main_menu_ref(self)
+local game_main_menu_ref = Game.main_menu
+function Game:main_menu(change_context)
+	local ret = game_main_menu_ref(self, change_context)
 	clock_ui.reset()
 	return ret
 end
@@ -137,7 +137,6 @@ end
 
 local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
 function Controller:queue_R_cursor_press(x, y)
-	if self.locks.frame then return end
 	if G.HUD_clock and G.HUD_clock.states.hover.is and not SystemClock.draw_as_popup then
 		config_ui.open_config_menu()
 	end
