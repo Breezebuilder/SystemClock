@@ -345,7 +345,8 @@ function config_ui.create_config_tab()
 end
 
 local function rebuild_UIBox_element(uie_id, build_func, juice)
-	local ui_element = G.OVERLAY_MENU and G.OVERLAY_MENU:get_UIE_by_ID(uie_id)
+	if not G.OVERLAY_MENU then return end
+	local ui_element = G.OVERLAY_MENU:get_UIE_by_ID(uie_id)
 	if not ui_element then 
 		logger.log_warn("Could not find UIE '" .. tostring(uie_id) .. "'")
 		return
