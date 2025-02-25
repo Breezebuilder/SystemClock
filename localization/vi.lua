@@ -13,9 +13,9 @@ return {
 					" ",
 					" ",
 					" ",
-					"{C:green}Bản dịch của {C:gold}HuayTheLocFixer{}",
+					"{C:green}Bản dịch của {C:gold}HuyTheKiller{}",
 					" ",
-            		"Đừng để rơi vào {C:purple,E:1}Hố Đen{} nhé."
+					"Đừng để rơi vào {C:purple,E:1}Hố Đen{} nhé."
 				}
 			}
 		}
