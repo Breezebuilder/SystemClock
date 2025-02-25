@@ -126,10 +126,10 @@ function G.FUNCS.exit_overlay_menu(e)
 	return g_funcs_exit_overlay_menu_ref(e)
 end
 
-local g_funcs_set_Trance_font = G.FUNCS.set_Trance_font
+local g_funcs_set_Trance_font_ref = G.FUNCS.set_Trance_font
 function G.FUNCS.set_Trance_font(...)
-	if g_funcs_set_Trance_font then
-		local ret = { g_funcs_set_Trance_font(...) }
+	if g_funcs_set_Trance_font_ref then
+		local ret = { g_funcs_set_Trance_font_ref(...) }
 		clock_ui.reset()
 		return unpack(ret)
 	end
@@ -149,10 +149,10 @@ function G.FUNCS.change_tab(e)
 	return g_funcs_change_tab_ref(e)
 end
 
-local g_funcs_options = G.FUNCS.options
+local g_funcs_options_ref = G.FUNCS.options
 function G.FUNCS.options(e)
 	SystemClock.set_popup(false)
-	return g_funcs_options(e)
+	return g_funcs_options_ref(e)
 end
 
 function SystemClock.set_popup(state, forceReset)
