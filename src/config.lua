@@ -13,14 +13,14 @@ local DEFAULTS = {
 		[1] = {
 			['format'] = 4,
 			['style'] = 5,
-			['size'] = 0.6,
+			['size'] = 0.5,
 			['colours'] = {
 				['text'] = 'WHITE',
 				['back'] = 'DYN_UI.MAIN'
 			},
 			['position'] = {
-				['x'] = 0.44356,
-				['y'] = -0.65719
+				['x'] = 0.68450,
+				['y'] = -0.61240
 			}
 		},
 		[2] = {
