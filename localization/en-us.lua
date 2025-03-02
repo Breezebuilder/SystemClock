@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Time",
 			['sysclock_settings_tab'] = "Clock",
 			['sysclock_name'] = "SystemClock",
 			['sysclock_visibility_setting'] = "Show clock",
@@ -41,7 +42,8 @@ return {
 				"Shadow",
 				"Translucent",
 				"Panel",
-				"Embossed"
+				"Embossed",
+				"Throwback"
 			},
 			['sysclock_colours'] = {
 				"White",

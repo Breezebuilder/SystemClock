@@ -218,8 +218,8 @@ function config.load()
 		end
 	end
 
-	utilities.table_deep_merge(loaded_config, config)
-	utilities.table_deep_merge(DEFAULTS, config)
+	utilities.deep_merge(loaded_config, config)
+	utilities.deep_merge(DEFAULTS, config)
 
 	update_config_version()
 
@@ -227,7 +227,7 @@ function config.load()
 end
 
 function config.reset_preset(preset_index)
-	config.clock_presets[preset_index] = utilities.table_deep_copy(DEFAULTS.clock_presets[preset_index])
+	config.clock_presets[preset_index] = utilities.deep_copy(DEFAULTS.clock_presets[preset_index])
 	config.save()
 end
 

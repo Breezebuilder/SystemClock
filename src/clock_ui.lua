@@ -1,7 +1,43 @@
 local clock_ui = {}
 
 local config = require('systemclock.config')
-local DraggableContainer = require('systemclock.draggablecontainer')
+local locale = require('systemclock.locale')
+local draggable_container = require('systemclock.draggablecontainer')
+
+clock_ui.styles = {
+    [1] = {
+        name = 'simple',
+    },
+    [2] = {
+        name = 'shadow',
+        text_shadow = true
+    },
+    [3] = {
+        name = 'translucent',
+        shadow_colour = G.C.UI.TRANSPARENT_DARK,
+        shadow_padding = 0.05,
+        text_shadow = true
+    },
+    [4] = {
+        name = 'panel',
+        shadow_colour = G.C.UI.TRANSPARENT_DARK,
+        shadow_padding = 0.02,
+        outer_colour_ref = 'back',
+        outer_padding = 0.02,
+        inner_colour = G.C.DYN_UI.BOSS_DARK,
+        inner_padding = 0.05,
+        text_padding = 0.05,
+        text_shadow = true
+    },
+    [5] = {
+        name = 'embossed',
+        shadow_colour_ref = 'shadow',
+        outer_colour_ref = 'back',
+        emboss_amount = 0.05,
+        inner_padding = 0.1,
+        text_shadow = true
+    }
+}
 
 local function calculate_max_text_width(format_index)
     format_index = format_index or SystemClock.current_preset.format
@@ -18,19 +54,19 @@ local function calculate_max_text_width(format_index)
     return width
 end
 
-local function create_clock_DynaText(style, text_size, colours, float)
+local function create_clock_DynaText(text_size, colours, shadow, float, silent)
     local dynaText = DynaText({
         string = { {
             ref_table = SystemClock,
             ref_value = 'time'
         } },
-        colours = { colours.text },
+        colours = colours,
         scale = text_size,
-        shadow = (style > 1),
+        shadow = shadow,
         pop_in = 0,
         pop_in_rate = 10,
         float = float,
-        silent = true,
+        silent = silent,
     })
 
     return {
@@ -43,24 +79,28 @@ local function create_clock_DynaText(style, text_size, colours, float)
     }
 end
 
-local function create_UIBox_clock(style, text_size, colours, float)
-    style = style or 2
+local function create_UIBox_clock(style_index, text_size, float)
+    style_index = style_index or 2
     text_size = text_size or 1
-    colours = colours or { text = G.C.WHITE, back = G.C.BLACK }
 
-    local translucent_colour = (style == 3 or style == 4) and G.C.UI.TRANSPARENT_DARK or G.C.CLEAR
-    local panel_outer_colour = (style == 4) and colours.back or G.C.CLEAR
-    local panel_inner_colour = (style == 4) and G.C.DYN_UI.BOSS_DARK or (style == 5) and colours.back or G.C.CLEAR
-    local panel_shadow_colour = (style == 5) and colours.shadow or G.C.CLEAR
-    local emboss_amount = (style == 5) and 0.05 or 0
-    local inner_width = calculate_max_text_width()
+    local colours = SystemClock.assign_clock_colours()
+
+    local style = clock_ui.styles[style_index]
+
+    local panel_outer_colour = style.outer_colour_ref and colours[style.outer_colour_ref] or style.outer_colour or G.C.CLEAR
+    local panel_inner_colour = style.inner_colour_ref and colours[style.inner_colour_ref] or style.inner_colour or G.C.CLEAR
+    local panel_shadow_colour = style.shadow_colour_ref and colours[style.shadow_colour_ref] or style.shadow_colour or G.C.CLEAR
+    local text_colours = style.text_colour_ref and { colours[style.text_colour_ref] } or style.text_colours or style.text_colour and { style.text_colour } or { colours.text }
+
+    local text_width = math.max(style.inner_width or 0, calculate_max_text_width())
 
     return {
         n = G.UIT.ROOT,
         config = {
-            align = 'cm',
-            padding = 0.03,
-            colour = translucent_colour,
+            align = 'tm',
+            colour = panel_shadow_colour,
+            padding = style.shadow_padding,
+            minw = 0.1,
             r = 0.1
         },
         nodes = {
@@ -68,49 +108,65 @@ local function create_UIBox_clock(style, text_size, colours, float)
                 n = G.UIT.R,
                 config = {
                     align = 'cm',
-                    padding = 0.05,
                     colour = panel_outer_colour,
+                    padding = style.outer_padding,
+                    minh = style.outer_height,
+                    minw = style.outer_width,
                     r = 0.1
                 },
                 nodes = {
                     {
                         n = G.UIT.C,
-                        config = {
-                            align = 'tm',
-                            r = 0.1,
-                            minw = 0.1,
-                            colour = panel_shadow_colour,
-                        },
+                        config = { padding = style.outer_padding },
                         nodes = {
+                            style.heading_text and {
+                                n = G.UIT.R,
+                                config = {
+                                    align = "cm",
+                                },
+                                nodes = {
+                                    {
+                                        n = G.UIT.T,
+                                        config = {
+                                            text = locale.translate('sysclock_time_heading'),
+                                            minh = 1,
+                                            scale = 0.85 * 0.4,
+                                            colour = G.C.UI.TEXT_LIGHT,
+                                            shadow = true
+                                        }
+                                    }
+                                }
+                            },
                             {
                                 n = G.UIT.R,
                                 config = {
                                     align = 'cm',
                                     colour = panel_inner_colour,
+                                    padding = style.inner_padding,
+                                    minh = style.inner_height,
+                                    minw = style.inner_width,
                                     r = 0.1,
-                                    minw = 0.5,
-                                    padding = 0.03
                                 },
                                 nodes = {
                                     {
                                         n = G.UIT.C,
                                         config = {
                                             align = 'cm',
-                                            padding = 0.03,
-                                            minw = inner_width,
+                                            padding = style.text_padding,
+                                            minw = text_width,
                                             r = 0.1
                                         },
-                                        nodes = { create_clock_DynaText(style, text_size, colours, float) }
+                                        nodes = { create_clock_DynaText(text_size, text_colours, style.text_shadow, float, true) }
                                     }
                                 }
-                            },
-                            {
-                                n = G.UIT.R,
-                                config = { minh = emboss_amount }
                             }
                         }
                     }
                 }
+            },
+            {
+                n = G.UIT.R,
+                config = { minh = style.emboss_amount }
             }
         }
     }
@@ -121,7 +177,7 @@ function clock_ui.reset()
         G.HUD_clock:remove()
     end
     if config.clock_visible and (G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
-        G.HUD_clock = DraggableContainer({
+        G.HUD_clock = draggable_container({
             config = {
                 align = 'cm',
                 offset = { x = 0, y = 0 },
@@ -130,9 +186,8 @@ function clock_ui.reset()
             },
             nodes = {
                 create_UIBox_clock(
-                    SystemClock.current_preset.style,
+                    SystemClock.current_preset.style_index,
                     SystemClock.current_preset.size,
-                    SystemClock.assign_clock_colours(),
                     SystemClock.draw_as_popup
                 )
             },
@@ -150,11 +205,11 @@ function clock_ui.reset()
                 SystemClock.set_draggable(true, true)
                 temporary_drag = true
             end
-            DraggableContainer.drag(self)
+            draggable_container.drag(self)
         end
 
         G.HUD_clock.stop_drag = function(self)
-            DraggableContainer.stop_drag(self)
+            draggable_container.stop_drag(self)
             SystemClock.set_position({ x = self.T.x, y = self.T.y })
             if temporary_drag then
                 SystemClock.set_draggable(false, true)

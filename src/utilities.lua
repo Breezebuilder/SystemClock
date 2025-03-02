@@ -9,30 +9,32 @@ function utilities.index_of(table, val)
 	return nil
 end
 
-function utilities.table_deep_copy(source)
+function utilities.deep_copy(source, destination)
 	if type(source) ~= 'table' then return source end
 
-	local copy = {}
+	destination = destination or {}
 	if #source > 0 then
 		for i, v in ipairs(source) do
-			copy[i] = utilities.table_deep_copy(v)
+			destination[i] = utilities.deep_copy(v)
 		end
 	else
 		for k, v in pairs(source) do
-			copy[k] = utilities.table_deep_copy(v)
+			destination[k] = utilities.deep_copy(v)
 		end
 	end
 
-	return copy
+	return destination
 end
 
-function utilities.table_deep_merge(source, destination, replace)
+function utilities.deep_merge(source, destination, replace)
+	destination = destination or {}
+
 	for k, v in pairs(source) do
 		if type(v) == 'table' then
 			if replace or destination[k] == nil then
 				destination[k] = {}
 			end
-			utilities.table_deep_merge(v, destination[k], replace)
+			utilities.deep_merge(v, destination[k], replace)
 		else
 			if replace or destination[k] == nil then
 				destination[k] = v
@@ -45,7 +47,7 @@ function utilities.table_deep_merge(source, destination, replace)
 			if replace or destination[i] == nil then
 				destination[i] = {}
 			end
-			utilities.table_deep_merge(v, destination[i], replace)
+			utilities.deep_merge(v, destination[i], replace)
 		else
 			if replace or destination[i] == nil then
 				destination[i] = v
@@ -53,6 +55,15 @@ function utilities.table_deep_merge(source, destination, replace)
 		end
 	end
 
+	return destination
+end
+
+
+function utilities.shallow_copy(source, destination)
+	destination = destination or {}
+	for i, v in ipairs(source) do
+		destination[i] = v
+	end
 	return destination
 end
 
@@ -65,11 +76,11 @@ function utilities.get_colour_from_ref(ref)
 		colour = colour[obj_name]
 		depth = depth + 1
 		if depth > 2 or not colour then
-			return nil
+			return { 1, 0, 1, 1 }
 		end
 	end
 
-	return type(colour) == 'table' and colour
+	return type(colour) == 'table' and colour or { 1, 0, 1, 1 }
 end
 
 return utilities

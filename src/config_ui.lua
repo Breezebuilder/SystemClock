@@ -175,7 +175,7 @@ local function create_UIBox_config_panel()
 								scale = 0.8,
 								w = 4.5,
 								options = locale.translate('sysclock_styles'),
-								current_option = SystemClock.indices.style,
+								current_option = SystemClock.indices.style_index,
 								opt_callback = 'sysclock_cycle_clock_style',
 								colour = G.C.ORANGE
 							})

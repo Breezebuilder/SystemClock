@@ -22,6 +22,12 @@ SystemClock.TEXT_SIZES = {
 }
 SystemClock.FORMAT_EXAMPLES = {}
 
+SystemClock.time = ''
+SystemClock.current_preset = {}
+SystemClock.indices = {}
+SystemClock.example_time = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
+SystemClock.draw_as_popup = false
+
 local config = require('systemclock.config')
 local clock_ui = require('systemclock.clock_ui')
 local config_ui = require('systemclock.config_ui')
@@ -30,23 +36,15 @@ local utilities = require('systemclock.utilities')
 config.load()
 config.save()
 
-SystemClock.time = ''
-SystemClock.current_preset = {}
-SystemClock.indices = {}
-SystemClock.colours = {}
-SystemClock.example_time = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
-SystemClock.draw_as_popup = false
-
 function SystemClock.assign_clock_colours()
 	local text_colour = utilities.get_colour_from_ref(SystemClock.current_preset.colours.text)
 	local back_colour = utilities.get_colour_from_ref(SystemClock.current_preset.colours.back)
 	local shadow_colour = darken(back_colour, 0.3)
 
-	SystemClock.colours = {
-		text = text_colour,
-		back = back_colour,
-		shadow = shadow_colour
-	}
+	SystemClock.colours = SystemClock.colours or {}
+	SystemClock.colours.text = text_colour
+	SystemClock.colours.back = back_colour
+	SystemClock.colours.shadow = shadow_colour
 
 	return SystemClock.colours
 end
@@ -57,7 +55,7 @@ local function init_config_preset(presetIndex)
 
 	SystemClock.current_preset = config.clock_presets[presetIndex]
 	SystemClock.indices.format = SystemClock.current_preset.format or 1
-	SystemClock.indices.style = SystemClock.current_preset.style or 1
+	SystemClock.indices.style_index = SystemClock.current_preset.style_index or 1
 	SystemClock.indices.size = utilities.index_of(SystemClock.TEXT_SIZES, SystemClock.current_preset.size) or 1
 	SystemClock.indices.text_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 1
 	SystemClock.indices.back_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 1
@@ -95,7 +93,7 @@ function Game:update(dt)
 	if config then
 		SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, config.hour_offset)
 
-		if SystemClock.indices.style == 5 and SystemClock.indices.back_colour > 17 then
+		if SystemClock.indices.style_index == 5 and SystemClock.indices.back_colour > 17 and SystemClock.colours then
 			SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * (0.7)
 			SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * (0.7)
 			SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * (0.7)
@@ -208,8 +206,8 @@ end
 
 G.FUNCS.sysclock_cycle_clock_style = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
-	SystemClock.indices.style = e.to_key
-	SystemClock.current_preset.style = SystemClock.indices.style
+	SystemClock.indices.style_index = e.to_key
+	SystemClock.current_preset.style_index = SystemClock.indices.style_index
 	clock_ui.reset()
 end
 
