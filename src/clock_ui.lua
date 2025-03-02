@@ -101,10 +101,10 @@ local function create_UIBox_clock(style_index, text_size, float)
 
     local style = clock_ui.styles[style_index]
 
-    local panel_outer_colour = style.outer_colour_ref and colours[style.outer_colour_ref] or style.outer_colour or G.C.CLEAR
-    local panel_inner_colour = style.inner_colour_ref and colours[style.inner_colour_ref] or style.inner_colour or G.C.CLEAR
-    local panel_shadow_colour = style.shadow_colour_ref and colours[style.shadow_colour_ref] or style.shadow_colour or G.C.CLEAR
-    local text_colours = style.text_colour_ref and { colours[style.text_colour_ref] } or style.text_colours or style.text_colour and { style.text_colour } or { colours.text }
+    local panel_outer_colour = style.outer_colour or style.outer_colour_ref and colours[style.outer_colour_ref] or G.C.CLEAR
+    local panel_inner_colour = style.inner_colour or style.inner_colour_ref and colours[style.inner_colour_ref] or G.C.CLEAR
+    local panel_shadow_colour = style.shadow_colour or style.shadow_colour_ref and colours[style.shadow_colour_ref] or G.C.CLEAR
+    local text_colours = style.text_colours or (style.text_colour and { style.text_colour }) or (style.text_colour_ref and { colours[style.text_colour_ref] }) or { colours.text }
 
     local text_width = math.max(style.inner_width or 0, calculate_max_text_width())
 
