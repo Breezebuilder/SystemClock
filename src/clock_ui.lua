@@ -36,6 +36,20 @@ clock_ui.styles = {
         emboss_amount = 0.05,
         inner_padding = 0.1,
         text_shadow = true
+    },
+    [6] = {
+        name = 'throwback',
+        shadow_colour = darken(G.C.DYN_UI.BOSS_MAIN, 0.3),
+        outer_colour = G.C.DYN_UI.BOSS_MAIN,
+        inner_colour = G.C.DYN_UI.BOSS_DARK,
+        outer_width = 1.45,
+        outer_height = 1.2,
+        outer_padding = 0.03,
+        inner_width = 1.2,
+        inner_height = 0.7,
+        emboss_amount = 0.06,
+        heading_text = 'sysclock_time_heading',
+        text_shadow = true
     }
 }
 
