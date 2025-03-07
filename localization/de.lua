@@ -63,9 +63,12 @@ return {
 				"Lila",
 				"Lavendel",
 				"Rosa",
-				"Regenbogen",
-				"Dynamisch",
-				"Dynamisch dunkel"
+				"Edition",
+				"Edition dunkel",
+				"Blind",
+				"Blind dunkel",
+				"Boss",
+				"Boss dunkel"
 			}
 		}
 	}

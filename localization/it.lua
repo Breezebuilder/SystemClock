@@ -63,9 +63,12 @@ return {
 				"Viola",
 				"Lavanda",
 				"Rosa",
-				"Arcobaleno",
-				"Dinamico",
-				"Dinamico scuro"
+				"Edizione",
+				"Edizione scuro",
+				"Buio",
+				"Buio scuro",
+				"Boss",
+				"Boss scuro"
 			}
 		}
 	}

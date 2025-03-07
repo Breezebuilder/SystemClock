@@ -63,9 +63,12 @@ return {
 				"Púrpura",
 				"Lavanda",
 				"Rosa",
-				"Arcoíris",
-				"Dinámico",
-				"Dinámico oscuro"
+				"Edición",
+				"Edición oscuro",
+				"Ciega",
+				"Ciega oscuro",
+				"Jefe",
+				"Jefe oscuro"
 			}
 		}
 	}

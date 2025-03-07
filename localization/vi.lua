@@ -63,9 +63,12 @@ return {
 				"Tím",
 				"Tím oải hương",
 				"Hồng",
-				"Cầu vồng",
-				"Năng động",
-				"Tối năng động"
+				"Ấn bản",
+				"Ấn bản tối",
+				"Blind",
+				"Blind tối",
+				"Boss",
+				"Boss tối"
 			}
 		}
 	}

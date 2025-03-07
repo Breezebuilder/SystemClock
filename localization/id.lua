@@ -63,9 +63,12 @@ return {
 				"Ungu",
 				"Lavender",
 				"Merah muda",
-				"Pelangi",
-				"Dinamika",
-				"Dinamika gelap"
+				"Edisi",
+				"Edisi gelap",
+				"Blind",
+				"Blind gelap",
+				"Boss",
+				"Boss gelap"
 			}
 		}
 	}

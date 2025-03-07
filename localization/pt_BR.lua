@@ -63,9 +63,12 @@ return {
 				"Roxo",
 				"Lavanda",
 				"Rosa",
-				"Arco-íris",
-				"Dinâmico",
-				"Dinâmico escuro"
+				"Edição",
+				"Edição escuro",
+				"Blind",
+				"Blind escuro",
+				"Chefe",
+				"Chefe escuro"
 			}
 		}
 	}

@@ -63,9 +63,12 @@ return {
 				"Fioletowy",
 				"Lawendowy",
 				"Różowy",
-				"Tęczowy",
-				"Dynamiczny",
-				"Dynamiczny ciemny"
+				"Wersja",
+				"Wersja ciemny",
+				"Przeszkadzajkę",
+				"Przeszkadzajkę ciemny",
+				"Bossa",
+				"Bossa ciemny"
 			}
 		}
 	}

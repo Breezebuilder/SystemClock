@@ -63,9 +63,12 @@ return {
 				"Violet",
 				"Lavande",
 				"Rose",
-				"Arc-en-ciel",
-				"Dynamique",
-				"Dynamique foncé"
+				"Édition",
+				"Édition foncé",
+				"Blinde",
+				"Blinde foncé",
+				"Boss",
+				"Boss foncé"
 			}
 		}
 	}

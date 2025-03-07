@@ -63,9 +63,12 @@ return {
 				"Paars",
 				"Lavendel",
 				"Roze",
-				"Regenboog",
-				"Dynamisch",
-				"Dynamisch donker"
+				"Editie",
+				"Editie donker",
+				"Blind",
+				"Blind donker",
+				"Baas",
+				"Baas donker"
 			}
 		}
 	}
