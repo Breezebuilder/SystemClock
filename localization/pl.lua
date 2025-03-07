@@ -41,8 +41,8 @@ return {
 				"Prosty",
 				"Cień",
 				"Przezroczysty",
+				"Wyryć",
 				"Panel",
-				"Wytłoczony",
 				"Odrzut"
 			},
 			['sysclock_colours'] = {

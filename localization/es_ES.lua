@@ -41,8 +41,8 @@ return {
 				"Sencillo",
 				"Sombra",
 				"Translúcido",
+				"Realzar",
 				"Panel",
-				"Realzado",
 				"Retroceso"
 			},
 			['sysclock_colours'] = {

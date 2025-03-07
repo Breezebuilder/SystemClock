@@ -41,8 +41,8 @@ return {
 				"Einfach",
 				"Schatten",
 				"Durchscheinend",
+				"Prägen",
 				"Panel",
-				"Geprägt",
 				"Zurückwurf"
 			},
 			['sysclock_colours'] = {

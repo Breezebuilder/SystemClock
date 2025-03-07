@@ -41,8 +41,8 @@ return {
 				"Simple",
 				"Ombre",
 				"Translucide",
-				"Panneau",
 				"Embossé",
+				"Panneau",
 				"Rétrolancer"
 			},
 			['sysclock_colours'] = {

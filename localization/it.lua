@@ -41,8 +41,8 @@ return {
 				"Semplice",
 				"Ombra",
 				"Traslucido",
-				"Pannello",
 				"Rilievo",
+				"Pannello",
 				"Rilancio"
 			},
 			['sysclock_colours'] = {

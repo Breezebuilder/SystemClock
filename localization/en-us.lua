@@ -41,8 +41,8 @@ return {
 				"Simple",
 				"Shadow",
 				"Translucent",
+				"Emboss",
 				"Panel",
-				"Embossed",
 				"Throwback"
 			},
 			['sysclock_colours'] = {

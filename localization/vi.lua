@@ -41,8 +41,8 @@ return {
 				"Đơn giản",
 				"Dổ bóng",
 				"Trong suốt",
-				"Thêm viền",
 				"Dập nổi",
+				"Thêm viền",
 				"Némlại"
 			},
 			['sysclock_colours'] = {

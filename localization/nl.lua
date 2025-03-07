@@ -41,8 +41,8 @@ return {
 				"Eenvoudig",
 				"Schaduw",
 				"Transparant",
+				"Preg",
 				"Paneel",
-				"Geëmbosseerd",
 				"Terugworp"
 			},
 			['sysclock_colours'] = {

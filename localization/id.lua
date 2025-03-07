@@ -41,8 +41,8 @@ return {
 				"Sederhana",
 				"Bayangan",
 				"Transparan",
+				"Emboss",
 				"Panel",
-				"Embossed",
 				"Baliklempar"
 			},
 			['sysclock_colours'] = {

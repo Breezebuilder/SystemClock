@@ -22,7 +22,7 @@ SystemClock.TEXT_SIZES = {
 }
 
 SystemClock.STYLES = {
-	'simple', 'shadow', 'translucent', 'panel', 'emboss', 'throwback'
+	'simple', 'shadow', 'translucent', 'emboss', 'panel', 'throwback'
 }
 
 SystemClock.FORMAT_EXAMPLES = {}
