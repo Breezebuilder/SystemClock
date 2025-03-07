@@ -7,21 +7,18 @@ local draggable_container = require('systemclock.draggablecontainer')
 clock_ui.has_dynamic_shadow_colour = false
 
 clock_ui.styles = {
-    [1] = {
-        name = 'simple',
+    ['simple'] = {
+
     },
-    [2] = {
-        name = 'shadow',
+    ['shadow'] = {
         text_shadow = true
     },
-    [3] = {
-        name = 'translucent',
+    ['translucent'] = {
         shadow_colour = G.C.UI.TRANSPARENT_DARK,
         shadow_padding = 0.05,
         text_shadow = true
     },
-    [4] = {
-        name = 'panel',
+    ['panel'] = {
         shadow_colour = G.C.UI.TRANSPARENT_DARK,
         shadow_padding = 0.02,
         outer_colour_ref = 'back',
@@ -31,16 +28,14 @@ clock_ui.styles = {
         text_padding = 0.05,
         text_shadow = true
     },
-    [5] = {
-        name = 'embossed',
+    ['emboss'] = {
         shadow_colour_ref = 'shadow',
         outer_colour_ref = 'back',
         emboss_amount = 0.05,
         inner_padding = 0.1,
         text_shadow = true
     },
-    [6] = {
-        name = 'throwback',
+    ['throwback'] = {
         shadow_colour_ref = 'shadow',
         outer_colour_ref = 'back',
         inner_colour = G.C.DYN_UI.BOSS_DARK,
@@ -62,8 +57,8 @@ local function calculate_max_text_width(format_index)
     local width = 0
     local string = SystemClock.get_formatted_time(format, SystemClock.example_time, true)
     for _, c in utf8.chars(string) do
-        local dx = font.FONT:getWidth(c) * SystemClock.current_preset.size * G.TILESCALE * font.FONTSCALE +
-            3 * G.TILESCALE * font.FONTSCALE
+        local dx = font.FONT:getWidth(c) * SystemClock.current_preset.size * G.TILESCALE * font.FONTSCALE
+        dx = dx + 3 * G.TILESCALE * font.FONTSCALE
         dx = dx / (G.TILESIZE * G.TILESCALE)
         width = width + dx
     end
@@ -95,13 +90,13 @@ local function create_clock_DynaText(text_size, colours, shadow, float, silent)
     }
 end
 
-local function create_UIBox_clock(style_index, text_size, float)
-    style_index = style_index or 2
+local function create_UIBox_clock(style_name, text_size, float)
+    style_name = style_name or 'simple'
     text_size = text_size or 1
 
     local colours = SystemClock.assign_clock_colours()
 
-    local style = clock_ui.styles[style_index]
+    local style = clock_ui.styles[style_name]
 
     clock_ui.has_dynamic_shadow_colour = style.shadow_colour_ref == 'shadow'
 

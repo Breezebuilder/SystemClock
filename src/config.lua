@@ -12,7 +12,7 @@ local DEFAULTS = {
 	['clock_presets'] = {
 		[1] = {
 			['format'] = 4,
-			['style'] = 5,
+			['style'] = 'emboss',
 			['size'] = 0.5,
 			['colours'] = {
 				['text'] = 'WHITE',
@@ -25,7 +25,7 @@ local DEFAULTS = {
 		},
 		[2] = {
 			['format'] = 1,
-			['style'] = 2,
+			['style'] = 'shadow',
 			['size'] = 0.4,
 			['colours'] = {
 				['text'] = 'WHITE',
@@ -38,7 +38,7 @@ local DEFAULTS = {
 		},
 		[3] = {
 			['format'] = 6,
-			['style'] = 1,
+			['style'] = 'simple',
 			['size'] = 0.3,
 			['colours'] = {
 				['text'] = 'WHITE',
@@ -51,7 +51,7 @@ local DEFAULTS = {
 		},
 		[4] = {
 			['format'] = 1,
-			['style'] = 3,
+			['style'] = 'translucent',
 			['size'] = 0.5,
 			['colours'] = {
 				['text'] = 'WHITE',
@@ -64,7 +64,7 @@ local DEFAULTS = {
 		},
 		[5] = {
 			['format'] = 2,
-			['style'] = 1,
+			['style'] = 'simple',
 			['size'] = 0.3,
 			['colours'] = {
 				['text'] = 'WHITE',
@@ -197,6 +197,17 @@ local function update_config_version()
 		config.clockConfigVersion = nil
 
 		config.config_version = 4
+	end
+
+	if config.config_version == 4 then
+		logger.log_info("Transferring config settings (v4 -> v5)")
+
+		local v4_style_names = { 'simple', 'shadow', 'translucent', 'panel', 'emboss', 'throwback' }
+		for _, preset in ipairs(config.clock_presets) do
+			local style_index = preset.style
+			preset.style = v4_style_names[style_index] or 'simple'
+		end
+		config.config_version = 5
 	end
 
 	config.save()

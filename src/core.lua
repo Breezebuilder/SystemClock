@@ -20,6 +20,11 @@ SystemClock.COLOUR_REFS = {
 SystemClock.TEXT_SIZES = {
 	0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0
 }
+
+SystemClock.STYLES = {
+	'simple', 'shadow', 'translucent', 'panel', 'emboss', 'throwback'
+}
+
 SystemClock.FORMAT_EXAMPLES = {}
 
 SystemClock.time = ''
@@ -55,7 +60,7 @@ local function init_config_preset(presetIndex)
 
 	SystemClock.current_preset = config.clock_presets[presetIndex]
 	SystemClock.indices.format = SystemClock.current_preset.format or 1
-	SystemClock.indices.style = SystemClock.current_preset.style or 1
+	SystemClock.indices.style = utilities.index_of(SystemClock.STYLES, SystemClock.current_preset.style) or 1
 	SystemClock.indices.size = utilities.index_of(SystemClock.TEXT_SIZES, SystemClock.current_preset.size) or 1
 	SystemClock.indices.text_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 1
 	SystemClock.indices.back_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 1
@@ -207,7 +212,7 @@ end
 G.FUNCS.sysclock_cycle_clock_style = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.style = e.to_key
-	SystemClock.current_preset.style = SystemClock.indices.style
+	SystemClock.current_preset.style = SystemClock.STYLES[e.to_key]
 	clock_ui.reset()
 end
 
