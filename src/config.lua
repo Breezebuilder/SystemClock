@@ -206,6 +206,10 @@ local function update_config_version()
 		for _, preset in ipairs(config.clock_presets) do
 			local style_index = preset.style
 			preset.style = v4_style_names[style_index] or 'simple'
+			if preset.position then
+				preset.position.x = preset.position.x + 0.13
+				preset.position.y = preset.position.y + 0.15
+			end
 		end
 		config.config_version = 5
 	end
