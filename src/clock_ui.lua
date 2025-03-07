@@ -4,6 +4,8 @@ local config = require('systemclock.config')
 local locale = require('systemclock.locale')
 local draggable_container = require('systemclock.draggablecontainer')
 
+clock_ui.has_dynamic_shadow_colour = false
+
 clock_ui.styles = {
     [1] = {
         name = 'simple',
@@ -39,8 +41,8 @@ clock_ui.styles = {
     },
     [6] = {
         name = 'throwback',
-        shadow_colour = darken(G.C.DYN_UI.BOSS_MAIN, 0.3),
-        outer_colour = G.C.DYN_UI.BOSS_MAIN,
+        shadow_colour_ref = 'shadow',
+        outer_colour_ref = 'back',
         inner_colour = G.C.DYN_UI.BOSS_DARK,
         outer_width = 1.45,
         outer_height = 1.2,
@@ -101,6 +103,8 @@ local function create_UIBox_clock(style_index, text_size, float)
 
     local style = clock_ui.styles[style_index]
 
+    clock_ui.has_dynamic_shadow_colour = style.shadow_colour_ref == 'shadow'
+
     local panel_outer_colour = style.outer_colour or style.outer_colour_ref and colours[style.outer_colour_ref] or G.C.CLEAR
     local panel_inner_colour = style.inner_colour or style.inner_colour_ref and colours[style.inner_colour_ref] or G.C.CLEAR
     local panel_shadow_colour = style.shadow_colour or style.shadow_colour_ref and colours[style.shadow_colour_ref] or G.C.CLEAR
@@ -137,6 +141,7 @@ local function create_UIBox_clock(style_index, text_size, float)
                                 n = G.UIT.R,
                                 config = {
                                     align = "cm",
+                                    padding = 0.02
                                 },
                                 nodes = {
                                     {
@@ -146,7 +151,7 @@ local function create_UIBox_clock(style_index, text_size, float)
                                             minh = 1,
                                             scale = 0.85 * 0.4,
                                             colour = G.C.UI.TEXT_LIGHT,
-                                            shadow = true
+                                            shadow = style.text_shadow
                                         }
                                     }
                                 }

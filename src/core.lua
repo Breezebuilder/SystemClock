@@ -93,7 +93,7 @@ function Game:update(dt)
 	if config then
 		SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, config.hour_offset)
 
-		if SystemClock.indices.style_index == 5 and SystemClock.indices.back_colour > 17 and SystemClock.colours then
+		if clock_ui.has_dynamic_shadow_colour then
 			SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * (0.7)
 			SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * (0.7)
 			SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * (0.7)
