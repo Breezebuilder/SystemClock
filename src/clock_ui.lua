@@ -205,7 +205,7 @@ function clock_ui.reset()
             },
             nodes = {
                 create_UIBox_clock(
-                    SystemClock.current_preset.style_index,
+                    SystemClock.current_preset.style,
                     SystemClock.current_preset.size,
                     SystemClock.draw_as_popup
                 )
