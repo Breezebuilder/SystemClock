@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Waktu",
 			['sysclock_settings_tab'] = "Jam",
 			['sysclock_name'] = "Jam Sistem",
 			['sysclock_visibility_setting'] = "Tampilkan jam",
@@ -41,7 +42,8 @@ return {
 				"Bayangan",
 				"Transparan",
 				"Panel",
-				"Embossed"
+				"Embossed",
+				"Baliklempar"
 			},
 			['sysclock_colours'] = {
 				"Putih",

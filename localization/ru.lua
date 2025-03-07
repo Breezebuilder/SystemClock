@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Время",
 			['sysclock_settings_tab'] = "Часы",
 			['sysclock_name'] = "Системные часы",
 			['sysclock_visibility_setting'] = "Показать часы",
@@ -41,7 +42,8 @@ return {
 				"Тень",
 				"Полупрозрачный",
 				"Панель",
-				"Рельефный"
+				"Рельефный",
+				"Отброс"
 			},
 			['sysclock_colours'] = {
 				"Белый",

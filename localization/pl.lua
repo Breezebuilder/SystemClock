@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Czas",
 			['sysclock_settings_tab'] = "Zegar",
 			['sysclock_name'] = "Zegar Systemowy",
 			['sysclock_visibility_setting'] = "Pokaż zegar",
@@ -41,7 +42,8 @@ return {
 				"Cień",
 				"Przezroczysty",
 				"Panel",
-				"Wytłoczony"
+				"Wytłoczony",
+				"Odrzut"
 			},
 			['sysclock_colours'] = {
 				"Biały",

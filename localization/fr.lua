@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Heure",
 			['sysclock_settings_tab'] = "Horloge",
 			['sysclock_name'] = "Horloge Système",
 			['sysclock_visibility_setting'] = "Afficher l'horloge",
@@ -41,7 +42,8 @@ return {
 				"Ombre",
 				"Translucide",
 				"Panneau",
-				"Embossé"
+				"Embossé",
+				"Rétrolancer"
 			},
 			['sysclock_colours'] = {
 				"Blanc",

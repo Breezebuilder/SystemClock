@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Hora",
 			['sysclock_settings_tab'] = "Relógio",
 			['sysclock_name'] = "Relógio do Sistema",
 			['sysclock_visibility_setting'] = "Mostrar relógio",
@@ -41,7 +42,8 @@ return {
 				"Sombra",
 				"Translúcido",
 				"Painel",
-				"Relevo"
+				"Relevo",
+				"Retroarremesso"
 			},
 			['sysclock_colours'] = {
 				"Branco",

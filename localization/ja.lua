@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "時間",
 			['sysclock_settings_tab'] = "時計",
 			['sysclock_name'] = "システムクロック",
 			['sysclock_visibility_setting'] = "時計を表示",
@@ -41,7 +42,8 @@ return {
 				"シャドウ",
 				"半透明",
 				"パネル",
-				"エンボス"
+				"エンボス",
+				"投げ戻し"
 			},
 			['sysclock_colours'] = {
 				"白",

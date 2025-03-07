@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Zeit",
 			['sysclock_settings_tab'] = "Uhr",
 			['sysclock_name'] = "Systemuhr",
 			['sysclock_visibility_setting'] = "Uhr anzeigen",
@@ -41,7 +42,8 @@ return {
 				"Schatten",
 				"Durchscheinend",
 				"Panel",
-				"Geprägt"
+				"Geprägt",
+				"Zurückwurf"
 			},
 			['sysclock_colours'] = {
 				"Weiß",

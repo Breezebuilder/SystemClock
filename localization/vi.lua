@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Thời gian",
 			['sysclock_settings_tab'] = "Đồng hồ",
 			['sysclock_name'] = "Đồng Hồ Hệ Thống",
 			['sysclock_visibility_setting'] = "Hiện đồng hồ",
@@ -41,7 +42,8 @@ return {
 				"Dổ bóng",
 				"Trong suốt",
 				"Thêm viền",
-				"Dập nổi"
+				"Dập nổi",
+				"Némlại"
 			},
 			['sysclock_colours'] = {
 				"Trắng",

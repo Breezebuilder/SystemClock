@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "시간",
 			['sysclock_settings_tab'] = "시계",
 			['sysclock_name'] = "시스템 클럭",
 			['sysclock_visibility_setting'] = "시계 표시",
@@ -41,7 +42,8 @@ return {
 				"그림자",
 				"반투명",
 				"패널",
-				"양각"
+				"양각",
+				"되던짐"
 			},
 			['sysclock_colours'] = {
 				"흰색",

@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "時間",
 			['sysclock_settings_tab'] = "時鐘",
 			['sysclock_name'] = "系統時鐘",
 			['sysclock_visibility_setting'] = "顯示時鐘",
@@ -41,7 +42,8 @@ return {
 				"陰影",
 				"半透明",
 				"面板",
-				"浮雕"
+				"浮雕",
+				"回投"
 			},
 			['sysclock_colours'] = {
 				"白色",

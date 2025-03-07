@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Tijd",
 			['sysclock_settings_tab'] = "Klok",
 			['sysclock_name'] = "Systeemklok",
 			['sysclock_visibility_setting'] = "Toon klok",
@@ -41,7 +42,8 @@ return {
 				"Schaduw",
 				"Transparant",
 				"Paneel",
-				"Geëmbosseerd"
+				"Geëmbosseerd",
+				"Terugworp"
 			},
 			['sysclock_colours'] = {
 				"Wit",

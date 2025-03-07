@@ -22,6 +22,7 @@ return {
 	},
 	['misc'] = {
 		['dictionary'] = {
+			['sysclock_time_heading'] = "Ora",
 			['sysclock_settings_tab'] = "Orologio",
 			['sysclock_name'] = "Orologio di Sistema",
 			['sysclock_visibility_setting'] = "Mostra orologio",
@@ -41,7 +42,8 @@ return {
 				"Ombra",
 				"Traslucido",
 				"Pannello",
-				"Rilievo"
+				"Rilievo",
+				"Rilancio"
 			},
 			['sysclock_colours'] = {
 				"Bianco",
