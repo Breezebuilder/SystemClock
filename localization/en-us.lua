@@ -63,9 +63,12 @@ return {
 				"Purple",
 				"Lavender",
 				"Pink",
-				"Rainbow",
-				"Dynamic",
-				"Dynamic dark"
+				"Edition",
+				"Edition dark",
+				"Blind",
+				"Blind dark",
+				"Boss",
+				"Boss dark"
 			}
 		}
 	}
