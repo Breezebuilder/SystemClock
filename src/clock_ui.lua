@@ -187,7 +187,9 @@ local function create_UIBox_clock(style_name, text_size, float)
 end
 
 function clock_ui.reset()
+    local prev_pos = { x = 0, y = 0 }
     if G.HUD_clock then
+        prev_pos = { x = G.HUD_clock.T.x, y = G.HUD_clock.T.y }
         G.HUD_clock:remove()
     end
     if config.clock_visible and (G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
@@ -209,6 +211,8 @@ function clock_ui.reset()
         )
 
         local position = SystemClock.current_preset.position
+        G.HUD_clock.VT.x = prev_pos.x
+        G.HUD_clock.VT.y = prev_pos.y
         G.HUD_clock.T.x = position.x
         G.HUD_clock.T.y = position.y
 
@@ -232,6 +236,8 @@ function clock_ui.reset()
                 temporary_drag = false
             end
         end
+
+        G.HUD_clock:juice_up(0.1, 0.1)
     end
 end
 
