@@ -4,10 +4,64 @@
 
 local DraggableContainer = UIBox:extend()
 function DraggableContainer:init(args)
+	Moveable.init(self, args)
 
-	UIBox.init(self, args)
-
+	self.states.drag.can = args.can_drag or false
+	self.states.collide.can = true
 	self.created_on_pause = true
+	self.draw_layers = {}
+
+	self.definition = args.definition
+
+	if args.config then
+        self.config = args.config
+        args.config.major = args.config.major or args.config.parent or self
+
+        self:set_alignment({
+            major = args.config.major or G,
+            type = args.config.align or args.config.type or '',
+            bond = args.config.bond or 'Strong',
+            offset = args.config.offset or { x = 0, y = 0 },
+            lr_clamp = args.config.lr_clamp
+        })
+        self:set_role{
+            xy_bond = args.config.xy_bond,
+            r_bond = args.config.r_bond,
+            wh_bond = args.config.wh_bond or 'Weak',
+            scale_bond = args.config.scale_bond or 'Weak'
+        }
+
+        self.states.collide.can = ((args.config.can_collide ~= nil) and args.config.can_collide) or self.states.collide.can
+
+        self.parent = self.config.parent
+    end
+
+    self:set_parent_child(self.definition, nil)
+    self.Mid = self.Mid or self.UIRoot
+    self:calculate_xywh(self.UIRoot, self.T)
+
+    self.T.w = self.UIRoot.T.w
+    self.T.h = self.UIRoot.T.h
+    self.UIRoot:set_wh()
+
+    self.UIRoot:set_alignments()
+
+    self:align_to_major()
+	self.VT.x = args.VT.x or self.T.x
+	self.VT.y = args.VT.y or self.T.y
+    self.VT.w, self.VT.h = self.T.w, self.T.h
+
+    if self.Mid ~= self and self.Mid.parent and false then
+        self.VT.x = self.VT.x - self.Mid.role.offset.x + (self.Mid.parent.config.padding or 0)
+        self.VT.y = self.VT.y - self.Mid.role.offset.y + (self.Mid.parent.config.padding or 0)
+    end
+
+    if self.alignment and self.alignment.lr_clamp then
+        self:lr_clamp()
+    end
+
+    self.UIRoot:initialize_VT(true)
+
 	self.zoom = args.zoom or args.config.zoom
 	if self.zoom then
 		self.UIRoot:set_zoom(true, true, true)
