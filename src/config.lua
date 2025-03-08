@@ -12,28 +12,28 @@ local DEFAULTS = {
 	['clock_presets'] = {
 		[1] = {
 			['format'] = 4,
-			['style'] = 'emboss',
+			['style'] = 'panel',
 			['size'] = 0.5,
 			['colours'] = {
 				['text'] = 'WHITE',
 				['back'] = 'DYN_UI.MAIN'
 			},
 			['position'] = {
-				['x'] = 0.68450,
-				['y'] = -0.61240
+				['x'] = 0.580,
+				['y'] = -0.622
 			}
 		},
 		[2] = {
-			['format'] = 1,
-			['style'] = 'shadow',
+			['format'] = 5,
+			['style'] = 'emboss',
 			['size'] = 0.4,
 			['colours'] = {
 				['text'] = 'WHITE',
 				['back'] = 'GREEN'
 			},
 			['position'] = {
-				['x'] = -0.45227,
-				['y'] = 11.55784
+				['x'] = -0.397,
+				['y'] = 11.653
 			}
 		},
 		[3] = {
@@ -45,8 +45,8 @@ local DEFAULTS = {
 				['back'] = 'DYN_UI.MAIN'
 			},
 			['position'] = {
-				['x'] = 13.51127,
-				['y'] = 2.50993
+				['x'] = 13.660,
+				['y'] = 2.660
 			}
 		},
 		[4] = {
@@ -58,21 +58,21 @@ local DEFAULTS = {
 				['back'] = 'DYN_UI.MAIN'
 			},
 			['position'] = {
-				['x'] = 17.52411,
-				['y'] = 7.88492
+				['x'] = 17.574,
+				['y'] = 8.035
 			}
 		},
 		[5] = {
-			['format'] = 2,
-			['style'] = 'simple',
-			['size'] = 0.3,
+			['format'] = 3,
+			['style'] = 'throwback',
+			['size'] = 0.6,
 			['colours'] = {
-				['text'] = 'WHITE',
-				['back'] = 'DYN_UI.MAIN'
+				['text'] = 'ORANGE',
+				['back'] = 'DYN_UI.BOSS_MAIN'
 			},
 			['position'] = {
-				['x'] = 17.34843,
-				['y'] = 11.39360
+				['x'] = 2.936,
+				['y'] = 10.394
 			}
 		}
 	}
