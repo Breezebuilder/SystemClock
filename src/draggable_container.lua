@@ -1,20 +1,13 @@
--- Originally from BalaLib by Toeler (https://github.com/Toeler/Balatro-HandPreview/blob/main/Mods/BalaLib/BalaLib.lua) used under GPLv3
+-- Originally MoveableContainer from BalaLib by Toeler (https://github.com/Toeler/Balatro-HandPreview/blob/main/Mods/BalaLib/BalaLib.lua) used under GPLv3
 -- Modified for use in Ankh by MathIsFun0 (https://github.com/MathIsFun0/Ankh)
 -- Further modified for use in SystemClock
 
 local DraggableContainer = UIBox:extend()
 function DraggableContainer:init(args)
-	args.definition = {
-		n = G.UIT.ROOT,
-		config = { colour = G.C.CLEAR },
-		nodes = { {
-			n = G.UIT.R,
-			nodes = args.nodes or {}
-		} }
-	}
 
 	UIBox.init(self, args)
 
+	self.created_on_pause = true
 	self.zoom = args.zoom or args.config.zoom
 	if self.zoom then
 		self.UIRoot:set_zoom(true, true, true)

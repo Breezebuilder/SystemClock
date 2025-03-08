@@ -191,26 +191,28 @@ function clock_ui.reset()
         G.HUD_clock:remove()
     end
     if config.clock_visible and (G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
-        G.HUD_clock = draggable_container({
-            config = {
-                align = 'cm',
-                offset = { x = 0, y = 0 },
-                major = G,
-                instance_type = SystemClock.draw_as_popup and 'POPUP'
-            },
-            nodes = {
-                create_UIBox_clock(
+
+        G.HUD_clock = draggable_container(
+            {
+                config = {
+                    major = G,
+                    bond = 'Weak',
+                    instance_type = SystemClock.draw_as_popup and 'POPUP'
+                },
+                definition = create_UIBox_clock(
                     SystemClock.current_preset.style,
                     SystemClock.current_preset.size,
                     SystemClock.draw_as_popup
-                )
-            },
-            zoom = true
-        })
-        G.HUD_clock.states.drag.can = SystemClock.draw_as_popup or config.clock_allow_drag
+                ),
+                zoom = true
+            }
+        )
+
         local position = SystemClock.current_preset.position
         G.HUD_clock.T.x = position.x
         G.HUD_clock.T.y = position.y
+
+        G.HUD_clock.states.drag.can = SystemClock.draw_as_popup or config.clock_allow_drag
 
         local temporary_drag = false
 
