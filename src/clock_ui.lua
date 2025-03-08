@@ -187,15 +187,18 @@ local function create_UIBox_clock(style_name, text_size, float)
 end
 
 function clock_ui.reset()
-    local prev_pos = { x = 0, y = 0 }
+    local prev_pos = { x = -1, y = -1 }
     if G.HUD_clock then
         prev_pos = { x = G.HUD_clock.T.x, y = G.HUD_clock.T.y }
         G.HUD_clock:remove()
     end
     if config.clock_visible and (G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
+        local position = SystemClock.current_preset.position
 
         G.HUD_clock = draggable_container(
             {
+                T = { x = position.x, y = position.y },
+                VT = { x = prev_pos.x, y = prev_pos.y },
                 config = {
                     major = G,
                     bond = 'Weak',
@@ -206,17 +209,10 @@ function clock_ui.reset()
                     SystemClock.current_preset.size,
                     SystemClock.draw_as_popup
                 ),
-                zoom = true
+                zoom = true,
+                can_drag = SystemClock.draw_as_popup or config.clock_allow_drag
             }
         )
-
-        local position = SystemClock.current_preset.position
-        G.HUD_clock.VT.x = prev_pos.x
-        G.HUD_clock.VT.y = prev_pos.y
-        G.HUD_clock.T.x = position.x
-        G.HUD_clock.T.y = position.y
-
-        G.HUD_clock.states.drag.can = SystemClock.draw_as_popup or config.clock_allow_drag
 
         local temporary_drag = false
 
