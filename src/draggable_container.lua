@@ -46,7 +46,6 @@ function DraggableContainer:init(args)
 
     self.UIRoot:set_alignments()
 
-    self:align_to_major()
 	self.VT.x = args.VT.x or self.T.x
 	self.VT.y = args.VT.y or self.T.y
     self.VT.w, self.VT.h = self.T.w, self.T.h

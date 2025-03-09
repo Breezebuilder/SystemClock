@@ -164,7 +164,7 @@ function SystemClock.set_popup(state, forceReset)
 		if G.HUD_clock then
 			G.HUD_clock.states.drag.can = state or config.clock_allow_drag
 		end
-		clock_ui.reset()
+		clock_ui.reset(state)
 	end
 end
 
@@ -174,10 +174,10 @@ function SystemClock.set_position(pos)
 	config_ui.update_position_sliders()
 end
 
-function SystemClock.set_visibility(state, juice)
+function SystemClock.set_visibility(state, juice_config)
 	config.clock_visible = state
-	clock_ui.reset()
-	config_ui.update_visibility_toggle(juice)
+	clock_ui.reset(true)
+	config_ui.update_visibility_toggle(juice_config)
 end
 
 function SystemClock.set_draggable(state, juice)
@@ -198,7 +198,7 @@ end
 G.FUNCS.sysclock_restore_preset_defaults = function(e)
 	config.reset_preset(config.clock_preset_index)
 	init_config_preset()
-	clock_ui.reset()
+	clock_ui.reset(true)
 	config_ui.update_panel(true)
 end
 
@@ -206,14 +206,14 @@ G.FUNCS.sysclock_cycle_clock_time_format = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.format = e.to_key
 	SystemClock.current_preset.format = SystemClock.indices.format
-	clock_ui.reset()
+	clock_ui.reset(true)
 end
 
 G.FUNCS.sysclock_cycle_clock_style = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.style = e.to_key
 	SystemClock.current_preset.style = SystemClock.STYLES[e.to_key]
-	clock_ui.reset()
+	clock_ui.reset(true)
 end
 
 G.FUNCS.sysclock_cycle_clock_text_colour = function(e)
@@ -236,7 +236,7 @@ G.FUNCS.sysclock_cycle_clock_size = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.size = e.to_key
 	SystemClock.current_preset.size = e.to_val
-	clock_ui.reset()
+	clock_ui.reset(true)
 end
 
 G.FUNCS.sysclock_slider_clock_position_x = function(e)
