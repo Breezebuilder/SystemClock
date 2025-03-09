@@ -4,7 +4,7 @@ local logger = require('systemclock.logger')
 local utilities = require('systemclock.utilities')
 
 local DEFAULTS = {
-	['config_version'] = 4,
+	['config_version'] = 5,
 	['clock_visible'] = true,
 	['clock_allow_drag'] = true,
 	['hour_offset'] = 0,
