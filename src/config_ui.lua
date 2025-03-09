@@ -28,6 +28,29 @@ local function create_UIBox_visibility_toggle()
 	}
 end
 
+local function create_UIBox_persistent_toggle()
+	return {
+		n = G.UIT.ROOT,
+		config = { align = 'cm', colour = G.C.CLEAR },
+		nodes = {
+			{
+				n = G.UIT.R,
+				config = { align = 'cm' },
+				nodes = {
+					create_toggle({
+						label = locale.translate('sysclock_persistent_setting'),
+						w = 1.5,
+						text_scale = 0.8,
+						ref_table = config,
+						ref_value = 'clock_persistent',
+						callback = SystemClock.set_persistent
+					})
+				}
+			}
+		}
+	}
+end
+
 local function create_UIBox_draggable_toggle()
 	return {
 		n = G.UIT.ROOT,
@@ -218,7 +241,9 @@ local function create_UIBox_config_panel()
 end
 
 function config_ui.create_config_tab()
+	config_ui.is_open = true
 	SystemClock.set_popup(true)
+
 	return {
 		n = G.UIT.ROOT,
 		config = {
@@ -267,6 +292,26 @@ function config_ui.create_config_tab()
 											{
 												n = G.UIT.O,
 												config = {
+													id = 'sysclock_persistent_toggle',
+													object = UIBox {
+														config = { align = 'cm', offset = { x = 0, y = 0 } },
+														definition = create_UIBox_persistent_toggle()
+													}
+												}
+											}
+										}
+									},
+									{
+										n = G.UIT.R,
+										config = { minh = 0.2 },
+									},
+									{
+										n = G.UIT.R,
+										config = { align = 'tr' },
+										nodes = {
+											{
+												n = G.UIT.O,
+												config = {
 													id = 'sysclock_draggable_toggle',
 													object = UIBox {
 														config = { align = 'cm', offset = { x = 0, y = 0 } },
@@ -278,7 +323,7 @@ function config_ui.create_config_tab()
 									},
 									{
 										n = G.UIT.R,
-										config = { minh = 1.6 },
+										config = { minh = 0.7 },
 									},
 									{
 										n = G.UIT.R,
@@ -345,7 +390,7 @@ function config_ui.create_config_tab()
 end
 
 local function rebuild_UIBox_element(uie_id, build_func, juice)
-	if not G.OVERLAY_MENU then return end
+	if not G.OVERLAY_MENU or not config_ui.is_open then return end
 	local ui_element = G.OVERLAY_MENU:get_UIE_by_ID(uie_id)
 	if not ui_element then 
 		logger.log_warn("Could not find UIE '" .. tostring(uie_id) .. "'")
@@ -373,6 +418,10 @@ end
 
 function config_ui.update_visibility_toggle(juice)
 	rebuild_UIBox_element('sysclock_visibility_toggle', create_UIBox_visibility_toggle, juice)
+end
+
+function config_ui.update_persistent_toggle(juice)
+	rebuild_UIBox_element('sysclock_persistent_toggle', create_UIBox_persistent_toggle, juice)
 end
 
 function config_ui.update_draggable_toggle(juice)
@@ -420,6 +469,11 @@ function config_ui.open_config_menu()
 			})
 		}
 	)
+end
+
+function config_ui.close_config_menu()
+	config_ui.is_open = false
+	SystemClock.set_popup(false)
 end
 
 return config_ui

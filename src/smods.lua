@@ -25,13 +25,13 @@ SMODS.current_mod.config_tab = config_ui.create_config_tab
 
 local g_funcs_exit_mods_ref = G.FUNCS.exit_mods
 function G.FUNCS.exit_mods(e)
-	SystemClock.set_popup(false)
+	config_ui.close_config_menu()
 	g_funcs_exit_mods_ref(e)
 end
 
 local g_funcs_mods_button_ref = G.FUNCS.mods_button
 function G.FUNCS.mods_button(e)
-	SystemClock.set_popup(false)
+	config_ui.close_config_menu()
 	g_funcs_mods_button_ref(e)
 end
 

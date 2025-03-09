@@ -1,6 +1,7 @@
 local clock_ui = {}
 
 local config = require('systemclock.config')
+local config_ui = require('systemclock.config_ui')
 local locale = require('systemclock.locale')
 local draggable_container = require('systemclock.draggablecontainer')
 
@@ -192,7 +193,7 @@ function clock_ui.reset(juice)
         prev_pos = { x = G.HUD_clock.T.x, y = G.HUD_clock.T.y }
         G.HUD_clock:remove()
     end
-    if config.clock_visible and (G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
+    if config.clock_visible and (config.clock_persistent or G.STAGE == G.STAGES.RUN or SystemClock.draw_as_popup) then
         local position = SystemClock.current_preset.position
         prev_pos = prev_pos or position
 
@@ -211,7 +212,7 @@ function clock_ui.reset(juice)
                     SystemClock.draw_as_popup
                 ),
                 zoom = true,
-                can_drag = SystemClock.draw_as_popup or config.clock_allow_drag
+                can_drag = config.clock_allow_drag or config_ui.is_open
             }
         )
 
@@ -219,8 +220,8 @@ function clock_ui.reset(juice)
 
         G.HUD_clock.drag = function(self)
             if not config.clock_allow_drag then
-                SystemClock.set_draggable(true, true)
                 temporary_drag = true
+                SystemClock.set_draggable(true, true)
             end
             draggable_container.drag(self)
         end

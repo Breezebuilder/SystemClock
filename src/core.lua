@@ -64,6 +64,7 @@ local function init_config_preset(presetIndex)
 	SystemClock.indices.size = utilities.index_of(SystemClock.TEXT_SIZES, SystemClock.current_preset.size) or 1
 	SystemClock.indices.text_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 1
 	SystemClock.indices.back_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 1
+	SystemClock.draw_as_popup = config.clock_persistent or config_ui.is_open 
 	SystemClock.assign_clock_colours()
 end
 
@@ -99,9 +100,9 @@ function Game:update(dt)
 		SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, config.hour_offset)
 
 		if clock_ui.has_dynamic_shadow_colour then
-			SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * (0.7)
-			SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * (0.7)
-			SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * (0.7)
+			SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * 0.7
+			SystemClock.colours.shadow[2] = SystemClock.colours.back[2] * 0.7
+			SystemClock.colours.shadow[3] = SystemClock.colours.back[3] * 0.7
 		end
 	end
 
@@ -124,7 +125,7 @@ end
 
 local g_funcs_exit_overlay_menu_ref = G.FUNCS.exit_overlay_menu
 function G.FUNCS.exit_overlay_menu(e)
-	SystemClock.set_popup(false)
+	config_ui.close_config_menu()
 	config.save()
 	return g_funcs_exit_overlay_menu_ref(e)
 end
@@ -140,7 +141,7 @@ end
 
 local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
 function Controller:queue_R_cursor_press(x, y)
-	if G.HUD_clock and G.HUD_clock.states.hover.is and not SystemClock.draw_as_popup then
+	if G.HUD_clock and G.HUD_clock.states.hover.is and not config_ui.is_open then
 		config_ui.open_config_menu()
 	end
 	return controller_queue_R_cursor_press_ref(self, x, y)
@@ -148,22 +149,26 @@ end
 
 local g_funcs_change_tab_ref = G.FUNCS.change_tab
 function G.FUNCS.change_tab(e)
-	SystemClock.set_popup(false)
+	config_ui.close_config_menu()
 	return g_funcs_change_tab_ref(e)
 end
 
 local g_funcs_options_ref = G.FUNCS.options
 function G.FUNCS.options(e)
-	SystemClock.set_popup(false)
+	config_ui.close_config_menu()
 	return g_funcs_options_ref(e)
 end
 
-function SystemClock.set_popup(state, forceReset)
-	if forceReset or SystemClock.draw_as_popup ~= state then
-		SystemClock.draw_as_popup = state
-		if G.HUD_clock then
-			G.HUD_clock.states.drag.can = state or config.clock_allow_drag
+function SystemClock.set_popup(state)
+	if config.clock_persistent then
+		if not SystemClock.draw_as_popup then
+			SystemClock.draw_as_popup = true
+			clock_ui.reset(state)
+		elseif G.HUD_clock then
+			G.HUD_clock.states.drag.can = config.clock_allow_drag or config_ui.is_open
 		end
+	elseif SystemClock.draw_as_popup ~= state then
+		SystemClock.draw_as_popup = state
 		clock_ui.reset(state)
 	end
 end
@@ -175,16 +180,24 @@ function SystemClock.set_position(pos)
 end
 
 function SystemClock.set_visibility(state, juice_config)
+	if not state and config.clock_persistent then SystemClock.set_persistent(false, true) end
 	config.clock_visible = state
 	clock_ui.reset(true)
 	config_ui.update_visibility_toggle(juice_config)
 end
 
+function SystemClock.set_persistent(state, juice_config)
+	if state and not config.clock_visible then SystemClock.set_visibility(true, true) end
+	config.clock_persistent = state
+	clock_ui.reset(true)
+	config_ui.update_persistent_toggle(juice_config)
+end
+
 function SystemClock.set_draggable(state, juice)
 	config.clock_allow_drag = state
 	if G.HUD_clock then
-		G.HUD_clock.states.drag.can = state or SystemClock.draw_as_popup
-		G.HUD_clock:juice_up(0.05, 0.03)
+		G.HUD_clock.states.drag.can = state or config_ui.is_open
+		if juice then G.HUD_clock:juice_up(0.05, 0.03) end
 	end
 	config_ui.update_draggable_toggle(juice)
 end
