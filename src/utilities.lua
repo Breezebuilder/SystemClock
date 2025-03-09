@@ -1,8 +1,8 @@
 local utilities = {}
 
 local DYN_UI_INITIAL_COLOURS = {
-	['DYN_UI.MAIN'] = G.C.BLUE,
-	['DYN_UI.DARK'] = mix_colours(G.C.BLUE, G.C.BLACK, 0.4),
+	['DYN_UI.MAIN'] = mix_colours(G.C.BLUE, G.C.BLACK, 0.6),
+	['DYN_UI.DARK'] = mix_colours(G.C.BLUE, G.C.BLACK, 0.24),
 	['DYN_UI.BOSS_MAIN'] = darken(G.C.BLACK, 0.05),
 	['DYN_UI.BOSS_DARK'] = lighten(G.C.BLACK, 0.07)
 }
