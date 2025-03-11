@@ -26,7 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Clock",
 			['sysclock_name'] = "SystemClock",
 			['sysclock_visibility_setting'] = "Show clock",
-			['sysclock_persistent_setting'] = "Always visible",
+			['sysclock_persistent_setting'] = "Show in menus",
 			['sysclock_draggable_setting'] = "Allow dragging",
 			['sysclock_preset_setting'] = 'Preset',
 			['sysclock_preset_default_button'] = 'Restore default',
