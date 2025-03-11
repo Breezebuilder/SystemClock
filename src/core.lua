@@ -64,7 +64,7 @@ local function init_config_preset(presetIndex)
 	SystemClock.indices.size = utilities.index_of(SystemClock.TEXT_SIZES, SystemClock.current_preset.size) or 1
 	SystemClock.indices.text_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 1
 	SystemClock.indices.back_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 1
-	SystemClock.draw_as_popup = config.clock_persistent or config_ui.is_open 
+	SystemClock.draw_as_popup = config.clock_persistent or config_ui.is_open
 	SystemClock.assign_clock_colours()
 end
 
@@ -161,12 +161,8 @@ end
 
 function SystemClock.set_popup(state)
 	if config.clock_persistent then
-		if not SystemClock.draw_as_popup then
-			SystemClock.draw_as_popup = true
-			clock_ui.reset(state)
-		elseif G.HUD_clock then
-			G.HUD_clock.states.drag.can = config.clock_allow_drag or config_ui.is_open
-		end
+		SystemClock.draw_as_popup = true
+		clock_ui.reset(state)
 	elseif SystemClock.draw_as_popup ~= state then
 		SystemClock.draw_as_popup = state
 		clock_ui.reset(state)

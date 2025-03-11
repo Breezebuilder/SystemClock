@@ -472,8 +472,10 @@ function config_ui.open_config_menu()
 end
 
 function config_ui.close_config_menu()
-	config_ui.is_open = false
-	SystemClock.set_popup(false)
+	if config_ui.is_open then
+		config_ui.is_open = false
+		SystemClock.set_popup(false)
+	end
 end
 
 return config_ui

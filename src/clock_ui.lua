@@ -208,7 +208,7 @@ function clock_ui.reset(juice)
                 definition = create_UIBox_clock(
                     SystemClock.current_preset.style,
                     SystemClock.current_preset.size,
-                    SystemClock.draw_as_popup
+                    config_ui.is_open
                 ),
                 zoom = true,
                 can_drag = config.clock_allow_drag or config_ui.is_open
