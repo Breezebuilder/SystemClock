@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "時鐘",
 			['sysclock_name'] = "系統時鐘",
 			['sysclock_visibility_setting'] = "顯示時鐘",
+			['sysclock_persistent_setting'] = "在選單中顯示",
 			['sysclock_draggable_setting'] = "允許拖動",
 			['sysclock_preset_setting'] = '預設',
 			['sysclock_preset_default_button'] = '恢復預設值',

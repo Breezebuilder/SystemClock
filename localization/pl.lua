@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Zegar",
 			['sysclock_name'] = "Zegar Systemowy",
 			['sysclock_visibility_setting'] = "Pokaż zegar",
+			['sysclock_persistent_setting'] = "Pokaż w menu",
 			['sysclock_draggable_setting'] = "Zezwól na przeciąganie",
 			['sysclock_preset_setting'] = 'Ustawienie wstępne',
 			['sysclock_preset_default_button'] = 'Przywróć domyślny',

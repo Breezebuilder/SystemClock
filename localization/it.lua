@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Orologio",
 			['sysclock_name'] = "Orologio di Sistema",
 			['sysclock_visibility_setting'] = "Mostra orologio",
+			['sysclock_persistent_setting'] = "Mostra nei menu",
 			['sysclock_draggable_setting'] = "Consenti trascinamento",
 			['sysclock_preset_setting'] = 'Preimpostazione',
 			['sysclock_preset_default_button'] = 'Ripristina predefinito',

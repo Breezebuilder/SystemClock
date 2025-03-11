@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "시계",
 			['sysclock_name'] = "시스템 클럭",
 			['sysclock_visibility_setting'] = "시계 표시",
+			['sysclock_persistent_setting'] = "메뉴에 표시",
 			['sysclock_draggable_setting'] = "드래그 허용",
 			['sysclock_preset_setting'] = '프리셋',
 			['sysclock_preset_default_button'] = '기본값 복원',

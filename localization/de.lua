@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Uhr",
 			['sysclock_name'] = "Systemuhr",
 			['sysclock_visibility_setting'] = "Uhr anzeigen",
+			['sysclock_persistent_setting'] = "In Menüs anzeigen",
 			['sysclock_draggable_setting'] = "Verschieben erlauben",
 			['sysclock_preset_setting'] = 'Voreinstellung',
 			['sysclock_preset_default_button'] = 'Standard wiederherstellen',

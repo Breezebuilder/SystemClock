@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Reloj",
 			['sysclock_name'] = "Reloj del Sistema",
 			['sysclock_visibility_setting'] = "Mostrar reloj",
+			['sysclock_persistent_setting'] = "Mostrar en menús",
 			['sysclock_draggable_setting'] = "Permitir arrastrar",
 			['sysclock_preset_setting'] = 'Preajuste',
 			['sysclock_preset_default_button'] = 'Restaurar predeterminado',

@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Đồng hồ",
 			['sysclock_name'] = "Đồng Hồ Hệ Thống",
 			['sysclock_visibility_setting'] = "Hiện đồng hồ",
+			['sysclock_persistent_setting'] = "Xem trong menu",
 			['sysclock_draggable_setting'] = "Cho phép kéo thả",
 			['sysclock_preset_setting'] = 'Cài đặt sẵn',
 			['sysclock_preset_default_button'] = 'Khôi phục mặc định',

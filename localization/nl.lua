@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Klok",
 			['sysclock_name'] = "Systeemklok",
 			['sysclock_visibility_setting'] = "Toon klok",
+			['sysclock_persistent_setting'] = "Weergeven in menu's",
 			['sysclock_draggable_setting'] = "Slepen toestaan",
 			['sysclock_preset_setting'] = 'Voorinstelling',
 			['sysclock_preset_default_button'] = 'Standaard herstellen',

@@ -26,6 +26,7 @@ return {
 			['sysclock_settings_tab'] = "Jam",
 			['sysclock_name'] = "Jam Sistem",
 			['sysclock_visibility_setting'] = "Tampilkan jam",
+			['sysclock_persistent_setting'] = "Tampilkan di menu",
 			['sysclock_draggable_setting'] = "Izinkan penarikan",
 			['sysclock_preset_setting'] = 'Prasetel',
 			['sysclock_preset_default_button'] = 'Pulihkan default',
