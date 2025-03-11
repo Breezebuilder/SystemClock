@@ -7,5 +7,5 @@
   "priority": 100000,
   "main_file": "src/smods.lua",
   "badge_colour": "638fe1",
-  "version": "1.7.0~e"
+  "version": "1.7.0~f"
 }
