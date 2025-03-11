@@ -75,8 +75,7 @@ local function create_clock_DynaText(text_size, colours, shadow, float, silent)
         colours = colours,
         scale = text_size,
         shadow = shadow,
-        pop_in = 0,
-        pop_in_rate = 10,
+        pop_in_rate = 9999999,
         float = float,
         silent = silent,
     })
