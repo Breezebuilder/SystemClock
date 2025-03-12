@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Waktu",
 			['sysclock_settings_tab'] = "Jam",
 			['sysclock_name'] = "Jam Sistem",
+			['sysclock_right_click_tooltip'] = {
+				"Klik kanan untuk",
+				"membuka pengaturan"
+			},
 			['sysclock_visibility_setting'] = "Tampilkan jam",
 			['sysclock_persistent_setting'] = "Tampilkan di menu",
 			['sysclock_draggable_setting'] = "Izinkan penarikan",

@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Zeit",
 			['sysclock_settings_tab'] = "Uhr",
 			['sysclock_name'] = "Systemuhr",
+			['sysclock_right_click_tooltip'] = {
+				"Rechtsklick, um",
+				"Einstellungen zu öffnen"
+			},
 			['sysclock_visibility_setting'] = "Uhr anzeigen",
 			['sysclock_persistent_setting'] = "In Menüs anzeigen",
 			['sysclock_draggable_setting'] = "Verschieben erlauben",

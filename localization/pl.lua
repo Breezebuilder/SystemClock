@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Czas",
 			['sysclock_settings_tab'] = "Zegar",
 			['sysclock_name'] = "Zegar Systemowy",
+			['sysclock_right_click_tooltip'] = {
+				"Prawy klik, aby",
+				"otworzyć ustawienia"
+			},
 			['sysclock_visibility_setting'] = "Pokaż zegar",
 			['sysclock_persistent_setting'] = "Pokaż w menu",
 			['sysclock_draggable_setting'] = "Zezwól na przeciąganie",

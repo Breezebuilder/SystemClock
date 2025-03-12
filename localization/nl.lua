@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Tijd",
 			['sysclock_settings_tab'] = "Klok",
 			['sysclock_name'] = "Systeemklok",
+			['sysclock_right_click_tooltip'] = {
+				"Rechtsklik om",
+				"instellingen te openen"
+			},
 			['sysclock_visibility_setting'] = "Toon klok",
 			['sysclock_persistent_setting'] = "Weergeven in menu's",
 			['sysclock_draggable_setting'] = "Slepen toestaan",

@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Время",
 			['sysclock_settings_tab'] = "Часы",
 			['sysclock_name'] = "Системные часы",
+			['sysclock_right_click_tooltip'] = {
+				"ПКМ, чтобы",
+				"открыть настройки"
+			},
 			['sysclock_visibility_setting'] = "Показать часы",
 			['sysclock_persistent_setting'] = "Показывать в меню",
 			['sysclock_draggable_setting'] = "Перетаскивание",

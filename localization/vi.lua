@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Thời gian",
 			['sysclock_settings_tab'] = "Đồng hồ",
 			['sysclock_name'] = "Đồng Hồ Hệ Thống",
+			['sysclock_right_click_tooltip'] = {
+				"Nhấp chuột phải để",
+				"mở cài đặt"
+			},
 			['sysclock_visibility_setting'] = "Hiện đồng hồ",
 			['sysclock_persistent_setting'] = "Xem trong menu",
 			['sysclock_draggable_setting'] = "Cho phép kéo thả",

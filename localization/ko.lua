@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "시간",
 			['sysclock_settings_tab'] = "시계",
 			['sysclock_name'] = "시스템 클럭",
+			['sysclock_right_click_tooltip'] = {
+				"우클릭하여",
+				"설정 열기"
+			},
 			['sysclock_visibility_setting'] = "시계 표시",
 			['sysclock_persistent_setting'] = "메뉴에 표시",
 			['sysclock_draggable_setting'] = "드래그 허용",

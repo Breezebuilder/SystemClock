@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "時間",
 			['sysclock_settings_tab'] = "時鐘",
 			['sysclock_name'] = "系統時鐘",
+			['sysclock_right_click_tooltip'] = {
+				"右鍵點擊以",
+				"開啟設定"
+			},
 			['sysclock_visibility_setting'] = "顯示時鐘",
 			['sysclock_persistent_setting'] = "在選單中顯示",
 			['sysclock_draggable_setting'] = "允許拖動",

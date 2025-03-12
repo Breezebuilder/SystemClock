@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Hora",
 			['sysclock_settings_tab'] = "Relógio",
 			['sysclock_name'] = "Relógio do Sistema",
+			['sysclock_right_click_tooltip'] = {
+				"Clique direito para",
+				"abrir configurações"
+			},
 			['sysclock_visibility_setting'] = "Mostrar relógio",
 			['sysclock_persistent_setting'] = "Mostrar nos menus",
 			['sysclock_draggable_setting'] = "Permitir arrastar",

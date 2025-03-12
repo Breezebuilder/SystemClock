@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "時間",
 			['sysclock_settings_tab'] = "時計",
 			['sysclock_name'] = "システムクロック",
+			['sysclock_right_click_tooltip'] = {
+				"右クリックで",
+				"設定を開く"
+			},
 			['sysclock_visibility_setting'] = "時計を表示",
 			['sysclock_persistent_setting'] = "メニューに表示",
 			['sysclock_draggable_setting'] = "ドラッグを許可",
