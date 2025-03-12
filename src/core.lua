@@ -140,7 +140,7 @@ end
 local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
 function Controller:queue_R_cursor_press(x, y)
 	if G.HUD_clock and G.HUD_clock.states.hover.is then
-		config.clock_rclick_tutorial = false
+		config.clock_right_click_tutorial = false
 		if config_ui.is_open then
 			clock_ui.reset(true)
 		else

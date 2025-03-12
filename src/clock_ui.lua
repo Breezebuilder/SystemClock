@@ -237,7 +237,7 @@ function clock_ui.reset(juice)
         local position = SystemClock.current_preset.position
         prev_pos = prev_pos or position
 
-        local tooltip_popup = config.clock_rclick_tutorial and create_clock_h_popup(locale.translate('sysclock_right_click_tooltip'))
+        local tooltip_popup = config.clock_right_click_tutorial and create_clock_h_popup(locale.translate('sysclock_right_click_tooltip'))
 
         G.HUD_clock = draggable_container(
             {
