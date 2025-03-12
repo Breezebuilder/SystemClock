@@ -25,6 +25,10 @@ return {
 			['sysclock_time_heading'] = "Time",
 			['sysclock_settings_tab'] = "Clock",
 			['sysclock_name'] = "SystemClock",
+			['sysclock_right_click_tooltip'] = {
+				"Right click to",
+				"open settings"
+			},
 			['sysclock_visibility_setting'] = "Show clock",
 			['sysclock_persistent_setting'] = "Show in menus",
 			['sysclock_draggable_setting'] = "Allow dragging",

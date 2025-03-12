@@ -15,6 +15,10 @@ function DraggableContainer:init(args)
 
 	if args.config then
         self.config = args.config
+		if self.config.h_popup then
+			self.config.h_popup_config = self.config.h_popup_config or { align = self.T.y > G.ROOM.T.h / 2 and 'tm' or 'bm' }
+			self.config.h_popup_config.parent = self
+		end
         args.config.major = args.config.major or args.config.parent or self
 
         self:set_alignment({
@@ -144,6 +148,11 @@ function DraggableContainer:stop_drag()
 	if self.zoom then
 		self.UIRoot:set_drag_state(false, true)
 	end
+
+    if self.config.h_popup then
+        self.config.h_popup_config.align = self.T.y > G.ROOM.T.h / 2 and 'tm' or 'bm'
+    end
+
 	UIBox.stop_drag(self)
 end
 

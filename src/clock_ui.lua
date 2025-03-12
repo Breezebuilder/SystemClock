@@ -66,6 +66,47 @@ local function calculate_max_text_width(format_index)
     return width
 end
 
+local function create_clock_h_popup(text, text_size)
+    text_size = text_size or 0.35
+    local rows = {}
+
+    for i = 1, #text do
+        local row = {
+            n = G.UIT.R,
+            config = { align = 'cm', padding = 0.05 * text_size },
+            nodes = {
+                {
+                    n = G.UIT.T,
+                    config = {
+                        text = text[i],
+                        shadow = true,
+                        colour = G.C.UI.TEXT_LIGHT,
+                        scale = text_size
+                    }
+                }
+            }
+        }
+        table.insert(rows, row)
+    end
+
+    local h_popup = {
+        n = G.UIT.ROOT,
+        config = {
+            padding = 0.1,
+            r = 0.1,
+            colour = { 0.205, 0.246, 0.253, 0.9 }
+        },
+        nodes = {
+            {
+                n = G.UIT.C,
+                nodes = rows
+            }
+        }
+    }
+
+    return h_popup
+end
+
 local function create_clock_DynaText(text_size, colours, shadow, float, silent)
     local dynaText = DynaText({
         string = { {
@@ -84,13 +125,13 @@ local function create_clock_DynaText(text_size, colours, shadow, float, silent)
         n = G.UIT.O,
         config = {
             align = 'cm',
-            id = 'clock_text',
+            id = 'sysclock_clock_text',
             object = dynaText
         }
     }
 end
 
-local function create_UIBox_clock(style_name, text_size, float)
+local function create_clock_UIBox(style_name, text_size, float)
     style_name = style_name or 'simple'
     text_size = text_size or 1
 
@@ -196,6 +237,8 @@ function clock_ui.reset(juice)
         local position = SystemClock.current_preset.position
         prev_pos = prev_pos or position
 
+        local tooltip_popup = config.clock_rclick_tutorial and create_clock_h_popup(locale.translate('sysclock_right_click_tooltip'))
+
         G.HUD_clock = draggable_container(
             {
                 T = { x = position.x, y = position.y },
@@ -203,9 +246,10 @@ function clock_ui.reset(juice)
                 config = {
                     major = G,
                     bond = 'Weak',
-                    instance_type = SystemClock.draw_as_popup and 'POPUP'
+                    instance_type = SystemClock.draw_as_popup and 'POPUP',
+                    h_popup = tooltip_popup
                 },
-                definition = create_UIBox_clock(
+                definition = create_clock_UIBox(
                     SystemClock.current_preset.style,
                     SystemClock.current_preset.size,
                     config_ui.is_open

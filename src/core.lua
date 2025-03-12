@@ -142,6 +142,7 @@ end
 local controller_queue_R_cursor_press_ref = Controller.queue_R_cursor_press
 function Controller:queue_R_cursor_press(x, y)
 	if G.HUD_clock and G.HUD_clock.states.hover.is and not config_ui.is_open then
+		config.clock_rclick_tutorial = false
 		config_ui.open_config_menu()
 	end
 	return controller_queue_R_cursor_press_ref(self, x, y)
