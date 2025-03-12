@@ -70,10 +70,8 @@ end
 
 function SystemClock.get_formatted_time(format_style, time, force_leading_zero, hour_offset)
 	format_style = format_style or SystemClock.CLOCK_FORMATS[SystemClock.indices.format]
-	if hour_offset then
-		if time == nil then
-			time = os.time()
-		end
+	if hour_offset and hour_offset ~= 0 then
+		time = time or os.time()
 		time = time + (hour_offset * 3600)
 	end
 	local formatted_time = os.date(format_style[1], time)
