@@ -179,17 +179,17 @@ function SystemClock.set_position(pos)
 end
 
 function SystemClock.set_visibility(state, juice_config)
-	if not state and config.clock_persistent then SystemClock.set_persistent(false, true) end
 	config.clock_visible = state
 	clock_ui.reset(true)
 	config_ui.update_visibility_toggle(juice_config)
+	if not state and config.clock_persistent then SystemClock.set_persistent(false, true) end
 end
 
 function SystemClock.set_persistent(state, juice_config)
-	if state and not config.clock_visible then SystemClock.set_visibility(true, true) end
 	config.clock_persistent = state
 	clock_ui.reset(true)
 	config_ui.update_persistent_toggle(juice_config)
+	if state and not config.clock_visible then SystemClock.set_visibility(true, true) end
 end
 
 function SystemClock.set_draggable(state, juice)
