@@ -8,7 +8,6 @@ function DraggableContainer:init(args)
 
 	self.states.drag.can = args.can_drag or false
 	self.states.collide.can = true
-	self.created_on_pause = true
 	self.draw_layers = {}
 
 	self.definition = args.definition
@@ -59,15 +58,16 @@ function DraggableContainer:init(args)
         self.VT.y = self.VT.y - self.Mid.role.offset.y + (self.Mid.parent.config.padding or 0)
     end
 
-    if self.alignment and self.alignment.lr_clamp then
-        self:lr_clamp()
-    end
+    if self.alignment and self.alignment.lr_clamp then self:lr_clamp() end
 
     self.UIRoot:initialize_VT(true)
 
 	self.zoom = args.zoom or args.config.zoom
-	if self.zoom then
-		self.UIRoot:set_zoom(true, true, true)
+	if self.zoom then self.UIRoot:set_zoom(true, true) end
+
+	if args.config.instance_type == 'POPUP' and not self.created_on_pause then
+		self.created_on_pause = true
+		self.UIRoot:set_created_on_pause(true, true)
 	end
 
 	self.attention_text = 'DraggableContainer'
@@ -88,6 +88,19 @@ function Moveable:set_zoom(state, recursive, force)
 	if recursive and self.children then
 		for k, v in pairs(self.children) do
 			v:set_zoom(state, true, force)
+		end
+	end
+end
+
+function Moveable:set_created_on_pause(state, recursive, force)
+	if self.created_on_pause == state and not force then return end
+
+	self.created_on_pause = state
+	if self.config.object then self.config.object.created_on_pause = state end
+
+	if recursive and self.children then
+		for k, v in pairs(self.children) do
+			v:set_created_on_pause(state, true, force)
 		end
 	end
 end
