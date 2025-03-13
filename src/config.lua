@@ -6,7 +6,7 @@ local utilities = require('systemclock.utilities')
 local DEFAULTS = {
 	['config_version'] = 5,
 	['clock_visible'] = true,
-	['clock_persistent'] = false,
+	['clock_persistent'] = true,
 	['clock_right_click_tutorial'] = true,
 	['clock_allow_drag'] = true,
 	['hour_offset'] = 0,
@@ -34,7 +34,7 @@ local DEFAULTS = {
 				['back'] = 'GREEN'
 			},
 			['position'] = {
-				['x'] = -0.397,
+				['x'] = -0.382,
 				['y'] = 11.653
 			}
 		},
