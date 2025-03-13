@@ -110,7 +110,8 @@ end
 local game_main_menu_ref = Game.main_menu
 function Game:main_menu(change_context)
 	local ret = game_main_menu_ref(self, change_context)
-	clock_ui.reset()
+	local juice_on_start = config and config.clock_right_click_tutorial
+	clock_ui.reset(juice_on_start)
 	return ret
 end
 
