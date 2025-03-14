@@ -87,12 +87,10 @@ function utilities.get_colour_from_ref(ref)
 	for obj_name in ref:gmatch("[^%.]+") do
 		colour = colour[obj_name]
 		depth = depth + 1
-		if depth > 2 or not colour then
-			return { 1, 0, 1, 1 }
-		end
+		if depth > 2 or not colour then return nil end
 	end
 
-	return type(colour) == 'table' and colour or { 1, 0, 1, 1 }
+	return type(colour) == 'table' and colour or nil
 end
 
 function utilities.parse_colour(colour_ref)
