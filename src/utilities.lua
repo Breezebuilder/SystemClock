@@ -105,7 +105,7 @@ function utilities.parse_colour(colour_ref)
 		return nil
 	end
 
-	if colour_ref:sub(1, 1) == "#" then
+	if string.len(colour_ref) > 6 and colour_ref:sub(1, 1) == "#" then
 		return HEX(colour_ref:sub(2))
 	end
 
