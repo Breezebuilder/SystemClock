@@ -36,14 +36,15 @@ SystemClock.draw_as_popup = false
 local config = require('systemclock.config')
 local clock_ui = require('systemclock.clock_ui')
 local config_ui = require('systemclock.config_ui')
+local logger = require('systemclock.logger')
 local utilities = require('systemclock.utilities')
 
 config.load()
 config.save()
 
 function SystemClock.assign_clock_colours()
-	local text_colour = utilities.get_colour_from_ref(SystemClock.current_preset.colours.text)
-	local back_colour = utilities.get_colour_from_ref(SystemClock.current_preset.colours.back)
+	local text_colour = SystemClock.current_preset.colours and utilities.get_colour_from_ref(SystemClock.current_preset.colours.text) or G.C.WHITE
+	local back_colour = SystemClock.current_preset.colours and utilities.get_colour_from_ref(SystemClock.current_preset.colours.back) or { 1, 0, 1, 1 }
 	local shadow_colour = darken(back_colour, 0.3)
 
 	SystemClock.colours = SystemClock.colours or {}
@@ -60,11 +61,20 @@ local function init_config_preset(presetIndex)
 
 	SystemClock.current_preset = config.clock_presets[presetIndex]
 	SystemClock.indices.format = SystemClock.current_preset.format or 0
+
+	SystemClock.current_preset = config.clock_presets[preset_index]
+	if not SystemClock.current_preset then
+		logger.log_warn("Error loading clock preset with index " .. tostring(preset_index))
+		SystemClock.current_preset = config.get_preset_default(1)
+	end
+
+	SystemClock.indices.format = tonumber(SystemClock.current_preset.format) or 0
 	SystemClock.indices.style = utilities.index_of(SystemClock.STYLES, SystemClock.current_preset.style) or 0
 	SystemClock.indices.size = utilities.index_of(SystemClock.TEXT_SIZES, SystemClock.current_preset.size) or 0
-	SystemClock.indices.text_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 0
-	SystemClock.indices.back_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 0
-	SystemClock.draw_as_popup = config.clock_persistent or config_ui.is_open
+	SystemClock.indices.text_colour = SystemClock.current_preset.colours and utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 0
+	SystemClock.indices.back_colour = SystemClock.current_preset.colours and utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 0
+	SystemClock.draw_as_popup = (not not config.clock_persistent) or config_ui.is_open
+
 	SystemClock.assign_clock_colours()
 end
 
