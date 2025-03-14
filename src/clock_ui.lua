@@ -51,12 +51,10 @@ clock_ui.styles = {
     }
 }
 
-local function calculate_max_text_width(format_index)
-    format_index = format_index or SystemClock.current_preset.format
-    local format = SystemClock.CLOCK_FORMATS[format_index]
+local function calculate_max_text_width()
     local font = G.LANG.font
     local width = 0
-    local string = SystemClock.get_formatted_time(format, SystemClock.example_time, true)
+    local string = SystemClock.get_formatted_time(SystemClock.current_format.format_string, false, SystemClock.example_time)
     for _, c in utf8.chars(string) do
         local dx = font.FONT:getWidth(c) * SystemClock.current_preset.size * G.TILESCALE * font.FONTSCALE
         dx = dx + 3 * G.TILESCALE * font.FONTSCALE
@@ -137,7 +135,7 @@ local function create_clock_UIBox(style_name, text_size, float)
 
     local colours = SystemClock.assign_clock_colours()
 
-    local style = clock_ui.styles[style_name] or { outer_colour = { 1, 0, 1, 1 } }
+    local style = clock_ui.styles[style_name] or {}
 
     clock_ui.has_dynamic_shadow_colour = style.shadow_colour_ref == 'shadow'
 

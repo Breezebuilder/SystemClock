@@ -1,12 +1,12 @@
 SystemClock = {}
 
 SystemClock.CLOCK_FORMATS = {
-	{ '%I:%M %p',    true },
-	{ '%I:%M',       true },
-	{ '%H:%M',       false },
-	{ '%I:%M:%S %p', true },
-	{ '%I:%M:%S',    true },
-	{ '%H:%M:%S',    false }
+	{ format_string = '%I:%M %p',    leading_zero = false },
+	{ format_string = '%I:%M',       leading_zero = false },
+	{ format_string = '%H:%M',       leading_zero = true },
+	{ format_string = '%I:%M:%S %p', leading_zero = false },
+	{ format_string = '%I:%M:%S',    leading_zero = false },
+	{ format_string = '%H:%M:%S',    leading_zero = true }
 }
 
 SystemClock.COLOUR_REFS = {
@@ -30,6 +30,7 @@ SystemClock.FORMAT_EXAMPLES = {}
 SystemClock.time = ''
 SystemClock.current_preset = {}
 SystemClock.indices = {}
+SystemClock.current_format = {}
 SystemClock.example_time = os.time({ year = 2015, month = 10, day = 21, hour = 16, min = 29, sec = 33 })
 SystemClock.draw_as_popup = false
 
@@ -55,12 +56,22 @@ function SystemClock.assign_clock_colours()
 	return SystemClock.colours
 end
 
-local function init_config_preset(presetIndex)
-	presetIndex = presetIndex or config.clock_preset_index or 1
-	config.clock_preset_index = presetIndex
+local function assign_current_format(format)
+	format = format or SystemClock.current_preset.format or 1
 
-	SystemClock.current_preset = config.clock_presets[presetIndex]
-	SystemClock.indices.format = SystemClock.current_preset.format or 0
+	local format_type = type(format)
+	if format_type == 'number' then
+		SystemClock.current_format = SystemClock.CLOCK_FORMATS[format]
+	elseif format_type == 'string' then
+		SystemClock.current_format = { format_string = format, leading_zero = false }
+	else
+		SystemClock.current_format = SystemClock.CLOCK_FORMATS[1]
+	end
+end
+
+local function assign_config_preset(preset_index)
+	preset_index = preset_index or config.clock_preset_index or 0
+	config.clock_preset_index = preset_index
 
 	SystemClock.current_preset = config.clock_presets[preset_index]
 	if not SystemClock.current_preset then
@@ -76,28 +87,33 @@ local function init_config_preset(presetIndex)
 	SystemClock.draw_as_popup = (not not config.clock_persistent) or config_ui.is_open
 
 	SystemClock.assign_clock_colours()
+	assign_current_format()
 end
 
-function SystemClock.get_formatted_time(format_style, time, force_leading_zero, hour_offset)
-	format_style = format_style or SystemClock.CLOCK_FORMATS[SystemClock.indices.format]
-	if hour_offset and hour_offset ~= 0 then
+function SystemClock.get_formatted_time(format_string, leading_zero, time, hour_offset)
+	format_string = format_string or SystemClock.current_format.format_string
+	leading_zero = leading_zero ~= nil and leading_zero or SystemClock.current_format.leading_zero
+
+	if hour_offset and tonumber(hour_offset) then
 		time = time or os.time()
-		time = time + (hour_offset * 3600)
+		time = time + tonumber(hour_offset) * 3600
 	end
-	local formatted_time = os.date(format_style[1], time)
-	if not force_leading_zero and format_style[2] then
+
+	local formatted_time = os.date(format_string, time)
+
+	if leading_zero == false then
 		formatted_time = tostring(formatted_time):gsub("^0", "")
 	end
 	return formatted_time
 end
 
 local function generate_example_time_formats()
-	for i, format_style in ipairs(SystemClock.CLOCK_FORMATS) do
-		SystemClock.FORMAT_EXAMPLES[i] = SystemClock.get_formatted_time(format_style, SystemClock.example_time)
+	for i, format_set in ipairs(SystemClock.CLOCK_FORMATS) do
+		SystemClock.FORMAT_EXAMPLES[i] = SystemClock.get_formatted_time(format_set.format_string, format_set.leading_zero, SystemClock.example_time)
 	end
 end
 
-init_config_preset()
+assign_config_preset()
 generate_example_time_formats()
 
 local game_update_ref = Game.update
@@ -105,7 +121,7 @@ function Game:update(dt)
 	local ret = game_update_ref(self, dt)
 
 	if config then
-		SystemClock.time = SystemClock.get_formatted_time(nil, nil, false, config.hour_offset)
+		SystemClock.time = SystemClock.get_formatted_time(nil, nil, nil, config.hour_offset)
 
 		if clock_ui.has_dynamic_shadow_colour then
 			SystemClock.colours.shadow[1] = SystemClock.colours.back[1] * 0.7
@@ -213,14 +229,14 @@ function SystemClock.set_draggable(state, juice)
 end
 
 G.FUNCS.sysclock_cycle_clock_preset = function(e)
-	init_config_preset(e.to_key)
+	assign_config_preset(e.to_key)
 	clock_ui.reset()
 	config_ui.update_panel(true)
 end
 
 G.FUNCS.sysclock_restore_preset_defaults = function(e)
 	config.reset_preset(config.clock_preset_index)
-	init_config_preset()
+	assign_config_preset()
 	clock_ui.reset(true)
 	config_ui.update_panel(true)
 end
@@ -229,6 +245,7 @@ G.FUNCS.sysclock_cycle_clock_time_format = function(e)
 	if not config.clock_visible then SystemClock.set_visibility(true, true) end
 	SystemClock.indices.format = e.to_key
 	SystemClock.current_preset.format = SystemClock.indices.format
+	SystemClock.current_format = SystemClock.CLOCK_FORMATS[e.to_key]
 	clock_ui.reset(true)
 end
 

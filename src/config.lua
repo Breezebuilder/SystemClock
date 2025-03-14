@@ -9,7 +9,6 @@ local DEFAULTS = {
 	['clock_persistent'] = true,
 	['clock_right_click_tutorial'] = true,
 	['clock_allow_drag'] = true,
-	['hour_offset'] = 0,
 	['clock_preset_index'] = 1,
 	['clock_presets'] = {
 		[1] = {
@@ -118,7 +117,7 @@ end
 
 function config.save()
 	if not love.filesystem.getInfo(SAVE_DIR) then
-		logger.log_info("Creating config folder...", "SystemClock")
+		logger.log_info("Creating config folder...")
 		local success = love.filesystem.createDirectory(SAVE_DIR)
 		if not success then
 			logger.log_error("Failed to create config folder")
@@ -136,7 +135,7 @@ end
 
 local function update_config_version()
 	if not config then
-		logger.log_error("Config not loaded", 'SystemClock')
+		logger.log_error("Config not loaded")
 		return
 	end
 
@@ -246,6 +245,10 @@ end
 function config.reset_preset(preset_index)
 	config.clock_presets[preset_index] = utilities.deep_copy(DEFAULTS.clock_presets[preset_index])
 	config.save()
+end
+
+function config.get_preset_default(preset_index)
+	return DEFAULTS.clock_presets[preset_index]
 end
 
 return config
