@@ -137,7 +137,7 @@ local function create_clock_UIBox(style_name, text_size, float)
 
     local colours = SystemClock.assign_clock_colours()
 
-    local style = clock_ui.styles[style_name]
+    local style = clock_ui.styles[style_name] or { outer_colour = { 1, 0, 1, 1 } }
 
     clock_ui.has_dynamic_shadow_colour = style.shadow_colour_ref == 'shadow'
 
