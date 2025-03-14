@@ -65,7 +65,6 @@ function utilities.deep_merge(source, destination, replace)
 	return destination
 end
 
-
 function utilities.shallow_copy(source, destination)
 	destination = destination or {}
 	for i, v in ipairs(source) do
@@ -75,7 +74,7 @@ function utilities.shallow_copy(source, destination)
 end
 
 function utilities.get_colour_from_ref(ref)
-	if not ref then return nil end
+	if not ref or type(ref) ~= 'string' then return nil end
 	local colour
 
 	if G.STAGE == G.STAGES.MAIN_MENU then
@@ -94,6 +93,23 @@ function utilities.get_colour_from_ref(ref)
 	end
 
 	return type(colour) == 'table' and colour or { 1, 0, 1, 1 }
+end
+
+function utilities.parse_colour(colour_ref)
+	if not colour_ref then return nil end
+
+	local ref_type = type(colour_ref)
+	if ref_type == 'table' and #colour_ref >= 3 then
+		return { colour_ref[1] or 1, colour_ref[2] or 1, colour_ref[3] or 1, colour_ref[4] or 1 }
+	elseif ref_type ~= 'string' then
+		return nil
+	end
+
+	if colour_ref:sub(1, 1) == "#" then
+		return HEX(colour_ref:sub(2))
+	end
+
+	return utilities.get_colour_from_ref(colour_ref)
 end
 
 return utilities

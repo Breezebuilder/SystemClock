@@ -44,8 +44,8 @@ config.load()
 config.save()
 
 function SystemClock.assign_clock_colours()
-	local text_colour = SystemClock.current_preset.colours and utilities.get_colour_from_ref(SystemClock.current_preset.colours.text) or G.C.WHITE
-	local back_colour = SystemClock.current_preset.colours and utilities.get_colour_from_ref(SystemClock.current_preset.colours.back) or { 1, 0, 1, 1 }
+	local text_colour = SystemClock.current_preset.colours and utilities.parse_colour(SystemClock.current_preset.colours.text) or G.C.WHITE
+	local back_colour = SystemClock.current_preset.colours and utilities.parse_colour(SystemClock.current_preset.colours.back) or { 1, 0, 1, 1 }
 	local shadow_colour = darken(back_colour, 0.3)
 
 	SystemClock.colours = SystemClock.colours or {}
