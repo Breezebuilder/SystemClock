@@ -55,15 +55,15 @@ function SystemClock.assign_clock_colours()
 end
 
 local function init_config_preset(presetIndex)
-	presetIndex = presetIndex or config.clock_preset_index
+	presetIndex = presetIndex or config.clock_preset_index or 1
 	config.clock_preset_index = presetIndex
 
 	SystemClock.current_preset = config.clock_presets[presetIndex]
-	SystemClock.indices.format = SystemClock.current_preset.format or 1
-	SystemClock.indices.style = utilities.index_of(SystemClock.STYLES, SystemClock.current_preset.style) or 1
-	SystemClock.indices.size = utilities.index_of(SystemClock.TEXT_SIZES, SystemClock.current_preset.size) or 1
-	SystemClock.indices.text_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 1
-	SystemClock.indices.back_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 1
+	SystemClock.indices.format = SystemClock.current_preset.format or 0
+	SystemClock.indices.style = utilities.index_of(SystemClock.STYLES, SystemClock.current_preset.style) or 0
+	SystemClock.indices.size = utilities.index_of(SystemClock.TEXT_SIZES, SystemClock.current_preset.size) or 0
+	SystemClock.indices.text_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.text) or 0
+	SystemClock.indices.back_colour = utilities.index_of(SystemClock.COLOUR_REFS, SystemClock.current_preset.colours.back) or 0
 	SystemClock.draw_as_popup = config.clock_persistent or config_ui.is_open
 	SystemClock.assign_clock_colours()
 end
