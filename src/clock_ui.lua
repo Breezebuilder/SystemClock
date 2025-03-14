@@ -54,7 +54,7 @@ clock_ui.styles = {
 local function calculate_max_text_width()
     local font = G.LANG.font
     local width = 0
-    local string = SystemClock.get_formatted_time(SystemClock.current_format.format_string, false, SystemClock.example_time)
+    local string = SystemClock.get_formatted_time(SystemClock.current_format.format_string, true, SystemClock.example_time)
     for _, c in utf8.chars(string) do
         local dx = font.FONT:getWidth(c) * SystemClock.current_preset.size * G.TILESCALE * font.FONTSCALE
         dx = dx + 3 * G.TILESCALE * font.FONTSCALE
